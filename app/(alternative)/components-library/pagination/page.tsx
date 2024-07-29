@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Pagination - Mosaic',
+  title: 'Pagination - Twelve',
   description: 'Page description',
 }
 

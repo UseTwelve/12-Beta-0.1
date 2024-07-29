@@ -1,12 +1,12 @@
 export const metadata = {
-  title: 'Billing Settings - Mosaic',
+  title: 'Account Settings - Twelve',
   description: 'Page description',
 }
 
 import SettingsSidebar from '../settings-sidebar'
-import BillingPanel from './billing-panel'
+import AccountPanel from './account-panel'
 
-export default function BillingSettings() {
+export default function AccountSettings() {
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-[96rem] mx-auto">
 
@@ -21,7 +21,7 @@ export default function BillingSettings() {
         <div className="flex flex-col md:flex-row md:-mr-px">
 
           <SettingsSidebar />
-          <BillingPanel />
+          <AccountPanel />
 
         </div>
       </div>

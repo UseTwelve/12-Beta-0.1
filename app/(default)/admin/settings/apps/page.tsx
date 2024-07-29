@@ -1,12 +1,12 @@
 export const metadata = {
-  title: 'Notifications Settings - Mosaic',
+  title: 'Apps Settings - Twelve',
   description: 'Page description',
 }
 
 import SettingsSidebar from '../settings-sidebar'
-import NotificationsPanel from './notifications-panel'
+import AppsPanel from './apps-panel'
 
-export default function NotificationsSettings() {
+export default function AppsSettings() {
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-[96rem] mx-auto">
 
@@ -21,7 +21,7 @@ export default function NotificationsSettings() {
         <div className="flex flex-col md:flex-row md:-mr-px">
 
           <SettingsSidebar />
-          <NotificationsPanel />
+          <AppsPanel />
 
         </div>
       </div>

@@ -130,15 +130,15 @@ export default function Sidebar({
               {/* Inbox */}
               <li
                 className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                  segments.includes("giving") &&
+                  segments && segments.includes("giving") &&
                   "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
                 }`}
               >
-                <SidebarLink href="/giving">
+                <SidebarLink href="/admin/giving">
                   <div className="flex items-center">
                     <svg
                       className={`shrink-0 fill-current ${
-                        segments.includes("giving")
+                        segments && segments.includes("giving")
                           ? "text-violet-500"
                           : "text-gray-400 dark:text-gray-500"
                       }`}
@@ -159,15 +159,15 @@ export default function Sidebar({
               {/* Inbox */}
               <li
                 className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                  segments.includes("giving") &&
+                  segments && segments.includes("giving") &&
                   "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
                 }`}
               >
-                <SidebarLink href="/giving">
+                <SidebarLink href="/admin/giving">
                   <div className="flex items-center">
                     <svg
                       className={`shrink-0 fill-current ${
-                        segments.includes("giving")
+                        segments && segments.includes("giving")
                           ? "text-violet-500"
                           : "text-gray-400 dark:text-gray-500"
                       }`}
@@ -188,14 +188,14 @@ export default function Sidebar({
               </li>
 
               {/* Settings */}
-              <SidebarLinkGroup open={segments.includes("settings")}>
+              <SidebarLinkGroup open={segments && segments.includes("giving") || false}>
                 {(handleClick, open) => {
                   return (
                     <>
                       <a
                         href="#0"
                         className={`block text-gray-800 dark:text-gray-100 truncate transition ${
-                          segments.includes("settings")
+                          segments && segments.includes("giving")
                             ? ""
                             : "hover:text-gray-900 dark:hover:text-white"
                         }`}
@@ -208,7 +208,7 @@ export default function Sidebar({
                           <div className="flex items-center">
                             <svg
                               className={`shrink-0 fill-current ${
-                                segments.includes("settings")
+                                segments && segments.includes("giving")
                                   ? "text-violet-500"
                                   : "text-gray-400 dark:text-gray-500"
                               }`}

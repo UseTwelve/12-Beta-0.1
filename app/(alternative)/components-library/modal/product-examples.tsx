@@ -276,7 +276,7 @@ export default function ProductExamples() {
             <div className="mb-5 text-center">
               {/* Icons */}
               <div className="inline-flex items-center justify-center space-x-3 mb-4">
-                {/* Mosaic logo */}
+                {/* Twelve logo */}
                 <div className="flex justify-center items-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700">
                   <svg
                     version="1.0"
@@ -332,13 +332,13 @@ m142 -38 c14 -10 31 -36 39 -58 13 -36 12 -43 -5 -79 -27 -55 -81 -81 -134
                 </svg>
               </div>
               <div className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                Connect Mosaic with your Cruip account
+                Connect Twelve with your Cruip account
               </div>
             </div>
             {/* Modal content */}
             <div className="text-sm mb-5">
               <div className="font-medium text-gray-800 dark:text-gray-100 mb-3">
-                Mosaic would like to:
+                Twelve would like to:
               </div>
               <ul className="space-y-2 mb-5">
                 <li className="flex items-center">
@@ -379,7 +379,7 @@ m142 -38 c14 -10 31 -36 39 -58 13 -36 12 -43 -5 -79 -27 -55 -81 -81 -134
                 </li>
               </ul>
               <div className="text-xs text-gray-500">
-                By clicking on Allow access, you authorize Mosaic to use your
+                By clicking on Allow access, you authorize Twelve to use your
                 information in accordance with its{" "}
                 <a
                   className="text-violet-500 hover:text-violet-600 dark:hover:text-violet-400"
@@ -388,7 +388,7 @@ m142 -38 c14 -10 31 -36 39 -58 13 -36 12 -43 -5 -79 -27 -55 -81 -81 -134
                   Privacy Policy
                 </a>
                 . You can stop it at any time on the integrations page of your
-                Mosaic account.
+                Twelve account.
               </div>
             </div>
             {/* Modal footer */}
@@ -428,7 +428,7 @@ m142 -38 c14 -10 31 -36 39 -58 13 -36 12 -43 -5 -79 -27 -55 -81 -81 -134
                 src={ModalImage}
                 width={460}
                 height="200"
-                alt="New on Mosaic"
+                alt="New on Twelve"
               />
               {/* Close button */}
               <button
@@ -453,7 +453,7 @@ m142 -38 c14 -10 31 -36 39 -58 13 -36 12 -43 -5 -79 -27 -55 -81 -81 -134
               <div className="mb-2">
                 <div className="mb-3">
                   <div className="btn-xs text-xs border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-gray-800 dark:text-gray-300 px-2.5 py-1 rounded-full shadow-none">
-                    New on Mosaic
+                    New on Twelve
                   </div>
                 </div>
                 <div className="text-lg font-semibold text-gray-800 dark:text-gray-100">
@@ -522,7 +522,7 @@ m142 -38 c14 -10 31 -36 39 -58 13 -36 12 -43 -5 -79 -27 -55 -81 -81 -134
                         <div className="grow">
                           <div className="flex flex-wrap items-center justify-between mb-0.5">
                             <span className="font-medium text-gray-800 dark:text-gray-100">
-                              Mosaic Light{" "}
+                              Twelve Light{" "}
                               <span className="text-xs italic text-gray-500 align-top">
                                 Current Plan
                               </span>
@@ -548,7 +548,7 @@ m142 -38 c14 -10 31 -36 39 -58 13 -36 12 -43 -5 -79 -27 -55 -81 -81 -134
                         <div className="grow">
                           <div className="flex flex-wrap items-center justify-between mb-0.5">
                             <span className="font-semibold text-gray-800 dark:text-gray-100">
-                              Mosaic Basic{" "}
+                              Twelve Basic{" "}
                               <span className="text-xs italic text-violet-500 align-top">
                                 Best Value
                               </span>
@@ -574,7 +574,7 @@ m142 -38 c14 -10 31 -36 39 -58 13 -36 12 -43 -5 -79 -27 -55 -81 -81 -134
                         <div className="grow">
                           <div className="flex flex-wrap items-center justify-between mb-0.5">
                             <span className="font-semibold text-gray-800 dark:text-gray-100">
-                              Mosaic Plus
+                              Twelve Plus
                             </span>
                             <span className="text-gray-600">
                               <span className="font-medium text-green-600">
@@ -592,7 +592,7 @@ m142 -38 c14 -10 31 -36 39 -58 13 -36 12 -43 -5 -79 -27 -55 -81 -81 -134
                   </li>
                 </ul>
                 <div className="text-xs text-gray-500">
-                  Your workspace's Mosaic Light Plan is set to $39 per month and
+                  Your workspace's Twelve Light Plan is set to $39 per month and
                   will renew on August 9, 2024.
                 </div>
               </div>

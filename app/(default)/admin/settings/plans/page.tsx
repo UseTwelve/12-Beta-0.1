@@ -1,12 +1,12 @@
 export const metadata = {
-  title: 'Feedback Settings - Mosaic',
+  title: 'Plans Settings - Twelve',
   description: 'Page description',
 }
 
 import SettingsSidebar from '../settings-sidebar'
-import FeedbackPanel from './feedback-panel'
+import PlansPanel from './plans-panel'
 
-export default function FeedbackSettings() {
+export default function PlansSettings() {
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-[96rem] mx-auto">
 
@@ -21,7 +21,7 @@ export default function FeedbackSettings() {
         <div className="flex flex-col md:flex-row md:-mr-px">
 
           <SettingsSidebar />
-          <FeedbackPanel />
+          <PlansPanel />
 
         </div>
       </div>
