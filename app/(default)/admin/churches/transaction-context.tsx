@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState } from 'react'
-import { Record } from '@/app/(default)/admin/churches/invoices-table'
+import { Record } from './invoices-table'
 
 interface ChurchDetailContextProps {
   church: Record | null

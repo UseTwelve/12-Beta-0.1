@@ -6,12 +6,10 @@ const axiosAuth = axios.create({
 });
 
 axiosAuth.interceptors.request.use(request => {
-  console.log('Starting Request', request)
   return request
 });
 
 axiosAuth.interceptors.response.use(response => {
-  console.log('Response:', response)
   return response
 });
 

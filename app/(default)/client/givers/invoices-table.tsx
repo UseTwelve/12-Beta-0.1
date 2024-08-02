@@ -6,14 +6,13 @@ import NewInvoiceRow from './new-invoice-row'
 
 export interface Invoice {
   id: number;
-  crmStatus: string;
-  amount: string;
-  wallet: string;
-  fullName: string;
-  date: string;
-  category: string;
-  memo: string;
   nameInWallet: string;
+  crmName: string;
+  group: string;
+  subGroup: string;
+  wallet: string;
+  fellowship: string;
+  softrRecordID: string;
 }
 
 interface InvoicesTableProps {
@@ -22,9 +21,10 @@ interface InvoicesTableProps {
   onSaveNewRecord: (record: Invoice) => void;
   onUpdateRecord: (index: number, updatedRecord: Invoice) => void;
   onDeleteRecord: (index: number) => void;
+  setNewRecordToNull: () => void;
 }
 
-export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, onUpdateRecord, onDeleteRecord }: InvoicesTableProps) {
+export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, onUpdateRecord, onDeleteRecord, setNewRecordToNull }: InvoicesTableProps) {
   const {
     selectedItems,
     isAllSelected,
@@ -35,7 +35,7 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
   return (
     <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl relative">
       <header className="px-5 py-4">
-        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Transactions <span className="text-gray-400 dark:text-gray-500 font-medium">{invoices.length}</span></h2>
+        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Total givers<span className="text-gray-400 dark:text-gray-500 font-medium"> {invoices.length}</span></h2>
       </header>
       <div>
         {/* Table */}
@@ -53,41 +53,34 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
                   </div>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">CRM Status</div>
+                  <div className="font-semibold text-left">Wallet Name</div>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Amount</div>
+                  <div className="font-semibold text-left">CRM Name</div>
+                </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold text-left">Group</div>
+                </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold text-left">sub Group</div>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Wallet</div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Fullname in CRM</div>
-                </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Date</div>
-                </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Category</div>
-                </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Memo</div>
-                </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Name in wallet</div>
-                </th>
+   
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Actions</div>
                 </th>
               </tr>
             </thead>
             {/* Table body */}
-            <tbody className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60">
+            <tbody className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60" key="heghiwudhfuhdis">
               {newRecord && (
                 <NewInvoiceRow
+                  key="new"
                   record={newRecord}
                   onSave={onSaveNewRecord}
-                  onCancel={() => setNewRecord(null)}
+                  onCancel={() => setNewRecordToNull()}
                 />
               )}
               {invoices.slice(1).map((invoice, index) => (
@@ -99,6 +92,7 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
                   isSelected={selectedItems.includes(invoice.id)}
                   onUpdateRecord={onUpdateRecord}
                   onDeleteRecord={onDeleteRecord}
+                  isEditing={false} // Add the isEditing property with a default value
                 />
               ))}
             </tbody>

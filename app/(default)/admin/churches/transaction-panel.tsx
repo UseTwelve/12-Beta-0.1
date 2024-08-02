@@ -143,22 +143,12 @@ export default function TransactionPanel() {
                   <textarea id="notes" className="form-textarea w-full focus:border-gray-300" rows={4} placeholder="Write a note…" defaultValue={''} />
                 </form>
               </div>
-              {/* Download / Report */}
+              {/* Save / Cancel */}
               <div className="flex items-center space-x-3 mt-6">
-                <div className="w-1/2">
-                  <button className="btn w-full border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-gray-800 dark:text-gray-300">
-                    <svg className="fill-current text-gray-400 dark:text-gray-500 shrink-0 rotate-180" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 4c-.3 0-.5.1-.7.3L1.6 10 3 11.4l4-4V16h2V7.4l4 4 1.4-1.4-5.7-5.7C8.5 4.1 8.3 4 8 4ZM1 2h14V0H1v2Z" />
-                    </svg>
-                    <span className="ml-2">Download</span>
-                  </button>
-                </div>
-                <div className="w-1/2">
-                  <button className="btn w-full border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-red-500">
-                    <svg className="fill-current shrink-0" width="16" height="16" viewBox="0 0 16 16">
-                      <path d="M7.001 3h2v4h-2V3Zm1 7a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM15 16a1 1 0 0 1-.6-.2L10.667 13H1a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1ZM2 11h9a1 1 0 0 1 .6.2L14 13V2H2v9Z" />
-                    </svg>
-                    <span className="ml-2">Report</span>
+                <div className="w-full">
+                  <button className="btn w-full border-green-800 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-green-800 dark:text-gray-300">
+                    
+                    <span className="ml-2">Save</span>
                   </button>
                 </div>
               </div>

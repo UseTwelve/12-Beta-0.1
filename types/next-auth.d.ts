@@ -23,6 +23,7 @@ type ChurchType = {
   physicalAddress: string;
   googleSheetLink: string;
   spreadsheetId: string;
+  hasCrm: boolean;
 };
 
 type ChurchInfoType = {

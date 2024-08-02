@@ -13,9 +13,9 @@ export default function DropdownProfile({ align }: {
   return (
     <Menu as="div" className="relative inline-flex">
       <MenuButton className="inline-flex justify-center items-center group">
-        <Image className="w-8 h-8 rounded-full" src={session?.user?.profileImage || UserAvatar} width={32} height={32} alt="User" />
+        <Image className="w-8 h-8 rounded-full" src={ session?.user?.churchInfo?.church.logo || session?.user?.profileImage || UserAvatar} width={32} height={32} alt="User" />
         <div className="flex items-center truncate">
-          <span className="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white">{session?.user?.fullName}</span>
+          <span className="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white">{session?.user?.churchInfo?.church.name || session?.user?.fullName}</span>
           <svg className="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500" viewBox="0 0 12 12">
             <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
           </svg>

@@ -11,7 +11,7 @@ const FlyoutContext = createContext<FlyoutContextProps | undefined>(undefined)
 
 export const FlyoutProvider = ({
   children,
-  initialState = false
+  initialState = true
 }: {
   children: React.ReactNode,
   initialState?: boolean

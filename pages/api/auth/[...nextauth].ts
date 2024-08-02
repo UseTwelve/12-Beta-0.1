@@ -1,20 +1,20 @@
-import NextAuth, { AuthOptions, User } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth, { AuthOptions, User } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { label: "Email", type: "text", placeholder: "jsmith@email.com" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'text', placeholder: 'jsmith@email.com' },
+        password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) { 
+      async authorize(credentials, req) {
         try {
           const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               email: credentials?.email,
@@ -36,7 +36,7 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-      async jwt({ token, user }) {
+    async jwt({ token, user }) {
       if (user) {
         token.user = user as any;
       }
@@ -50,8 +50,8 @@ export const authOptions: AuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/signin", 
-    error: "/signin", // Redirect to sign-in page on error
+    signIn: '/signin',
+    error: '/signin', // Redirect to sign-in page on error
   },
 };
 

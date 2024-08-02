@@ -65,13 +65,13 @@ export default function SignIn() {
                   <button type="submit" className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white ml-3">Sign In</button>
                 </div>
               </form>
-              <div className="pt-5 mt-6 border-t border-gray-100 dark:border-gray-700/60">
+              {/* <div className="pt-5 mt-6 border-t border-gray-100 dark:border-gray-700/60">
                 <div className="text-sm">
                   Don't have an account? <Link href="/signup" className="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400">
                     Sign Up
                   </Link>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

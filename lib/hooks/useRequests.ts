@@ -4,7 +4,7 @@ export const fetchRecords = async (axiosAuth: AxiosInstance, url:string) => {
   try {
     const response = await axiosAuth.get(url);
     const data = response.data.data;
-    return data;
+    return data.results;
   } catch (error) {
     console.error('Error fetching records:', error);
     throw error;

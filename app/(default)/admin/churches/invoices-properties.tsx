@@ -4,12 +4,16 @@ export const InvoicesProperties = () => {
 
   const totalColor = (status: string): string => {
     switch (status) {
-      case 'Successful':
+      case 'Zelle':
+        return 'text-[#3500ff]';
+      case 'Cash App':
         return 'text-green-500';
-      case 'Pending':
-        return 'text-yellow-500';
-      case 'Failed':
+      case 'Venmo':
         return 'text-red-500';
+      case 'Apple Pay':
+        return 'text-[#7d5e5e]';
+      case 'PayPal':
+        return 'text-[#5670ab]';
       default:
         return 'text-gray-500';
     }
