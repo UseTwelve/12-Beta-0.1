@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Transactions - Twelve',
+  title: 'Transactions - Mosaic',
   description: 'Page description',
 }
 
@@ -127,9 +127,7 @@ function Transactions() {
             <DeleteButton />
 
             {/* Search form */}
-            <div className="hidden sm:block">
-              <SearchForm />
-            </div>
+         
 
             {/* Export button */}
             <button className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white">Export Transactions</button>

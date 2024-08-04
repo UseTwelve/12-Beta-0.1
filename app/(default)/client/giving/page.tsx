@@ -91,7 +91,6 @@ function GivingContent() {
   useEffect(() => {
     if (status === "authenticated") {
       fetchData();
-      console.log(filteredAndSortedRecords);
     }
   }, [status, axiosAuth]);
 

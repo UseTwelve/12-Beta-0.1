@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { Transition } from '@headlessui/react'
 import { useFlyoutContext } from '@/app/flyout-context'
-import {  useChurchDetail } from './transaction-context'
+import { useTransactionDetail } from './transaction-context'
 import { TransactionsProperties } from './transactions-properties'
 
 import Image from 'next/image'
@@ -15,7 +15,7 @@ export default function TransactionPanel() {
     setFlyoutOpen,
   } = useFlyoutContext()  
   
-  const { church } = useChurchDetail()
+  const { transaction } = useTransactionDetail()
 
   const {
     statusColor,
@@ -73,20 +73,21 @@ export default function TransactionPanel() {
             <path d="m7.95 6.536 4.242-4.243a1 1 0 1 1 1.415 1.414L9.364 7.95l4.243 4.242a1 1 0 1 1-1.415 1.415L7.95 9.364l-4.243 4.243a1 1 0 0 1-1.414-1.415L6.536 7.95 2.293 3.707a1 1 0 0 1 1.414-1.414L7.95 6.536Z" />
           </svg>
         </button>
-        {church &&
+        {transaction &&
           <div className="py-8 px-4 lg:px-8">
             <div className="max-w-sm mx-auto lg:max-w-none">
-              <div className="text-gray-800 dark:text-gray-100 font-semibold text-center mb-1">Update church</div>
+              <div className="text-gray-800 dark:text-gray-100 font-semibold text-center mb-1">Bank Transfer</div>
+              <div className="text-sm text-center italic">{transaction.date}, 8:56 PM</div>
               {/* Details */}
               <div className="drop-shadow-md mt-12">
                 {/* Top */}
                 <div className="bg-white dark:bg-gray-800 rounded-t-xl px-5 pb-2.5 text-center">
                   <div className="mb-3 text-center">
-                    <Image className="inline-flex w-12 h-12 rounded-full -mt-6" src={church.logo} width={48} height={48} alt="Transaction 04" />
+                    <Image className="inline-flex w-12 h-12 rounded-full -mt-6" src={transaction.image} width={48} height={48} alt="Transaction 04" />
                   </div>
-                  <div className={`text-2xl font-semibold mb-1 ${amountColor(church.name)}`}>{church.name}</div>
-                  <div className="text-sm font-medium text-gray-800 dark:text-gray-100 mb-3">{church.physicalAddress}</div>
-                  <div className={`text-xs inline-flex font-medium rounded-full text-center px-2.5 py-1 ${statusColor(church.name)}`}>{church.hasCrm}</div>
+                  <div className={`text-2xl font-semibold mb-1 ${amountColor(transaction.amount)}`}>{transaction?.amount}</div>
+                  <div className="text-sm font-medium text-gray-800 dark:text-gray-100 mb-3">{transaction.name}</div>
+                  <div className={`text-xs inline-flex font-medium rounded-full text-center px-2.5 py-1 ${statusColor(transaction.status)}`}>{transaction.status}</div>
                 </div>
                 {/* Divider */}
                 <div className="flex justify-between items-center" aria-hidden="true">

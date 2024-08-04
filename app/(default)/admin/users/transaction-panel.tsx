@@ -3,36 +3,41 @@
 import { useState, useEffect, useRef } from "react";
 import { Transition } from "@headlessui/react";
 import { useFlyoutContext } from "@/app/flyout-context";
-import { useChurchDetail } from "./transaction-context";
+import { useMemberDetail } from "./transaction-context";
 import { TransactionsProperties } from "./transactions-properties";
 import Image from "next/image";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import Toast from "@/components/toast";
+import DropdownFull from "@/components/dropdown-full";
+import { fetchRecords } from "@/lib/hooks/useRequests";
 
-export default function ChurchPanel({ onReload }: { onReload: () => void }) {
+export default function MemberPanel({ onReload }: { onReload: () => void }) {
   const { flyoutOpen, setFlyoutOpen } = useFlyoutContext();
-  const { church, setChurch } = useChurchDetail();
+  const { member, setMember } = useMemberDetail();
   const { statusColor, amountColor } = TransactionsProperties();
   const panelContent = useRef<HTMLDivElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
-  const [name, setName] = useState("");
-  const [physicalAddress, setPhysicalAddress] = useState("");
-  const [hasCrm, setHasCrm] = useState(false);
-  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [userType, setUserType] = useState(9997);
+  const [role, setRole] = useState(9999);
+  const [church, setChurch] = useState<number|null>(null);
+  const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
   const axiosAuth = useAxiosAuth();
-
   
   const [loading, setLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>("");
   const [toastType, setToastType] = useState<"success" | "error" | "info">("info");
   const [toastOpen, setToastOpen] = useState<boolean>(false);
+  const [churches, setChurches] = useState<{ id: number, name: string }[]>([]);
 
   const clearForm = () => {
-    setName("");
-    setPhysicalAddress("");
-    setHasCrm(false);
-    setLogoFile(null);
-    setChurch(null); // Clear the church state as well
+    setFullName("");
+    setPhoneNumber("");
+    setChurch(null);
+    setProfileImageFile(null);
+    setMember(null); // Clear the member state as well
   };
 
   useEffect(() => {
@@ -42,36 +47,54 @@ export default function ChurchPanel({ onReload }: { onReload: () => void }) {
   }, [flyoutOpen]);
 
   useEffect(() => {
-    if (church) {
-      setName(church.name);
-      setPhysicalAddress(church.physicalAddress);
-      setHasCrm(church.hasCrm);
+    if (member) {
+      setFullName(member.user.fullName);
+      setEmail(member.user.email);
+      setPhoneNumber(member.user.phoneNumber);
+      setChurch(member.church.id);
     } else {
       clearForm();
     }
-  }, [church]);
+  }, [member]);
+
+  const fetchChurches = async () => {
+    try {
+      const data = await fetchRecords(axiosAuth, "/admin/churches");
+      setChurches(data.map((church: any) => ({ id: church.id, name: church.name })));
+    } catch (error) {
+      console.error("Error fetching records:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchChurches(); 
+  }, []);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setLogoFile(event.target.files[0]);
+      setProfileImageFile(event.target.files[0]);
     }
   };
 
   const handleSubmit = async () => {
     setLoading(true);
+    console.log("submitting form", fullName, email, phoneNumber, role, userType, church, profileImageFile);
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("physicalAddress", physicalAddress);
-    formData.append("hasCrm", hasCrm.toString());
-    if (logoFile) {
-      formData.append("logo", logoFile);
+    formData.append("fullName", fullName);
+    formData.append("email", email);
+    formData.append("phoneNumber", phoneNumber);
+    formData.append("role", `${role}`);
+    formData.append("userType", `${userType}`);
+    formData.append("church", `${church}`);
+    if (profileImageFile) {
+      formData.append("profileImage", profileImageFile);
     }
 
     try {
       let response;
-      if (church) {
+      if (member) {
         response = await axiosAuth.patch(
-          `/admin/churches/${church.id}`,
+          `/admin/users/${member.id}`,
           formData,
           {
             headers: {
@@ -80,7 +103,7 @@ export default function ChurchPanel({ onReload }: { onReload: () => void }) {
           }
         );
       } else {
-        response = await axiosAuth.post("/admin/churches", formData, {
+        response = await axiosAuth.post("/admin/users", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -89,12 +112,18 @@ export default function ChurchPanel({ onReload }: { onReload: () => void }) {
       await onReload();
       setFlyoutOpen(false);
       clearForm();
-      setToastMessage("Church saved successfully!");
+      setToastMessage("Member was added successfully!");
       setToastType("success");
       setToastOpen(true);
-    } catch (error) {
-      console.error("Error uploading church data:", error);
-      setToastMessage("Failed to save the church. Please try again.");
+    } catch (error:any) {
+      console.error("Error uploading member data:", error);
+      if (error.response.data.message) {
+        setToastMessage(error.response.data.message);
+      } else {
+        setToastMessage("Failed to save the member. Please try again.");
+        
+      }
+
       setToastType("error");
       setToastOpen(true);
     } finally {
@@ -147,32 +176,32 @@ export default function ChurchPanel({ onReload }: { onReload: () => void }) {
         <div className="py-8 px-4 lg:px-8">
           <div className="max-w-sm mx-auto lg:max-w-none">
             <div className="text-gray-800 dark:text-gray-100 font-semibold text-center mb-1">
-              {church ? "Update church" : "Add church"}
+              {member ? "Update member" : "Add member"}
             </div>
             <div className="mt-6">
               <div className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2">
-                Logo
+                Profile Image
               </div>
               <form
                 encType="multipart/form-data"
                 className="rounded bg-gray-100 dark:bg-gray-700/30 border border-dashed border-gray-300 dark:border-gray-700/60 text-center px-5 py-8"
-                onClick={() => document?.getElementById("logo")?.click()}
+                onClick={() => document?.getElementById("profileImage")?.click()}
               >
-                {logoFile ? (
+                {profileImageFile ? (
                   <Image
-                    src={URL.createObjectURL(logoFile)}
+                    src={URL.createObjectURL(profileImageFile)}
                     className="inline-flex"
                     width={160}
                     height={160}
-                    alt="Church Logo"
+                    alt="User profile Image"
                   />
-                ) : church?.logo ? (
+                ) : member?.user.profileImage ? (
                   <Image
-                    src={church.logo} // Use the existing logo from the API
+                    src={member.user.profileImage} // Use the existing profileImage from the API
                     className="inline-flex"
                     width={160}
                     height={160}
-                    alt="Church Logo"
+                    alt="User profile Image"
                   />
                 ) : (
                   <svg
@@ -188,17 +217,17 @@ export default function ChurchPanel({ onReload }: { onReload: () => void }) {
 
                 <input
                   className="sr-only"
-                  id="logo"
+                  id="profileImage"
                   type="file"
-                  name="logo"
+                  name="profileImage"
                   accept="image/*"
                   onChange={handleFileChange}
                 />
                 <label
-                  htmlFor="logo"
+                  htmlFor="profileImage"
                   className="block text-sm text-gray-500 dark:text-gray-400 italic"
                 >
-                  {logoFile ? "Change logo" : "Upload logo"}
+                  {profileImageFile ? "Change profileImage" : "Upload profileImage"}
                 </label>
               </form>
             </div>
@@ -206,17 +235,17 @@ export default function ChurchPanel({ onReload }: { onReload: () => void }) {
               <div>
                 <label
                   className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2"
-                  htmlFor="name"
+                  htmlFor="fullName"
                 >
-                  Church name
+                  Full Name
                 </label>
                 <input
-                  id="name"
+                  id="fullName"
                   className="form-input w-full"
                   type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Name in the CRM"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Enter your full name"
                 />
               </div>
             </div>
@@ -224,50 +253,48 @@ export default function ChurchPanel({ onReload }: { onReload: () => void }) {
               <div>
                 <label
                   className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2"
-                  htmlFor="physicalAddress"
+                  htmlFor="phoneNumber"
                 >
-                  Physical Address
+                  Phone number
                 </label>
                 <input
-                  id="physicalAddress"
+                  id="phoneNumber"
+                  className="form-input w-full"
+                  type="number"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder=" enter phone number"
+                />
+              </div>
+            </div>
+            <div className="mt-6">
+              <div>
+                <label
+                  className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2"
+                  htmlFor="phoneNumber"
+                >
+                  Email
+                </label>
+                <input
+                  id="email"
                   className="form-input w-full"
                   type="text"
-                  value={physicalAddress}
-                  onChange={(e) => setPhysicalAddress(e.target.value)}
-                  placeholder="Location of the church"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="enter email"
                 />
               </div>
             </div>
             <div className="mt-6">
               <h2 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2">
-                Church has CRM
+                Assign church
               </h2>
-              <div className="flex flex-wrap items-center -m-3">
-                <div className="m-3">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="hasCrm"
-                      className="form-radio"
-                      checked={hasCrm}
-                      onChange={() => setHasCrm(true)}
-                    />
-                    <span className="text-sm ml-2">Yes</span>
-                  </label>
-                </div>
-                <div className="m-3">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="hasCrm"
-                      className="form-radio"
-                      checked={!hasCrm}
-                      onChange={() => setHasCrm(false)}
-                    />
-                    <span className="text-sm ml-2">No</span>
-                  </label>
-                </div>
-              </div>
+              <DropdownFull
+                items={churches}
+                value={church}
+                setValue={setChurch}
+                placeholder="Select a church"
+              />
             </div>
             <div className="flex items-center space-x-3 mt-6">
               <div className="w-full">

@@ -1,30 +1,30 @@
 'use client'
 
 import { createContext, useContext, useState } from 'react'
-import { Record } from '@/app/(default)/admin/churches/invoices-table'
+import { Transaction } from './transactions-table'
 
-interface ChurchDetailContextProps {
-  church: Record | null
-  setChurch: (church: Record | null) => void
+interface TransactionDetailContextProps {
+  transaction: Transaction | null
+  setTransaction: (transaction: Transaction | null) => void
 }
 
-const ChurchDetailContext = createContext<ChurchDetailContextProps | undefined>(undefined)
+const TransactionDetailContext = createContext<TransactionDetailContextProps | undefined>(undefined)
 
-export const ChurchDetailProvider = ({ children }: {
+export const TransactionDetailProvider = ({ children }: {
   children: React.ReactNode
 }) => {
-  const [church, setChurch] = useState<Record | null>(null)
+  const [transaction, setTransaction] = useState<Transaction | null>(null)
   return (
-    <ChurchDetailContext.Provider value={{ church, setChurch }}>
+    <TransactionDetailContext.Provider value={{ transaction, setTransaction }}>
       {children}
-    </ChurchDetailContext.Provider>
+    </TransactionDetailContext.Provider>
   )
 }
 
-export const useChurchDetail = () => {
-  const context = useContext(ChurchDetailContext)
+export const useTransactionDetail = () => {
+  const context = useContext(TransactionDetailContext)
   if (!context) {
-    throw new Error('useChurch must be used within a ChurchProvider')
+    throw new Error('useTransaction must be used within a TransactionProvider')
   }
   return context
 }

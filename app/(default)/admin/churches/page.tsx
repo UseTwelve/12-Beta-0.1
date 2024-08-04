@@ -1,23 +1,19 @@
 "use client";
 
 import { SelectedItemsProvider } from "@/app/selected-items-context";
-import SearchForm from "@/components/search-form";
-import DeleteButton from "@/components/delete-button";
-import ChurchesTable, { Record } from "./invoices-table";
+import ChurchesTable from "./invoices-table";
 import { useSession } from "next-auth/react";
 import { SetStateAction, useEffect, useMemo, useState } from "react";
 import Toast from "@/components/toast";
 
 import {
   fetchRecords,
-  addRecord,
-  updateRecord,
   deleteRecord,
 } from "@/lib/hooks/useRequests";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { FlyoutProvider } from "@/app/flyout-context";
-import TransactionPanel from "./transaction-panel";
-import { ChurchDetailProvider } from "./transaction-context";
+import { FlyoutProvider, useFlyoutContext } from "@/app/flyout-context";
+import { ChurchDetailProvider, useChurchDetail } from "./transaction-context"; // Import the hook
+import ChurchPanel from "./transaction-panel";
 
 function ChurchesContent() {
   const { data: session, status } = useSession();
@@ -32,6 +28,9 @@ function ChurchesContent() {
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
   const apiUrl = "/admin/churches";
 
+  const { setChurch } = useChurchDetail();
+  const { setFlyoutOpen } = useFlyoutContext()
+
   const filteredAndSortedRecords = useMemo(() => {
     // Step 1: Filter records
     let filteredRecords = records.filter((record) => {
@@ -42,8 +41,8 @@ function ChurchesContent() {
       );
     });
 
-    // Step 2: Sort the filtered records
-    if (sortConfig.key) {
+     // Step 2: Sort the filtered records
+     if (sortConfig.key) {
       filteredRecords.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === "asc" ? -1 : 1;
@@ -80,34 +79,9 @@ function ChurchesContent() {
     }
   }, [status, axiosAuth]);
 
-  const handleAddRecord = () => {};
 
-  const handleSearch = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleUpdateRecord = async (index: number, updatedRecord: any) => {
-    index = index + 1;
-    try {
-      setToastMessage("Updating record...");
-      setToastInfoOpen(true);
-      await updateRecord(axiosAuth, index, updatedRecord, apiUrl);
-      await fetchData();
-      setToastInfoOpen(false);
-      setToastMessage("Record updated successfully.");
-      setToastSuccessOpen(true);
-    } catch (error) {
-      console.error("Error updating record:", error);
-      setToastMessage("Error updating record.");
-      setToastInfoOpen(false);
-      setToastErrorOpen(true);
-    }
-  };
 
   const handleDeleteRecord = async (index: number) => {
-    index = index + 1;
     try {
       setToastMessage("Deleting record...");
       setToastInfoOpen(true);
@@ -124,14 +98,10 @@ function ChurchesContent() {
     }
   };
 
-  const handleDateChange = (dates: [any, any]) => {
-    const [startDate, endDate] = dates;
-    const filteredRecords = records.filter((record) => {
-      const recordDate = new Date(record.date);
-      return recordDate >= startDate && recordDate <= endDate;
-    });
-    setRecords(filteredRecords);
+  const handleSearch = (event: { target: { value: SetStateAction<string> } }) => {
+    setSearchTerm(event.target.value);
   };
+
 
   const handleSort = (key: string) => {
     let direction = "asc";
@@ -182,21 +152,21 @@ function ChurchesContent() {
           {toastMessage}
         </Toast>
       </div>
+
       {/* Page header */}
       <div className="sm:flex sm:justify-between sm:items-center mb-5">
-        {/* Left: Title */}
         <div className="mb-4 sm:mb-0">
           <h1 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">
             Churches
           </h1>
         </div>
-        {/* Right: Actions */}
         <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-          {/* Search form */}
-          {/* Create invoice button */}
           <button
             className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white"
-            onClick={handleAddRecord}
+            onClick={() => {
+              setChurch(null);  // Clear the current church in context
+              setFlyoutOpen(true);
+            }}
           >
             <svg
               className="fill-current shrink-0 xs:hidden"
@@ -211,34 +181,14 @@ function ChurchesContent() {
         </div>
       </div>
 
-      {/* More actions */}
-      <div className="sm:flex sm:justify-between sm:items-center mb-5">
-        {/* Left side */}
-        <div className="mb-4 sm:mb-0">
-          <ul className="flex flex-wrap -m-1">{/* Left-side actions */}</ul>
-        </div>
-        {/* Right side */}
-        <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-          {/* Delete button */}
-          <DeleteButton />
-          {/* Dropdown */}
-          <SearchForm placeholder="Search…" onChange={handleSearch} />
-        </div>
-      </div>
-
       {/* Table */}
       <ChurchesTable
         churches={filteredAndSortedRecords}
-        onUpdateRecord={handleUpdateRecord}
         onDeleteRecord={handleDeleteRecord}
         onHandleSort={handleSort}
         sortConfig={sortConfig}
       />
-      {/* Pagination */}
-      {/* <div className="mt-8">
-        <PaginationClassic />
-      </div> */}
-       <TransactionPanel />
+      <ChurchPanel onReload={fetchData} />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useItemSelection } from '@/components/utils/use-item-selection'
 import InvoicesTableItem from './invoices-table-item'
 import NewInvoiceRow from './new-invoice-row'
 
-export interface Invoice {
+export interface Giver {
   id: number;
   nameInWallet: string;
   crmName: string;
@@ -16,10 +16,10 @@ export interface Invoice {
 }
 
 interface InvoicesTableProps {
-  invoices: Invoice[];
-  newRecord: Invoice | null;
-  onSaveNewRecord: (record: Invoice) => void;
-  onUpdateRecord: (index: number, updatedRecord: Invoice) => void;
+  invoices: Giver[];
+  newRecord: Giver | null;
+  onSaveNewRecord: (record: Giver) => void;
+  onUpdateRecord: (index: number, updatedRecord: Giver) => void;
   onDeleteRecord: (index: number) => void;
   setNewRecordToNull: () => void;
 }
@@ -35,7 +35,7 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
   return (
     <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl relative">
       <header className="px-5 py-4">
-        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Total givers<span className="text-gray-400 dark:text-gray-500 font-medium"> {invoices.length}</span></h2>
+        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Total givers<span className="text-gray-400 dark:text-gray-500 font-medium"> {invoices.length-1}</span></h2>
       </header>
       <div>
         {/* Table */}

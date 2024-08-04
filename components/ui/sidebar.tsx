@@ -450,7 +450,7 @@ export default function Sidebar({
                 </li>
   
                 {/* Settings */}
-                <SidebarLinkGroup open={segments && segments.includes("settings") || false}>
+                { 1 > 2 && <SidebarLinkGroup open={segments && segments.includes("settings") || false}>
                   {(handleClick, open) => {
                     return (
                       <>
@@ -550,7 +550,7 @@ export default function Sidebar({
                       </>
                     );
                   }}
-                </SidebarLinkGroup>
+                </SidebarLinkGroup>}
               </ul>
             </div>
           </div>

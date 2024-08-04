@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Invoice } from "./invoices-table";
+import { Giver } from "./invoices-table";
 import { InvoicesProperties } from "./invoices-properties";
 
 interface InvoicesTableItemProps {
-  invoice: Invoice;
+  invoice: Giver;
   onCheckboxChange: (id: number, checked: boolean) => void;
   isSelected: boolean;
   onUpdateRecord: (index: number, updatedRecord: any) => void;

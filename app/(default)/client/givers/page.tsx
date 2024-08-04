@@ -5,7 +5,7 @@ import SearchForm from '@/components/search-form'
 import DeleteButton from '@/components/delete-button'
 import DateSelect from '@/components/date-select'
 import FilterButton from '@/components/dropdown-filter'
-import InvoicesTable from './invoices-table'
+import InvoicesTable, { Giver } from './invoices-table'
 import PaginationClassic from '@/components/pagination-classic'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
@@ -19,7 +19,7 @@ function GivingContent() {
   const { data: session, status } = useSession();
   const axiosAuth = useAxiosAuth();
   const [records, setRecords] = useState<any[]>([]);
-  const [newRecord, setNewRecord] = useState(null);
+  const [newRecord, setNewRecord] = useState<Giver | null>(null);
   const [toastWarningOpen, setToastWarningOpen] = useState<boolean>(false)
   const [toastErrorOpen, setToastErrorOpen] = useState<boolean>(false)
   const [toastSuccessOpen, setToastSuccessOpen] = useState<boolean>(false)
@@ -32,7 +32,7 @@ function GivingContent() {
       setToastMessage('Fetching records...');
       setToastInfoOpen(true);
       const data = await fetchRecords(axiosAuth, apiUrl);
-      const formattedRecords = data.map((record) => ({
+      const formattedRecords = data.map((record:any) => ({
         nameInWallet: record[0],
         crmName: record[1],
         group: record[2],
@@ -57,6 +57,7 @@ function GivingContent() {
 
   const handleAddRecord = () => {
     setNewRecord({
+      id: 999,
       nameInWallet: "",
       crmName: "",
       group: "",
@@ -67,7 +68,7 @@ function GivingContent() {
     });
   };
 
-  const handleSaveNewRecord = async (record) => {
+  const handleSaveNewRecord = async (record:Giver) => {
     try {
       setToastMessage('Saving new record...');
       setToastInfoOpen(true);
@@ -95,7 +96,7 @@ function GivingContent() {
   };
 
 
-  const handleUpdateRecord = async (index, updatedRecord) => {
+  const handleUpdateRecord = async (index:number, updatedRecord:Giver) => {
     index = index + 1;
     try {
       setToastMessage('Updating record...');
@@ -113,7 +114,7 @@ function GivingContent() {
     }
   };
 
-  const handleDeleteRecord = async (index) => {
+  const handleDeleteRecord = async (index:number) => {
     index = index + 1;
     try {
       setToastMessage('Deleting record...');
@@ -186,7 +187,7 @@ function GivingContent() {
           {/* Delete button */}
           <DeleteButton />
           {/* Dropdown */}
-          <SearchForm placeholder="Search" />
+          {/* <SearchForm placeholder="Search" /> */}
           <DateSelect />
           {/* <FilterButton align="right" /> */}
           <button className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white" onClick={handleDownload}>

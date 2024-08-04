@@ -16,7 +16,7 @@ interface InvoicesTableItemProps {
 }
 
 export interface Giver {
-  id?: number;
+  id: number;
   nameInWallet: string;
   crmName: string;
   group: string;
@@ -136,7 +136,6 @@ export default function InvoicesTableItem({
               <FullNameDropdown
                 value={editValues.fullName}
                 onChange={(selectedOption) => {
-                  console.log("jejfewu==>",selectedOption)
                   setEditValues({
                     ...editValues,
                     fullName: selectedOption,

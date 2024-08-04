@@ -1,54 +1,43 @@
 import { useState } from "react";
-import { User } from "./invoices-table";
 import { InvoicesProperties } from "./invoices-properties";
 import Image from "next/image";
+import { Member } from "@/types/church-member";
+import { useMemberDetail } from "./transaction-context";
+import { useFlyoutContext } from "@/app/flyout-context";
 
 interface InvoicesTableItemProps {
-  invoice: User;
+  member: Member;
   onCheckboxChange: (id: number, checked: boolean) => void;
   isSelected: boolean;
-  onUpdateRecord: (index: number, updatedRecord: any) => void;
   onDeleteRecord: (index: number) => void;
   index: number;
   isEditing: boolean;
 }
 
 export default function InvoicesTableItem({
-  invoice,
+  member,
   onCheckboxChange,
   isSelected,
-  onUpdateRecord,
   onDeleteRecord,
   index,
   isEditing,
 }: InvoicesTableItemProps) {
-  const [isEditingState, setIsEditingState] = useState(isEditing);
-  const [editValues, setEditValues] = useState(invoice);
+  const [editValues, setEditValues] = useState(member);
+  const { setFlyoutOpen } = useFlyoutContext()
+
+  const { setMember } = useMemberDetail()
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onCheckboxChange(invoice.id, e.target.checked);
+    onCheckboxChange(member.user.id, e.target.checked);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditValues({
-      ...editValues,
-      [e.target.name]: e.target.value,
-    });
-  };
 
-  const handleSave = () => {
-    onUpdateRecord(index, editValues);
-    setIsEditingState(false);
-  };
-
-  const handleCancel = () => {
-    setEditValues(invoice);
-    setIsEditingState(false);
-  };
-
-  const handleEdit = () => {
-    setIsEditingState(true);
-  };
+  const handleEdit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {    
+    e.stopPropagation()
+    e.nativeEvent.stopImmediatePropagation()
+    setFlyoutOpen(true)
+    setMember(member)
+  }
 
   const { totalColor, statusColor, typeIcon } = InvoicesProperties();
 
@@ -71,42 +60,32 @@ export default function InvoicesTableItem({
         <div className="flex items-center">
           <div className="w-9 h-9 shrink-0 mr-2 sm:mr-3">
             <button  tabIndex={-1}>
-              <Image className="rounded-full" src={invoice.profileImage} width={36} height={36} alt={invoice.fullName} />
+              <Image className="rounded-full" src={member.user.profileImage} width={36} height={36} alt={member.user.fullName} />
             </button>
           </div>
           <div className="font-medium text-gray-800 dark:text-gray-100">
-            <button>{invoice.fullName}</button>
+            <button>{member.user.fullName}</button>
           </div>
         </div>
       </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
-              {invoice.email}
+              {member.church.name}
             </div>
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
-              {invoice.phoneNumber}
+              {member.user.email}
             </div>
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
-              {invoice.isVerified? "Yes" : "No"}
+              {member.user.phoneNumber}
             </div>
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
-              {invoice.userTypeId}
-            </div>
-          </td>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <div className="font-medium text-gray-800 dark:text-gray-100">
-              {invoice.createdAt}
-            </div>
-          </td>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <div className="font-medium text-gray-800 dark:text-gray-100">
-              {invoice.active? "Yes" : "No"}
+                            {`${new Date(member.user.createdAt)}`.slice(0,-39)}
             </div>
           </td>
           
@@ -114,7 +93,7 @@ export default function InvoicesTableItem({
             <div className="space-x-1">
               <button
                 className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full"
-                onClick={handleEdit}
+                onClick={(e) => handleEdit(e)}
               >
                 <span className="sr-only">Edit</span>
                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
@@ -123,7 +102,7 @@ export default function InvoicesTableItem({
               </button>
               <button
                 className="text-red-500 hover:text-red-600 rounded-full"
-                onClick={() => onDeleteRecord(index)}
+                onClick={() => onDeleteRecord(member.user.id)}
               >
                 <span className="sr-only">Delete</span>
                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">

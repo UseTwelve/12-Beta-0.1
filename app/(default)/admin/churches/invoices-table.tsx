@@ -1,3 +1,4 @@
+// churches-table.tsx
 "use client";
 
 import { useItemSelection } from "@/components/utils/use-item-selection";
@@ -19,7 +20,6 @@ export interface Record {
 interface InvoicesTableProps {
   churches: Record[];
   sortConfig: { key: string; direction: string } | null;
-  onUpdateRecord: (index: number, updatedRecord: Record) => void;
   onDeleteRecord: (index: number) => void;
   onHandleSort: (key: string) => void;
 }
@@ -36,7 +36,7 @@ export default function ChurchesTable({
     handleCheckboxChange,
     handleSelectAllChange,
   } = useItemSelection(churches);
-console.log(churches)
+
   return (
     <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl relative">
       <header className="px-5 py-4">

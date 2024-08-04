@@ -22,29 +22,9 @@ export const uploadRecord = async (axiosAuth: AxiosInstance, url:string) => {
 };
 
 
-export const addRecord = async (axiosAuth: AxiosInstance, newRecord: any, url:string) => {
+export const deleteRecord = async (axiosAuth: AxiosInstance, id: number, url:string) => {
   try {
-    const response = await axiosAuth.post(url, { newRecord });
-    return response.data;
-  } catch (error) {
-    console.error('Error adding record:', error);
-    throw error;
-  }
-};
-
-export const updateRecord = async (axiosAuth: AxiosInstance, rowIndex: number, updatedRecord: any, url:string) => {
-  try {
-    const response = await axiosAuth.put(url, { rowIndex, updatedRecord });
-    return response.data;
-  } catch (error) {
-    console.error('Error updating record:', error);
-    throw error;
-  }
-};
-
-export const deleteRecord = async (axiosAuth: AxiosInstance, rowIndex: number, url:string) => {
-  try {
-    const response = await axiosAuth.delete(url, { data: { rowIndex } });
+    const response = await axiosAuth.delete(`${url}/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error deleting record:', error);
