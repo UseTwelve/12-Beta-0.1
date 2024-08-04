@@ -39,7 +39,7 @@ export default function DropdownLibrary() {
             {/* Full-width Dropdown */}
             <div className="w-80">
               <h2 className="text-2xl text-gray-800 dark:text-gray-100 font-bold mb-6">Full-width Dropdown</h2>
-              <DropdownFull />
+              {/* <DropdownFull /> */}
             </div>
 
             {/* Filter */}
