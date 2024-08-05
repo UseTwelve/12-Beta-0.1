@@ -5,23 +5,27 @@ import AuthHeader from '../auth-header'
 import AuthImage from '../auth-image'
 import { signIn } from 'next-auth/react';
 import { useState, useEffect } from "react";
-import { useSearchParams } from 'next/navigation';
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const searchParams = useSearchParams();
-  const [error, setError] = useState(searchParams?.get('error'));
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (error) {
-      const url = new URL(window.location.href);
-      url.searchParams.delete("error");
-      window.history.replaceState({}, '', url);
-    }
-  }, [error]);
+    if (typeof window !== 'undefined') {
+      let params = new URLSearchParams(window.location.search);
+      let searchParams = params.get("error"); 
+      setError(searchParams);
 
-  const onSubmit = async (e:any) => {
+      if (searchParams) {
+        const url = new URL(window.location.href);
+        url.searchParams.delete("error");
+        window.history.replaceState({}, '', url);
+      }
+    }
+  }, []);
+
+  const onSubmit = async (e: any) => {
     e.preventDefault();
     const result = await signIn("credentials", {
       email,
@@ -65,13 +69,6 @@ export default function SignIn() {
                   <button type="submit" className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white ml-3">Sign In</button>
                 </div>
               </form>
-              {/* <div className="pt-5 mt-6 border-t border-gray-100 dark:border-gray-700/60">
-                <div className="text-sm">
-                  Don't have an account? <Link href="/signup" className="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400">
-                    Sign Up
-                  </Link>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>

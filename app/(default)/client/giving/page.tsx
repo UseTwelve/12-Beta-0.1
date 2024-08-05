@@ -96,6 +96,7 @@ function GivingContent() {
 
   const handleAddRecord = () => {
     setNewRecord({
+      id:999,
       crmStatus: "",
       amount: "",
       wallet: "",
@@ -322,7 +323,7 @@ function GivingContent() {
           {/* Dropdown */}
           <SearchForm placeholder="Search…" onChange={handleSearch} />
 
-          <Datepicker onDateChange={handleDateChange} />
+          {/* <Datepicker onDateChange={handleDateChange} /> */}
           {/* <FilterButton align="right" /> */}
           <button
             className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white"

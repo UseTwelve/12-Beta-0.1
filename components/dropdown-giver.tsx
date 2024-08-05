@@ -29,14 +29,14 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) 
    const fetchGivers = async () => {
      try {
        const response = await fetchRecords(axiosAuth, '/client/givers');
-       const formattedRecords = response.slice(1).map((record) => ({
+       const formattedRecords = response.slice(1).map((record:any) => ({
          nameInWallet: record[0],
          crmName: record[1],
          group: record[2],
          subGroup: record[3],
          wallet: record[4],
        }));
-      setOptions(formattedRecords.map(giver => giver.nameInWallet));
+      setOptions(formattedRecords.map((giver:Giver) => giver.nameInWallet));
      } catch (error) {
        console.error('Error fetching givers:', error);
      }

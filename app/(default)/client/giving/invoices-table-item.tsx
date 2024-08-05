@@ -70,7 +70,7 @@ export default function InvoicesTableItem({
     const fetchGivers = async () => {
       try {
         const response = await fetchRecords(axiosAuth, "/client/givers");
-        const formattedRecords = response.map((record) => ({
+        const formattedRecords = response.map((record: any) => ({
           nameInWallet: record[0],
           crmName: record[1],
           group: record[2],

@@ -1,4 +1,4 @@
-export default function SearchForm({ placeholder = 'Search…', onChange }) {
+export default function SearchForm({ placeholder = 'Search…', onChange }: { placeholder: string, onChange: (event: React.ChangeEvent<HTMLInputElement>) => void }) {
   return (
     <form className="relative">
       <label htmlFor="action-search" className="sr-only">Search</label>

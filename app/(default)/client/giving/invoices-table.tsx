@@ -5,7 +5,7 @@ import InvoicesTableItem from "./invoices-table-item";
 import NewInvoiceRow from "./new-invoice-row";
 
 export interface Record {
-  id?: number;
+  id: number;
   crmStatus: string;
   amount: string;
   wallet: string;

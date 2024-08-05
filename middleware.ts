@@ -7,12 +7,12 @@ export async function middleware(request: any) {
   const { nextUrl } = request;
 
 
-  if (nextUrl.pathname.startsWith("/admin") && token?.user.user?.userType?.name !== "admin") {
+  if (nextUrl.pathname.startsWith("/admin") && (token as any)?.user.user?.userType?.name !== "admin") {
     return NextResponse.redirect(
       new URL("/signin?error=You Are Not Authorized!", request.url)
     );
   }
-  if (nextUrl.pathname.startsWith("/client") && token?.user.user?.userType?.name !== "client") {
+  if (nextUrl.pathname.startsWith("/client") && (token as any)?.user.user?.userType?.name !== "client") {
     return NextResponse.redirect(
       new URL("/signin?error=You Are Not Authorized!", request.url)
     );
