@@ -5,7 +5,7 @@ import InvoicesTableItem from "./invoices-table-item";
 import NewInvoiceRow from "./new-invoice-row";
 
 export interface Record {
-  id: number;
+  id?: number;
   crmStatus: string;
   amount: string;
   wallet: string;
@@ -279,7 +279,7 @@ export default function InvoicesTable({
                   index={index + 1}
                   invoice={invoice}
                   onCheckboxChange={handleCheckboxChange}
-                  isSelected={selectedItems.includes(invoice.id)}
+                  isSelected={selectedItems.includes(invoice.id ?? index + 1)}
                   onUpdateRecord={onUpdateRecord}
                   onDeleteRecord={onDeleteRecord}
                   isEditing={false} // Add the isEditing property with a default value

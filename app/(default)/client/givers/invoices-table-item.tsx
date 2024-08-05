@@ -25,7 +25,7 @@ export default function InvoicesTableItem({
   const [editValues, setEditValues] = useState(invoice);
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onCheckboxChange(invoice.id, e.target.checked);
+    onCheckboxChange(invoice.id ?? index + 1, e.target.checked);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

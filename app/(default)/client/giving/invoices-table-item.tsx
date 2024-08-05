@@ -37,11 +37,10 @@ export default function InvoicesTableItem({
 }: InvoicesTableItemProps) {
   const [isEditingState, setIsEditingState] = useState(isEditing);
   const [editValues, setEditValues] = useState(invoice);
-  const [givers, setGivers] = useState<Giver[]>([]);
   const axiosAuth = useAxiosAuth();
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onCheckboxChange(invoice.id, e.target.checked);
+    onCheckboxChange(invoice.id ?? index, e.target.checked);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,25 +64,6 @@ export default function InvoicesTableItem({
     setIsEditingState(true);
   };
 
-  useEffect(() => {
-    // Fetch givers from API
-    const fetchGivers = async () => {
-      try {
-        const response = await fetchRecords(axiosAuth, "/client/givers");
-        const formattedRecords = response.map((record: any) => ({
-          nameInWallet: record[0],
-          crmName: record[1],
-          group: record[2],
-          subGroup: record[3],
-          wallet: record[4],
-        }));
-        setGivers(formattedRecords);
-      } catch (error) {
-        console.error("Error fetching givers:", error);
-      }
-    };
-    fetchGivers();
-  }, []);
 
   const { totalColor, statusColor, typeIcon } = InvoicesProperties();
 
@@ -111,6 +91,12 @@ export default function InvoicesTableItem({
               value={editValues.crmStatus}
               onChange={handleChange}
               className="form-input"
+              disabled={
+                (
+                  editValues.crmStatus === "successful" ||
+                  editValues.crmStatus === "failed"
+                )
+              } // Set disabled to true if status is not 'pending' or 'new'
             />
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">

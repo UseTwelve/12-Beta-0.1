@@ -1,26 +1,34 @@
-"use client"
+"use client";
 
-import Link from 'next/link'
-import AuthHeader from '../auth-header'
-import AuthImage from '../auth-image'
-import { signIn } from 'next-auth/react';
+import Link from "next/link";
+import AuthHeader from "../auth-header";
+import AuthImage from "../auth-image";
+import { signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
+import Toast02 from "@/components/toast-02";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [toastErrorOpen, setToastErrorOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       let params = new URLSearchParams(window.location.search);
-      let searchParams = params.get("error"); 
+      let searchParams = params.get("error");
       setError(searchParams);
 
       if (searchParams) {
         const url = new URL(window.location.href);
         url.searchParams.delete("error");
-        window.history.replaceState({}, '', url);
+        window.history.replaceState({}, "", url);
+        setToastErrorOpen(true);
+
+        // Automatically close the toast after 5 seconds
+        setTimeout(() => {
+          setToastErrorOpen(false);
+        }, 5000);
       }
     }
   }, []);
@@ -35,6 +43,12 @@ export default function SignIn() {
 
     if (result?.error) {
       setError(result.error); // Handle error by setting state
+      setToastErrorOpen(true);
+
+      // Automatically close the toast after 5 seconds
+      setTimeout(() => {
+        setToastErrorOpen(false);
+      }, 5000);
     } else {
       window.location.href = "/";
     }
@@ -47,26 +61,65 @@ export default function SignIn() {
           <div className="min-h-[100vh] h-full flex flex-col after:flex-1">
             <AuthHeader />
             <div className="max-w-sm mx-auto w-full px-4 py-8">
-              <h1 className="text-3xl text-gray-800 dark:text-gray-100 font-bold mb-6">Welcome back!</h1>
-              {error && <p className="text-red-500">{error}</p>} {/* Display the error message */}
+              <h1 className="text-3xl text-gray-800 dark:text-gray-100 font-bold mb-6">
+                Welcome back!
+              </h1>
+              <Toast02
+                type="error"
+                open={toastErrorOpen}
+                setOpen={setToastErrorOpen}
+              >
+                {error}
+              </Toast02>
               <form onSubmit={onSubmit}>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1" htmlFor="email">Email Address</label>
-                    <input id="email" className="form-input w-full" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <label
+                      className="block text-sm font-medium mb-1"
+                      htmlFor="email"
+                    >
+                      Email Address
+                    </label>
+                    <input
+                      id="email"
+                      className="form-input w-full"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1" htmlFor="password">Password</label>
-                    <input id="password" className="form-input w-full" type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="on" />
+                    <label
+                      className="block text-sm font-medium mb-1"
+                      htmlFor="password"
+                    >
+                      Password
+                    </label>
+                    <input
+                      id="password"
+                      className="form-input w-full"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      autoComplete="on"
+                    />
                   </div>
                 </div>
                 <div className="flex items-center justify-between mt-6">
                   <div className="mr-1">
-                    <Link href="/reset-password" className="text-sm underline hover:no-underline">
+                    <Link
+                      href="/reset-password"
+                      className="text-sm underline hover:no-underline"
+                    >
                       Forgot Password?
                     </Link>
                   </div>
-                  <button type="submit" className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white ml-3">Sign In</button>
+                  <button
+                    type="submit"
+                    className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white ml-3"
+                  >
+                    Sign In
+                  </button>
                 </div>
               </form>
             </div>

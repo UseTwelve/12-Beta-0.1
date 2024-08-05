@@ -21,11 +21,11 @@ export const InvoicesProperties = () => {
 
   const statusColor = (status: string): string => {
     switch (status) {
-      case 'Successful':
+      case 'successful':
         return 'bg-green-500/20 text-green-700';
-      case 'Pending':
+      case 'pending':
         return 'bg-yellow-500/20 text-yellow-700';
-      case 'Failed':
+      case 'failed':
         return 'bg-red-500/20 text-red-700';
       default:
         return 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400';

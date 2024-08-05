@@ -21,6 +21,7 @@ import {
 } from "@/lib/hooks/useGoogleSheet";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import Datepicker from "@/components/datepicker";
+import ModalBlank from "@/components/modal-blank";
 
 
 function GivingContent() {
@@ -35,16 +36,22 @@ function GivingContent() {
   const [toastMessage, setToastMessage] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
+  const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null);
+  const [dangerModalOpen, setDangerModalOpen] = useState<boolean>(false);
 
   const filteredAndSortedRecords = useMemo(() => {
-    // Step 1: Filter records
+    // If searchTerm is empty, return all records (except the header row)
+    if (searchTerm.trim() === "") {
+      return records;
+    }
+  
+    // Otherwise, filter the records based on the searchTerm
     let filteredRecords = records.slice(1).filter((record) => {
-  return Object.values(record).some((value) => 
-    typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-});
-
-
+      return Object.values(record).some((value) => 
+        typeof value === 'string' && searchTerm.split(" ").some((term) => value.toLowerCase().includes(term.toLowerCase()))
+      );
+    });
+  
     // Step 2: Sort the filtered records
     if (sortConfig.key) {
       filteredRecords.sort((a, b) => {
@@ -57,10 +64,12 @@ function GivingContent() {
         return 0;
       });
     }
-
+  
     // Add back the header row after filtering and sorting
     return [records[0], ...filteredRecords];
   }, [records, searchTerm, sortConfig]);
+  
+
 
   const fetchData = async () => {
     try {
@@ -96,8 +105,7 @@ function GivingContent() {
 
   const handleAddRecord = () => {
     setNewRecord({
-      id:999,
-      crmStatus: "",
+      crmStatus: "new",
       amount: "",
       wallet: "",
       fullName: "",
@@ -142,10 +150,25 @@ function GivingContent() {
     try {
       setToastMessage("Uploading records...");
       setToastInfoOpen(true);
+  
+      // Iterate over the records and update crmStatus from "new" to "pending"
+      for (let index = 0; index < records.length; index++) {
+        const record = records[index];
+        if (record.crmStatus === "new") {
+          const updatedRecord = { ...record, crmStatus: "pending" };
+          await updateRecord(axiosAuth, index + 1, updatedRecord, `/client/church/record`);
+        }
+      }
+  
+      // Upload the records after updating the statuses
       await uploadRecord(axiosAuth, "/client/church/upload");
+  
       setToastInfoOpen(false);
       setToastMessage("Records uploaded successfully.");
       setToastSuccessOpen(true);
+  
+      // Optionally, refetch the records to update the state
+      await fetchData();
     } catch (error) {
       console.error("Error uploading record:", error);
       setToastMessage("Error uploading records.");
@@ -153,6 +176,8 @@ function GivingContent() {
       setToastErrorOpen(true);
     }
   };
+  
+  
 
   const handleUpdateRecord = async (index: number, updatedRecord: any) => {
     index = index + 1;
@@ -177,21 +202,31 @@ function GivingContent() {
     }
   };
 
-  const handleDeleteRecord = async (index: number) => {
+  
+  const handleDeleteRecord = (index: number) => {
     index = index + 1;
-    try {
-      setToastMessage("Deleting record...");
-      setToastInfoOpen(true);
-      await deleteRecord(axiosAuth, index, `/client/church/record`);
-      await fetchData();
-      setToastInfoOpen(false);
-      setToastMessage("Record deleted successfully.");
-      setToastSuccessOpen(true);
-    } catch (error) {
-      console.error("Error deleting record:", error);
-      setToastMessage("Error deleting record.");
-      setToastInfoOpen(false);
-      setToastErrorOpen(true);
+    setSelectedRecordId(index); // Store the ID of the member to delete
+    setDangerModalOpen(true); // Show the confirmation modal
+  };
+
+  const confirmDelete = async () => {
+    if (selectedRecordId !== null) {
+      try {
+        setToastMessage("Deleting record...");
+        setToastInfoOpen(true);
+        await deleteRecord(axiosAuth, selectedRecordId, `/client/church/record`);
+        await fetchData();
+        setToastInfoOpen(false);
+        setToastMessage("Record deleted successfully.");
+        setToastSuccessOpen(true);
+      } catch (error) {
+        console.error("Error deleting record:", error);
+        setToastMessage("Error deleting record.");
+        setToastInfoOpen(false);
+        setToastErrorOpen(true);
+      } finally {
+        setDangerModalOpen(false); // Close the modal after the operation
+      }
     }
   };
 
@@ -265,6 +300,46 @@ function GivingContent() {
           {toastMessage}
         </Toast>
       </div>
+      <ModalBlank isOpen={dangerModalOpen} setIsOpen={setDangerModalOpen}>
+        <div className="p-5 flex space-x-4">
+          <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-gray-100 dark:bg-gray-700">
+            <svg
+              className="shrink-0 fill-current text-red-500"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+            >
+              <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
+            </svg>
+          </div>
+          <div>
+            <div className="mb-2">
+              <div className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                Delete user?
+              </div>
+            </div>
+            <div className="text-sm mb-10">
+              <div className="space-y-2">
+                <p>Are you sure you want to delete this member?</p>
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-end space-x-2">
+              <button
+                className="btn-sm border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-gray-800 dark:text-gray-300"
+                onClick={() => setDangerModalOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn-sm bg-red-500 hover:bg-red-600 text-white"
+                onClick={confirmDelete} // Call confirmDelete on confirmation
+              >
+                Yes, Delete it
+              </button>
+            </div>
+          </div>
+        </div>
+      </ModalBlank>
       {/* Page header */}
       <div className="sm:flex sm:justify-between sm:items-center mb-5">
         {/* Left: Title */}

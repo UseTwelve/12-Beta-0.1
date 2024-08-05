@@ -5,7 +5,7 @@ import InvoicesTableItem from './invoices-table-item'
 import NewInvoiceRow from './new-invoice-row'
 
 export interface Giver {
-  id: number;
+  id?: number;
   nameInWallet: string;
   crmName: string;
   group: string;
@@ -89,7 +89,7 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
                   index={index + 1}
                   invoice={invoice}
                   onCheckboxChange={handleCheckboxChange}
-                  isSelected={selectedItems.includes(invoice.id)}
+                  isSelected={selectedItems.includes(invoice.id ?? index + 1)}
                   onUpdateRecord={onUpdateRecord}
                   onDeleteRecord={onDeleteRecord}
                   isEditing={false} // Add the isEditing property with a default value

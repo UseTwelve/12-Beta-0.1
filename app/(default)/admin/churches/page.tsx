@@ -32,17 +32,20 @@ function ChurchesContent() {
   const { setFlyoutOpen } = useFlyoutContext()
 
   const filteredAndSortedRecords = useMemo(() => {
-    // Step 1: Filter records
-    let filteredRecords = records.filter((record) => {
-      return Object.values(record).some(
-        (value) =>
-          typeof value === "string" &&
-          value.toLowerCase().includes(searchTerm.toLowerCase())
+    // If searchTerm is empty, return all records (except the header row)
+    if (searchTerm.trim() === "") {
+      return records;
+    }
+  
+    // Otherwise, filter the records based on the searchTerm
+    let filteredRecords = records.slice(1).filter((record) => {
+      return Object.values(record).some((value) => 
+        typeof value === 'string' && searchTerm.split(" ").some((term) => value.toLowerCase().includes(term.toLowerCase()))
       );
     });
-
-     // Step 2: Sort the filtered records
-     if (sortConfig.key) {
+  
+    // Step 2: Sort the filtered records
+    if (sortConfig.key) {
       filteredRecords.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === "asc" ? -1 : 1;
@@ -53,9 +56,9 @@ function ChurchesContent() {
         return 0;
       });
     }
-
+  
     // Add back the header row after filtering and sorting
-    return filteredRecords;
+    return [records[0], ...filteredRecords];
   }, [records, searchTerm, sortConfig]);
 
   const fetchData = async () => {
