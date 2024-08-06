@@ -45,7 +45,7 @@ export default function InvoicesTable({
   } = useItemSelection(invoices);
   
   const totalAmount = invoices.slice(1).reduce((sum, record) => {
-    const amount = parseFloat(record.amount.replace(/[^0-9.-]+/g, ""));
+    const amount = record.amount ? parseFloat(record.amount.replace(/[^0-9.-]+/g, "")) : 0;
     return sum + (isNaN(amount) ? 0 : amount);
   }, 0);
 
