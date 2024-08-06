@@ -9,12 +9,12 @@ export async function middleware(request: any) {
 
   if (nextUrl.pathname.startsWith("/admin") && (token as any)?.user.user?.userType?.name !== "admin") {
     return NextResponse.redirect(
-      new URL("/signin?error=You Are Not Authorized!", request.url)
+      new URL("/signin", request.url)
     );
   }
   if (nextUrl.pathname.startsWith("/client") && (token as any)?.user.user?.userType?.name !== "client") {
     return NextResponse.redirect(
-      new URL("/signin?error=You Are Not Authorized!", request.url)
+      new URL("/signin", request.url)
     );
   }
 
