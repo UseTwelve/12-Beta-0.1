@@ -5,11 +5,15 @@ import Image from 'next/image'
 import { Menu, MenuButton, MenuItems, MenuItem, Transition } from '@headlessui/react'
 import UserAvatar from '@/public/images/user-avatar-32.png'
 import { signOut, useSession } from 'next-auth/react'
+import { use, useEffect } from 'react'
 
 export default function DropdownProfile({ align }: {
   align?: 'left' | 'right'
 }) {
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession();
+
+  useEffect(() => { }, [session, status]);
+
   return (
     <Menu as="div" className="relative inline-flex">
       <MenuButton className="inline-flex justify-center items-center group">

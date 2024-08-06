@@ -59,6 +59,8 @@ export default function Sidebar({
     };
   }, [breakpoint]);
 
+  useEffect(() => { }, [session, status]);
+
   if (session && session.user && session.user.userType.name === "client") {
     return (
       <div className={`min-w-fit ${sidebarExpanded ? "sidebar-expanded" : ""}`}>
