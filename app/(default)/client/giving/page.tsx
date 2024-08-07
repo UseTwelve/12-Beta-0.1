@@ -38,6 +38,7 @@ function GivingContent() {
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null);
   const [dangerModalOpen, setDangerModalOpen] = useState<boolean>(false);
+  const [selectedItems, setSelectedItems] = useState<number[]>([]); // Add this line
 
   const filteredAndSortedRecords = useMemo(() => {
     // If searchTerm is empty, return all records (except the header row)
@@ -150,23 +151,25 @@ function GivingContent() {
     try {
       setToastMessage("Uploading records...");
       setToastInfoOpen(true);
-  
-      // Iterate over the records and update crmStatus from "new" to "pending"
+      
+      // Iterate over the selected items and update crmStatus from "new" to "pending"
+      console.log("selectedItems", selectedItems);
       for (let index = 0; index < records.length; index++) {
         const record = records[index];
-        if (record.crmStatus === "new") {
+        console.log("record",index, record);
+        if (selectedItems.includes(index) && record.crmStatus === "new") {
           const updatedRecord = { ...record, crmStatus: "pending" };
           await updateRecord(axiosAuth, index + 1, updatedRecord, `/client/church/record`);
         }
       }
-  
+
       // Upload the records after updating the statuses
       await uploadRecord(axiosAuth, "/client/church/upload");
-  
+
       setToastInfoOpen(false);
       setToastMessage("Records uploaded successfully.");
       setToastSuccessOpen(true);
-  
+
       // Optionally, refetch the records to update the state
       await fetchData();
     } catch (error) {
@@ -427,6 +430,7 @@ function GivingContent() {
         onHandleSort={handleSort}
         sortConfig={sortConfig}
         setNewRecordToNull={() => setNewRecord(null)}
+        setSelectedItems={setSelectedItems}
       />
       {/* Pagination */}
       {/* <div className="mt-8">

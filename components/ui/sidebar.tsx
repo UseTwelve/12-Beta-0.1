@@ -59,7 +59,6 @@ export default function Sidebar({
     };
   }, [breakpoint]);
 
-  useEffect(() => { }, [session, status]);
 
   if (session && session.user && session.user.userType.name === "client") {
     return (
@@ -121,15 +120,7 @@ export default function Sidebar({
           <div className="space-y-8">
             {/* Pages group */}
             <div>
-              <h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3">
-                <span
-                  className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-                  aria-hidden="true"
-                >
-                  •••
-                </span>
-           
-              </h3>
+              
               <ul className="mt-3">
                 {/* Inbox */}
                 <li
@@ -192,7 +183,7 @@ export default function Sidebar({
                 </li>}
   
                 {/* Settings */}
-                <SidebarLinkGroup open={segments && segments.includes("settings") || false}>
+                {1 > 2 && <SidebarLinkGroup open={segments && segments.includes("settings") || false}>
                   {(handleClick, open) => {
                     return (
                       <>
@@ -292,7 +283,7 @@ export default function Sidebar({
                       </>
                     );
                   }}
-                </SidebarLinkGroup>
+                </SidebarLinkGroup>}
               </ul>
             </div>
           </div>
@@ -381,15 +372,7 @@ export default function Sidebar({
           <div className="space-y-8">
             {/* Pages group */}
             <div>
-              <h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3">
-                <span
-                  className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-                  aria-hidden="true"
-                >
-                  •••
-                </span>
-           
-              </h3>
+              
               <ul className="mt-3">
                 {/* Inbox */}
                 <li

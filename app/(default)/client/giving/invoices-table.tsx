@@ -3,6 +3,7 @@
 import { useItemSelection } from "@/components/utils/use-item-selection";
 import InvoicesTableItem from "./invoices-table-item";
 import NewInvoiceRow from "./new-invoice-row";
+import { useEffect } from "react";
 
 export interface Record {
   id?: number;
@@ -25,6 +26,7 @@ interface InvoicesTableProps {
   onDeleteRecord: (index: number) => void;
   onHandleSort: (key: string) => void;
   setNewRecordToNull: () => void;
+  setSelectedItems: (items: number[]) => void; // Add this line
 }
 
 export default function InvoicesTable({
@@ -36,6 +38,7 @@ export default function InvoicesTable({
   setNewRecordToNull,
   onHandleSort,
   sortConfig,
+  setSelectedItems, // Add this line
 }: InvoicesTableProps) {
   const {
     selectedItems,
@@ -43,21 +46,29 @@ export default function InvoicesTable({
     handleCheckboxChange,
     handleSelectAllChange,
   } = useItemSelection(invoices);
-  
-  const totalAmount = invoices.slice(1).reduce((sum, record) => {
-    const amount = record.amount ? parseFloat(record.amount.replace(/[^0-9.-]+/g, "")) : 0;
-    return sum + (isNaN(amount) ? 0 : amount);
-  }, 0);
+
+  const totalAmount = invoices
+    .filter((_, index) => selectedItems.includes(index))
+    .reduce((sum, record) => {
+      const amount = record.amount
+        ? parseFloat(record.amount.replace(/[^0-9.-]+/g, ""))
+        : 0;
+      return sum + (isNaN(amount) ? 0 : amount);
+    }, 0);
+
+    useEffect(() => {
+      setSelectedItems(selectedItems);
+    }, [selectedItems, setSelectedItems]);
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl relative">
       <header className="px-5 py-4">
-        <h2 className="font-semibold text-gray-800 dark:text-gray-100">
-        Total amount: {" "}
+        {selectedItems.length > 0 && <h2 className="font-semibold text-gray-800 dark:text-gray-100">
+          Total amount {" "}
           <span className="text-gray-400 dark:text-gray-500 font-medium">
             ${totalAmount.toLocaleString()}
           </span>
-        </h2>
+        </h2>}
       </header>
       <div>
         {/* Table */}
@@ -81,7 +92,7 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start" 
+                    className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("crmStatus")}
                   >
                     CRM Status
@@ -103,7 +114,7 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start" 
+                    className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("amount")}
                   >
                     Amount
@@ -125,7 +136,7 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start" 
+                    className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("wallet")}
                   >
                     Wallet
@@ -147,7 +158,7 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start" 
+                    className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("fullName")}
                   >
                     Fullname in CRM
@@ -169,7 +180,7 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start" 
+                    className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("date")}
                   >
                     Date
@@ -191,7 +202,7 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start" 
+                    className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("category")}
                   >
                     Category
@@ -213,7 +224,7 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start" 
+                    className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("memo")}
                   >
                     Memo
@@ -235,7 +246,7 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start" 
+                    className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("nameInWallet")}
                   >
                     Name in wallet
@@ -256,7 +267,7 @@ export default function InvoicesTable({
                   </div>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left" >Actions</div>
+                  <div className="font-semibold text-left">Actions</div>
                 </th>
               </tr>
             </thead>

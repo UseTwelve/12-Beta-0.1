@@ -12,8 +12,6 @@ export default function DropdownProfile({ align }: {
 }) {
   const { data: session, status } = useSession();
 
-  useEffect(() => { }, [session, status]);
-
   return (
     <Menu as="div" className="relative inline-flex">
       <MenuButton className="inline-flex justify-center items-center group">
