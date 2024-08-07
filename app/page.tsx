@@ -1,17 +1,16 @@
 "use client";
 import { useSession } from 'next-auth/react';
-import { redirect,useRouter } from 'next/navigation';
-import { use, useEffect } from 'react';
+import { redirect } from 'next/navigation';
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const router = useRouter();
-  useEffect(() => {
-
-    if(session)  router.refresh();
-   }, [session,status]);
 
   if (status === 'loading') return <p>Loading...</p>;
+
+  if (session && !sessionStorage.getItem('reloaded')) {
+    sessionStorage.setItem('reloaded', 'true');
+    location.reload();
+  }
 
   if (status === 'authenticated') {
     if (session.user.userType.name === "admin") {
