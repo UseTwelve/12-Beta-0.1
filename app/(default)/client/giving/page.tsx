@@ -46,14 +46,17 @@ function GivingContent() {
       return records;
     }
   
-    // Otherwise, filter the records based on the searchTerm
+    // Split search terms by commas
+    const searchTerms = searchTerm.split(",").filter(term=> term !== " ").map(term => term.trim().toLowerCase());
+  
+    // Filter records based on search terms
     let filteredRecords = records.slice(1).filter((record) => {
       return Object.values(record).some((value) => 
-        typeof value === 'string' && searchTerm.split(" ").some((term) => value.toLowerCase().includes(term.toLowerCase()))
+        typeof value === 'string' && searchTerms.some((term) => value.toLowerCase().includes(term))
       );
     });
   
-    // Step 2: Sort the filtered records
+    // Sort the filtered records
     if (sortConfig.key) {
       filteredRecords.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -69,6 +72,7 @@ function GivingContent() {
     // Add back the header row after filtering and sorting
     return [records[0], ...filteredRecords];
   }, [records, searchTerm, sortConfig]);
+  
   
 
 

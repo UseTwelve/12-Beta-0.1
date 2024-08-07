@@ -11,11 +11,9 @@ export default function Home() {
   if (status === 'authenticated') {
     if (session.user.userType.name === "admin") {
       return location.href = "/admin/churches";
-       redirect('/admin/churches');
     }
     if (session.user.userType.name === "client") {
       return location.href = "/client/giving";
-      return redirect('/client/giving');
     }
   }
 
