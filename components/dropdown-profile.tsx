@@ -48,7 +48,7 @@ export default function DropdownProfile({ align }: {
           </MenuItem>
           <MenuItem as="li">
             {({ active }) => (
-              <Link className={`font-medium text-sm flex items-center py-1 px-3 ${active ? 'text-violet-600 dark:text-violet-400' : 'text-violet-500'}`} href="#0" onClick={() => { sessionStorage.removeItem('reloaded'); signOut(); }}>
+              <Link className={`font-medium text-sm flex items-center py-1 px-3 ${active ? 'text-violet-600 dark:text-violet-400' : 'text-violet-500'}`} href="#0" onClick={() => {signOut(); }}>
                 Sign Out
               </Link>
             )}

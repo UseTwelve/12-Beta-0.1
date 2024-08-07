@@ -59,11 +59,6 @@ export default function Sidebar({
     };
   }, [breakpoint]);
 
-  if (session && !sessionStorage.getItem('reloaded')) {
-    sessionStorage.setItem('reloaded', 'true');
-    location.reload();
-  }
-
 
 
   if (session && session.user && session.user.userType.name === "client") {
