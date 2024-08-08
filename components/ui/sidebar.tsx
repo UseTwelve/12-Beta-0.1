@@ -62,7 +62,6 @@ export default function Sidebar({
 
 
   if (session && session.user && session.user.userType.name === "client") {
-    console.log("session", session);
     return (
       <div className={`min-w-fit ${sidebarExpanded ? "sidebar-expanded" : ""}`}>
         {/* Sidebar backdrop (mobile only) */}

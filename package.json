@@ -16,6 +16,7 @@
     "axios": "^1.7.2",
     "chart.js": "^4.4.1",
     "chartjs-adapter-moment": "^1.0.1",
+    "lodash.debounce": "^4.0.8",
     "next": "^14.0.3",
     "next-auth": "^4.24.7",
     "next-themes": "^0.3.0",

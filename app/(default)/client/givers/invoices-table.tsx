@@ -85,7 +85,7 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
               )}
               {invoices.slice(1).map((invoice, index) => (
                 <InvoicesTableItem
-                  key={invoice.id}
+                  key={index + 1}
                   index={index + 1}
                   invoice={invoice}
                   onCheckboxChange={handleCheckboxChange}

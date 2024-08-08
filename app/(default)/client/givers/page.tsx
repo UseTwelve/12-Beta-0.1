@@ -35,6 +35,7 @@ function GivingContent() {
   const [dangerModalOpen, setDangerModalOpen] = useState<boolean>(false);
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sheetId, setSheetId] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
   const apiUrl = "/client/givers";
 
@@ -77,7 +78,7 @@ function GivingContent() {
       setToastMessage("Fetching records...");
       setToastInfoOpen(true);
       const data = await fetchRecords(axiosAuth, apiUrl);
-      const formattedRecords = data.map((record: any) => ({
+      const formattedRecords = data.values.map((record: any) => ({
         nameInWallet: record[0],
         crmName: record[1],
         group: record[2],
@@ -85,6 +86,7 @@ function GivingContent() {
         wallet: record[4],
       }));
       setRecords(formattedRecords);
+      setSheetId(data.sheetId);
       setToastInfoOpen(false);
     } catch (error) {
       console.error("Error fetching records:", error);
@@ -169,12 +171,13 @@ function GivingContent() {
     setDangerModalOpen(true); // Show the confirmation modal
   };
 
+
   const confirmDelete = async () => {
     if (selectedRecordId !== null) {
       try {
         setToastMessage("Deleting record...");
         setToastInfoOpen(true);
-        await deleteRecord(axiosAuth, selectedRecordId, apiUrl);
+        await deleteRecord(axiosAuth,sheetId, selectedRecordId, apiUrl);  // Pass sheetId and rowIndex
         await fetchData();
         setToastInfoOpen(false);
         setToastMessage("Record deleted successfully.");

@@ -42,12 +42,13 @@ export const updateRecord = async (axiosAuth: AxiosInstance, rowIndex: number, u
   }
 };
 
-export const deleteRecord = async (axiosAuth: AxiosInstance, rowIndex: number, url:string) => {
+export const deleteRecord = async (axiosAuth: AxiosInstance, sheetId: number | null = 0, rowIndex: number, url: string) => {
   try {
-    const response = await axiosAuth.delete(url, { data: { rowIndex } });
+    const response = await axiosAuth.delete(url, { data: { sheetId, rowIndex } });
     return response.data;
   } catch (error) {
     console.error('Error deleting record:', error);
     throw error;
   }
 };
+

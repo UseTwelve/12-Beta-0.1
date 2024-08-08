@@ -36,7 +36,8 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) 
          subGroup: record[3],
          wallet: record[4],
        }));
-      setOptions(formattedRecords.map((giver:Giver) => giver.nameInWallet));
+       setOptions(formattedRecords.map((giver: Giver) => giver.crmName));
+  
      } catch (error) {
        console.error('Error fetching givers:', error);
      }
@@ -69,9 +70,9 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) 
       <div className="absolute z-50 mt-1 w-fit max-h-[240px] bg-white border border-gray-300 rounded-md shadow-lg overflow-y-scroll">
         {options
           .filter(option => option.toLowerCase().includes(value.toLowerCase()))
-          .map(option => (
+          .map((option,index) => (
             <div
-              key={option}
+              key={index}
               onClick={() => handleSelect(option)}
               className="cursor-pointer px-4 py-2 hover:bg-gray-100"
             >

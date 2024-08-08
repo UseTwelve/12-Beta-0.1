@@ -35,6 +35,7 @@ function GivingContent() {
   const [toastInfoOpen, setToastInfoOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [sheetId, setSheetId] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null);
   const [dangerModalOpen, setDangerModalOpen] = useState<boolean>(false);
@@ -81,7 +82,7 @@ function GivingContent() {
       setToastMessage("Fetching records...");
       setToastInfoOpen(true);
       const data = await fetchRecords(axiosAuth, "/client/church/records");
-      const formattedRecords = data.map((record: any[], index: any) => ({
+      const formattedRecords = data.values.map((record: any[], index: any) => ({
         id: index,
         crmStatus: record[0],
         amount: record[1],
@@ -93,6 +94,7 @@ function GivingContent() {
         nameInWallet: record[7],
       }));
       setRecords(formattedRecords);
+      setSheetId(data.sheetId);
       setToastInfoOpen(false);
     } catch (error) {
       console.error("Error fetching records:", error);
@@ -152,28 +154,38 @@ function GivingContent() {
   };
 
   const handleUploadRecord = async () => {
+    if (selectedItems.length === 0) {
+      setToastMessage("Please select records to upload.");
+      setToastWarningOpen(true);
+      return;
+    }
+  
+    const newRecords = selectedItems.filter(index => records[index].crmStatus === "new");
+  
+    if (newRecords.length !== selectedItems.length) {
+      setToastMessage("Please select only new records to upload.");
+      setToastWarningOpen(true);
+      return;
+    }
+  
     try {
       setToastMessage("Uploading records...");
       setToastInfoOpen(true);
-      
-      // Iterate over the selected items and update crmStatus from "new" to "pending"
-      console.log("selectedItems", selectedItems);
-      for (let index = 0; index < records.length; index++) {
-        const record = records[index];
-        console.log("record",index, record);
-        if (selectedItems.includes(index) && record.crmStatus === "new") {
-          const updatedRecord = { ...record, crmStatus: "pending" };
-          await updateRecord(axiosAuth, index + 1, updatedRecord, `/client/church/record`);
-        }
-      }
-
+  
+      const updatePromises = newRecords.map(index => {
+        const updatedRecord = { ...records[index], crmStatus: "pending" };
+        return updateRecord(axiosAuth, index + 1, updatedRecord, `/client/church/record`);
+      });
+  
+      await Promise.all(updatePromises);
+  
       // Upload the records after updating the statuses
       await uploadRecord(axiosAuth, "/client/church/upload");
-
+  
       setToastInfoOpen(false);
       setToastMessage("Records uploaded successfully.");
       setToastSuccessOpen(true);
-
+  
       // Optionally, refetch the records to update the state
       await fetchData();
     } catch (error) {
@@ -183,6 +195,7 @@ function GivingContent() {
       setToastErrorOpen(true);
     }
   };
+  
   
   
 
@@ -221,7 +234,7 @@ function GivingContent() {
       try {
         setToastMessage("Deleting record...");
         setToastInfoOpen(true);
-        await deleteRecord(axiosAuth, selectedRecordId, `/client/church/record`);
+        await deleteRecord(axiosAuth,sheetId, selectedRecordId, `/client/church/record`);  // Pass sheetId and rowIndex
         await fetchData();
         setToastInfoOpen(false);
         setToastMessage("Record deleted successfully.");
@@ -236,6 +249,8 @@ function GivingContent() {
       }
     }
   };
+  
+  
 
   const handleDateChange = (dates: [any, any]) => {
     const [startDate, endDate] = dates;
@@ -401,7 +416,7 @@ function GivingContent() {
         {/* Right side */}
         <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
           {/* Delete button */}
-          <DeleteButton />
+          {/* <DeleteButton /> */}
           {/* Dropdown */}
           <SearchForm placeholder="Search…" onChange={handleSearch} />
 

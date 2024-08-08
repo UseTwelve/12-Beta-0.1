@@ -78,7 +78,6 @@ export default function MemberPanel({ onReload }: { onReload: () => void }) {
 
   const handleSubmit = async () => {
     setLoading(true);
-    console.log("submitting form", fullName, email, phoneNumber, role, userType, church, profileImageFile);
     const formData = new FormData();
     formData.append("fullName", fullName);
     formData.append("email", email);
