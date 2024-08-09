@@ -95,6 +95,7 @@ function GivingContent() {
       setToastErrorOpen(true);
     }
   };
+  
 
   useEffect(() => {
     if (status === "authenticated") {

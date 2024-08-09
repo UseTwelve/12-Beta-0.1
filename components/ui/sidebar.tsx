@@ -17,7 +17,7 @@ export default function Sidebar({
 }) {
   const sidebar = useRef<HTMLDivElement>(null);
   const { sidebarOpen, setSidebarOpen } = useAppProvider();
-  const [sidebarExpanded, setSidebarExpanded] = useState<boolean>(false);
+  const [sidebarExpanded, setSidebarExpanded] = useState<boolean>(true);
   const segments = useSelectedLayoutSegments();
   const { data: session, status } = useSession();
   const [breakpoint, setBreakpoint] = useState<string | undefined>(

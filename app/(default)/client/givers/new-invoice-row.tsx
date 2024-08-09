@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 interface NewInvoiceRowProps {
@@ -8,6 +9,7 @@ interface NewInvoiceRowProps {
 
 export default function NewInvoiceRow({ record, onSave, onCancel }: NewInvoiceRowProps) {
   const [newRecord, setNewRecord] = useState(record);
+  const { data: session, status } = useSession();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewRecord({
@@ -30,7 +32,7 @@ export default function NewInvoiceRow({ record, onSave, onCancel }: NewInvoiceRo
         <input type="text" name="crmName" value={newRecord.crmName} onChange={handleChange} className="form-input" />
       </td>
 
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+      { session && !session.user.churchInfo?.church.hasCrm && <> <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <input type="text" name="group" value={newRecord.group} onChange={handleChange} className="form-input" />
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -38,7 +40,7 @@ export default function NewInvoiceRow({ record, onSave, onCancel }: NewInvoiceRo
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <input type="text" name="wallet" value={newRecord.wallet} onChange={handleChange} className="form-input" />
-      </td>
+      </td> </>}
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
         <div className="space-x-1">
           <button className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full" onClick={handleSave}>

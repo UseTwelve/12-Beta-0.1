@@ -1,52 +1,35 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { fetchRecords } from '@/lib/hooks/useGoogleSheet';
 import useAxiosAuth from '@/lib/hooks/useAxiosAuth';
 
-interface FullNameDropdownProps {
+interface CategoryDropdownProps {
   onChange: (value: string) => void;
   value: string;
 }
 
-export interface Giver {
-  id?: number;
-  nameInWallet: string;
-  crmName: string;
-  group: string;
-  subGroup: string;
-  wallet: string;
-  fellowship: string;
-  softrRecordID: string;
-}
-
-const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) => {
+const CategoryDropdown: React.FC<CategoryDropdownProps> = ({ onChange, value }) => {
   const [options, setOptions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [focused, setFocused] = useState(false);
   const axiosAuth = useAxiosAuth();
-  const router = useRouter();
 
   useEffect(() => {
     if (focused) {
-      const fetchGivers = async () => {
+      const fetchCategories = async () => {
         setLoading(true);
         try {
-          const response = await fetchRecords(axiosAuth, '/client/givers');
+          const response = await fetchRecords(axiosAuth, '/client/church/categories');
           const formattedRecords = response.values.slice(1).map((record: any) => ({
-            nameInWallet: record[0],
-            crmName: record[1],
-            group: record[2],
-            subGroup: record[3],
-            wallet: record[4],
+            category: record[0]
           }));
-          setOptions(formattedRecords.map((giver: Giver) => giver.crmName));
+          setOptions(formattedRecords.map((data: {category:string}) => data.category));
         } catch (error) {
-          console.error('Error fetching givers:', error);
+          console.error('Error fetching category:', error);
         } finally {
           setLoading(false);
         }
       };
-      fetchGivers();
+      fetchCategories();
     }
   }, [focused]);
 
@@ -57,11 +40,8 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) 
   };
 
   const handleSelect = (option: string) => {
-    if (option === 'add_name') {
-      router.push('/client/givers');
-    } else {
       onChange(option);
-    }
+  
   };
 
   return (
@@ -73,7 +53,7 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) 
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         className="form-input block w-64 pl-3 pr-10 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
-        placeholder="Match name"
+        placeholder="Category"
       />
       {focused && (
         <div className="absolute z-50 mt-1 w-full max-h-[240px] bg-white border border-gray-300 rounded-md shadow-lg overflow-y-scroll">
@@ -94,12 +74,7 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) 
                     {option}
                   </div>
                 ))}
-              <div
-                onMouseDown={() => handleSelect('add_name')}
-                className="cursor-pointer px-4 py-2 hover:bg-indigo-100 text-indigo-600 font-semibold transition duration-150 ease-in-out"
-              >
-                Add New Name
-              </div>
+              
             </>
           )}
         </div>
@@ -108,4 +83,4 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) 
   );
 };
 
-export default FullNameDropdown;
+export default CategoryDropdown;

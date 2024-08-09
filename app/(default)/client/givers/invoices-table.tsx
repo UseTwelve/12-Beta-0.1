@@ -3,6 +3,7 @@
 import { useItemSelection } from '@/components/utils/use-item-selection'
 import InvoicesTableItem from './invoices-table-item'
 import NewInvoiceRow from './new-invoice-row'
+import { useSession } from 'next-auth/react';
 
 export interface Giver {
   id?: number;
@@ -31,6 +32,7 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
     handleCheckboxChange,
     handleSelectAllChange,
   } = useItemSelection(invoices);
+  const { data: session, status } = useSession();
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl relative">
@@ -58,7 +60,7 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">CRM Name</div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                { session && !session.user.churchInfo?.church.hasCrm && <><th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Group</div>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -66,7 +68,7 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Wallet</div>
-                </th>
+                </th></>}
    
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Actions</div>

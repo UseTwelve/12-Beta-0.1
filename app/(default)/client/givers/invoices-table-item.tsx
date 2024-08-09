@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Giver } from "./invoices-table";
 import { InvoicesProperties } from "./invoices-properties";
+import { useSession } from "next-auth/react";
 
 interface InvoicesTableItemProps {
   invoice: Giver;
@@ -49,6 +50,7 @@ export default function InvoicesTableItem({
     setIsEditingState(true);
   };
 
+  const { data: session, status } = useSession();
   const { totalColor, statusColor, typeIcon } = InvoicesProperties();
 
   return (
@@ -86,7 +88,7 @@ export default function InvoicesTableItem({
               className="form-input"
             />
           </td>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          { session && !session.user.churchInfo?.church.hasCrm && <><td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <input
               type="text"
               name="group"
@@ -112,7 +114,7 @@ export default function InvoicesTableItem({
               onChange={handleChange}
               className="form-input"
             />
-          </td>
+          </td></>}
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
             <div className="space-x-1">
               <button
@@ -143,21 +145,13 @@ export default function InvoicesTableItem({
               {invoice.nameInWallet}
             </div>
           </td>
-          {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <div
-              className={`inline-flex font-medium rounded-full text-center px-2.5 py-0.5 ${statusColor(
-                invoice.crmStatus
-              )}`}
-            >
-              {invoice.crmStatus}
-            </div>
-          </td> */}
+
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
               {invoice.crmName}
             </div>
           </td>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          { session && !session.user.churchInfo?.church.hasCrm && <><td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
               {invoice.group}
             </div>
@@ -171,7 +165,7 @@ export default function InvoicesTableItem({
             <div className={`font-medium ${totalColor(invoice.wallet)}`}>
               {invoice.wallet}
             </div>
-          </td>
+          </td></>}
 
           
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">

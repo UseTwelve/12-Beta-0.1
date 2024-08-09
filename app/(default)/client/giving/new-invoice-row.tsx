@@ -1,3 +1,4 @@
+import CategoryDropdown from "@/components/dropdown-category-full";
 import FullNameDropdown from "@/components/dropdown-giver";
 import { useState } from "react";
 
@@ -77,12 +78,14 @@ export default function NewInvoiceRow({
         />
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <input
-          type="text"
-          name="category"
+      <CategoryDropdown
           value={newRecord.category}
-          onChange={handleChange}
-          className="form-input"
+          onChange={(selectedOption) => {
+            setNewRecord({
+              ...newRecord,
+              category: selectedOption,
+            });
+          }}
         />
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">

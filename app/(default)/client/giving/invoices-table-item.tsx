@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Record } from "./invoices-table";
 import { InvoicesProperties } from "./invoices-properties";
-import { fetchRecords } from "@/lib/hooks/useGoogleSheet";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import FullNameDropdown from "@/components/dropdown-giver";
+import CategoryDropdown from "@/components/dropdown-category-full";
 
 interface InvoicesTableItemProps {
   invoice: Record;
@@ -38,6 +38,20 @@ export default function InvoicesTableItem({
   const [isEditingState, setIsEditingState] = useState(isEditing);
   const [editValues, setEditValues] = useState(invoice);
   const axiosAuth = useAxiosAuth();
+  const categories = [
+    {
+      id: 1,
+      name: "Tithe",
+    },
+    {
+      id: 2,
+      name: "Offering",
+    },
+    {
+      id: 3,
+      name: "Orphanage",
+    },
+  ];
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCheckboxChange(invoice.id ?? index, e.target.checked);
@@ -64,6 +78,15 @@ export default function InvoicesTableItem({
     setIsEditingState(true);
   };
 
+  const handleCategoryChange = (selectedCategory: number | null) => {
+    const selectedCategoryName =
+      categories.find((category) => category.id === selectedCategory)?.name ||
+      "";
+    setEditValues({
+      ...editValues,
+      category: selectedCategoryName,
+    });
+  };
 
   const { totalColor, statusColor, typeIcon } = InvoicesProperties();
 
@@ -92,10 +115,8 @@ export default function InvoicesTableItem({
               onChange={handleChange}
               className="form-input"
               disabled={
-                (
-                  editValues.crmStatus === "successful" ||
-                  editValues.crmStatus === "failed"
-                )
+                editValues.crmStatus === "successful" ||
+                editValues.crmStatus === "failed"
               } // Set disabled to true if status is not 'pending' or 'new'
             />
           </td>
@@ -118,7 +139,7 @@ export default function InvoicesTableItem({
             />
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap relative">
-            {isEditingState ? (
+            <div className="relative">
               <FullNameDropdown
                 value={editValues.fullName}
                 onChange={(selectedOption) => {
@@ -128,11 +149,7 @@ export default function InvoicesTableItem({
                   });
                 }}
               />
-            ) : (
-              <div className="font-medium text-gray-800 dark:text-gray-100">
-                {invoice.fullName}
-              </div>
-            )}
+            </div>
           </td>
 
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -144,15 +161,18 @@ export default function InvoicesTableItem({
               className="form-input"
             />
           </td>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <input
-              type="text"
-              name="category"
+          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap relative">
+            <CategoryDropdown
               value={editValues.category}
-              onChange={handleChange}
-              className="form-input"
+              onChange={(selectedOption) => {
+                setEditValues({
+                  ...editValues,
+                  category: selectedOption,
+                });
+              }}
             />
           </td>
+
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <input
               type="text"
