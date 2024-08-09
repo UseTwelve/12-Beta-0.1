@@ -58,6 +58,7 @@ export default function NewInvoiceRow({
                   onChange={handleChange}
                   className="form-select"
                 >
+                  <option value=""></option>
                   <option value="Group 1">Group 1</option>
                   <option value="Group 2">Group 2</option>
                 </select>
@@ -69,6 +70,7 @@ export default function NewInvoiceRow({
                   onChange={handleChange}
                   className="form-select"
                 >
+                  <option value=""></option>
                   <option value="SubGroup A">SubGroup A</option>
                   <option value="SubGroup B">SubGroup B</option>
                   <option value="SubGroup C">SubGroup C</option>
@@ -83,6 +85,7 @@ export default function NewInvoiceRow({
                   onChange={handleChange}
                   className="form-select"
                 >
+                  <option value=""></option>
                   <option value="Cash App">Cash App</option>
                   <option value="PayPal">PayPal</option>
                   <option value="Apple Pay">Apple Pay</option>

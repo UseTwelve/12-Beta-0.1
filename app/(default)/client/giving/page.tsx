@@ -220,6 +220,38 @@ function GivingContent() {
     }
   };
 
+  const handleDeleteMultipleRecords = async () => {
+  if (selectedItems.length === 0) {
+    setToastMessage("Please select records to delete.");
+    setToastWarningOpen(true);
+    return;
+  }
+
+  try {
+    setToastMessage("Deleting selected records...");
+    setToastInfoOpen(true);
+
+    const deletePromises = selectedItems.map(async (index) => {
+      const recordId = index + 1; // Adjust for 1-based index in the Google Sheets API
+      return await deleteRecord(axiosAuth, sheetId, recordId, `/client/church/record`);
+    });
+
+    await Promise.all(deletePromises);
+
+    await fetchData();
+    setSelectedItems([]); // Clear selected items
+    setToastInfoOpen(false);
+    setToastMessage("Selected records deleted successfully.");
+    setToastSuccessOpen(true);
+  } catch (error) {
+    console.error("Error deleting records:", error);
+    setToastMessage("Error deleting selected records.");
+    setToastInfoOpen(false);
+    setToastErrorOpen(true);
+  }
+};
+
+
   
   const handleDeleteRecord = (index: number) => {
     index = index + 1;
@@ -414,7 +446,10 @@ function GivingContent() {
         {/* Right side */}
         <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
           {/* Delete button */}
-          {/* <DeleteButton /> */}
+          <DeleteButton 
+        handleDeleteMultipleRecords={handleDeleteMultipleRecords} 
+        selectedItems={selectedItems} 
+      />
           {/* Dropdown */}
           <SearchForm placeholder="Search…" onChange={handleSearch} />
 

@@ -97,6 +97,7 @@ export default function InvoicesTableItem({
                   onChange={handleChange}
                   className="form-select"
                 >
+                  <option value=""></option>
                   <option value="Group 1">Group 1</option>
                   <option value="Group 2">Group 2</option>
                 </select>
@@ -108,6 +109,7 @@ export default function InvoicesTableItem({
                   onChange={handleChange}
                   className="form-select"
                 >
+                  <option value=""></option>
                   <option value="SubGroup A">SubGroup A</option>
                   <option value="SubGroup B">SubGroup B</option>
                   <option value="SubGroup C">SubGroup C</option>

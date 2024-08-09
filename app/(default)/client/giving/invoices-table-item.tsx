@@ -136,6 +136,7 @@ export default function InvoicesTableItem({
               onChange={handleChange}
               className="form-select"
             >
+              <option value=""></option>
               <option value="Cash App">Cash App</option>
               <option value="PayPal">PayPal</option>
               <option value="Apple Pay">Apple Pay</option>
