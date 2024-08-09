@@ -123,9 +123,7 @@ function GivingContent() {
     });
   };
 
-  const handleSearch = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 

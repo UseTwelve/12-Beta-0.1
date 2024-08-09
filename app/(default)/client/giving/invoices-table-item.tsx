@@ -57,7 +57,7 @@ export default function InvoicesTableItem({
     onCheckboxChange(invoice.id ?? index, e.target.checked);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: any) => {
     setEditValues({
       ...editValues,
       [e.target.name]: e.target.value,
@@ -130,13 +130,20 @@ export default function InvoicesTableItem({
             />
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <input
-              type="text"
+            <select
               name="wallet"
               value={editValues.wallet}
               onChange={handleChange}
-              className="form-input"
-            />
+              className="form-select"
+            >
+              <option value="Cash App">Cash App</option>
+              <option value="PayPal">PayPal</option>
+              <option value="Apple Pay">Apple Pay</option>
+              <option value="KingPay">KingPay</option>
+              <option value="Zelle">Zelle</option>
+              <option value="Stock">Stock</option>
+              <option value="DonorPerfect">DonorPerfect</option>
+            </select>
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap relative">
             <div className="relative">

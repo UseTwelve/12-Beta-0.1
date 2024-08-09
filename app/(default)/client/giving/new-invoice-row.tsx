@@ -15,7 +15,7 @@ export default function NewInvoiceRow({
 }: NewInvoiceRowProps) {
   const [newRecord, setNewRecord] = useState(record);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e:any) => {
     setNewRecord({
       ...newRecord,
       [e.target.name]: e.target.value,
@@ -49,14 +49,21 @@ export default function NewInvoiceRow({
         />
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <input
-          type="text"
-          name="wallet"
-          value={newRecord.wallet}
-          onChange={handleChange}
-          className="form-input"
-        />
-      </td>
+            <select
+              name="wallet"
+              value={newRecord.wallet}
+              onChange={handleChange}
+              className="form-select"
+            >
+              <option value="Cash App">Cash App</option>
+              <option value="PayPal">PayPal</option>
+              <option value="Apple Pay">Apple Pay</option>
+              <option value="KingPay">KingPay</option>
+              <option value="Zelle">Zelle</option>
+              <option value="Stock">Stock</option>
+              <option value="DonorPerfect">DonorPerfect</option>
+            </select>
+          </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <FullNameDropdown
           value={newRecord.fullName}

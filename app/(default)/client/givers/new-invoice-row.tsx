@@ -1,5 +1,5 @@
-import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 interface NewInvoiceRowProps {
   record: any;
@@ -7,11 +7,15 @@ interface NewInvoiceRowProps {
   onCancel: () => void;
 }
 
-export default function NewInvoiceRow({ record, onSave, onCancel }: NewInvoiceRowProps) {
+export default function NewInvoiceRow({
+  record,
+  onSave,
+  onCancel,
+}: NewInvoiceRowProps) {
   const [newRecord, setNewRecord] = useState(record);
   const { data: session, status } = useSession();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: any) => {
     setNewRecord({
       ...newRecord,
       [e.target.name]: e.target.value,
@@ -26,30 +30,85 @@ export default function NewInvoiceRow({ record, onSave, onCancel }: NewInvoiceRo
     <tr>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px"></td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <input type="text" name="nameInWallet" value={newRecord.nameInWallet} onChange={handleChange} className="form-input" />
+        <input
+          type="text"
+          name="nameInWallet"
+          value={newRecord.nameInWallet}
+          onChange={handleChange}
+          className="form-input"
+        />
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <input type="text" name="crmName" value={newRecord.crmName} onChange={handleChange} className="form-input" />
+        <input
+          type="text"
+          name="crmName"
+          value={newRecord.crmName}
+          onChange={handleChange}
+          className="form-input"
+        />
       </td>
 
-      { session && !session.user.churchInfo?.church.hasCrm && <> <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <input type="text" name="group" value={newRecord.group} onChange={handleChange} className="form-input" />
-      </td>
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <input type="text" name="subGroup" value={newRecord.subGroup} onChange={handleChange} className="form-input" />
-      </td>
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <input type="text" name="wallet" value={newRecord.wallet} onChange={handleChange} className="form-input" />
-      </td> </>}
+      {session && !session.user.churchInfo?.church.hasCrm && (
+        <>
+          {" "}
+          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <select
+                  name="group"
+                  value={newRecord.group}
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  <option value="Group 1">Group 1</option>
+                  <option value="Group 2">Group 2</option>
+                </select>
+              </td>
+              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <select
+                  name="subGroup"
+                  value={newRecord.subGroup}
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  <option value="SubGroup A">SubGroup A</option>
+                  <option value="SubGroup B">SubGroup B</option>
+                  <option value="SubGroup C">SubGroup C</option>
+                  <option value="SubGroup D">SubGroup D</option>
+                  <option value="SubGroup E">SubGroup E</option>
+                </select>
+              </td>
+              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <select
+                  name="wallet"
+                  value={newRecord.wallet}
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  <option value="Cash App">Cash App</option>
+                  <option value="PayPal">PayPal</option>
+                  <option value="Apple Pay">Apple Pay</option>
+                  <option value="KingPay">KingPay</option>
+                  <option value="Zelle">Zelle</option>
+                  <option value="Stock">Stock</option>
+                  <option value="DonorPerfect">DonorPerfect</option>
+                </select>
+              </td>{" "}
+        </>
+      )}
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
         <div className="space-x-1">
-          <button className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full" onClick={handleSave}>
+          <button
+            className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full"
+            onClick={handleSave}
+          >
             <span className="sr-only">Save</span>
             <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
               <path d="M16 3c-7.2 0-13 5.8-13 13s5.8 13 13 13 13-5.8 13-13S23.2 3 16 3zM23 16l-7 7-7-7 1.4-1.4 4.6 4.6V8h2v11.2l4.6-4.6L23 16z" />
             </svg>
           </button>
-          <button className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full" onClick={onCancel}>
+          <button
+            className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full"
+            onClick={onCancel}
+          >
             <span className="sr-only">Cancel</span>
             <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
               <path d="M16 3c-7.2 0-13 5.8-13 13s5.8 13 13 13 13-5.8 13-13S23.2 3 16 3zM20.7 20.7l-1.4 1.4-4.3-4.3-4.3 4.3-1.4-1.4 4.3-4.3-4.3-4.3 1.4-1.4 4.3 4.3 4.3-4.3 1.4 1.4-4.3 4.3 4.3 4.3z" />

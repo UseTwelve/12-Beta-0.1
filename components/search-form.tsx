@@ -1,6 +1,10 @@
 export default function SearchForm({ placeholder = 'Search…', onChange }: { placeholder: string, onChange: (event: React.ChangeEvent<HTMLInputElement>) => void }) {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent the form from reloading the page
+  };
+
   return (
-    <form className="relative">
+    <form className="relative" onSubmit={handleSubmit}>
       <label htmlFor="action-search" className="sr-only">Search</label>
       <input 
         id="action-search" 
@@ -16,5 +20,5 @@ export default function SearchForm({ placeholder = 'Search…', onChange }: { pl
         </svg>
       </button>
     </form>
-  )
+  );
 }

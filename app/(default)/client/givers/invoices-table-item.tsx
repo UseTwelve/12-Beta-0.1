@@ -29,7 +29,7 @@ export default function InvoicesTableItem({
     onCheckboxChange(invoice.id ?? index + 1, e.target.checked);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: any) => {
     setEditValues({
       ...editValues,
       [e.target.name]: e.target.value,
@@ -88,33 +88,51 @@ export default function InvoicesTableItem({
               className="form-input"
             />
           </td>
-          { session && !session.user.churchInfo?.church.hasCrm && <><td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <input
-              type="text"
-              name="group"
-              value={editValues.group}
-              onChange={handleChange}
-              className="form-input"
-            />
-          </td>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <input
-              type="text"
-              name="subGroup"
-              value={editValues.subGroup}
-              onChange={handleChange}
-              className="form-input"
-            />
-          </td>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <input
-              type="text"
-              name="wallet"
-              value={editValues.wallet}
-              onChange={handleChange}
-              className="form-input"
-            />
-          </td></>}
+          {session && !session.user.churchInfo?.church.hasCrm && (
+            <>
+              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <select
+                  name="group"
+                  value={editValues.group}
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  <option value="Group 1">Group 1</option>
+                  <option value="Group 2">Group 2</option>
+                </select>
+              </td>
+              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <select
+                  name="subGroup"
+                  value={editValues.subGroup}
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  <option value="SubGroup A">SubGroup A</option>
+                  <option value="SubGroup B">SubGroup B</option>
+                  <option value="SubGroup C">SubGroup C</option>
+                  <option value="SubGroup D">SubGroup D</option>
+                  <option value="SubGroup E">SubGroup E</option>
+                </select>
+              </td>
+              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <select
+                  name="wallet"
+                  value={editValues.wallet}
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  <option value="Cash App">Cash App</option>
+                  <option value="PayPal">PayPal</option>
+                  <option value="Apple Pay">Apple Pay</option>
+                  <option value="KingPay">KingPay</option>
+                  <option value="Zelle">Zelle</option>
+                  <option value="Stock">Stock</option>
+                  <option value="DonorPerfect">DonorPerfect</option>
+                </select>
+              </td>
+            </>
+          )}
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
             <div className="space-x-1">
               <button
@@ -151,23 +169,26 @@ export default function InvoicesTableItem({
               {invoice.crmName}
             </div>
           </td>
-          { session && !session.user.churchInfo?.church.hasCrm && <><td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <div className="font-medium text-gray-800 dark:text-gray-100">
-              {invoice.group}
-            </div>
-          </td>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <div className="font-medium text-gray-800 dark:text-gray-100">
-              {invoice.subGroup}
-            </div>
-          </td>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <div className={`font-medium ${totalColor(invoice.wallet)}`}>
-              {invoice.wallet}
-            </div>
-          </td></>}
+          {session && !session.user.churchInfo?.church.hasCrm && (
+            <>
+              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <div className="font-medium text-gray-800 dark:text-gray-100">
+                  {invoice.group}
+                </div>
+              </td>
+              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <div className="font-medium text-gray-800 dark:text-gray-100">
+                  {invoice.subGroup}
+                </div>
+              </td>
+              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <div className={`font-medium ${totalColor(invoice.wallet)}`}>
+                  {invoice.wallet}
+                </div>
+              </td>
+            </>
+          )}
 
-          
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
             <div className="space-x-1">
               <button
