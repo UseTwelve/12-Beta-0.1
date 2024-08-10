@@ -19,13 +19,15 @@ Chart.register(BarController, BarElement, LinearScale, TimeScale, Tooltip, Legen
 interface BarChart04Props {
   data: ChartData
   width: number
-  height: number
+  height: number,
+  selected: string,
 }
 
 export default function BarChart04({
   data,
   width,
-  height
+  height,
+  selected
 }: BarChart04Props) {
 
   const [chart, setChart] = useState<Chart | null>(null)
@@ -57,9 +59,9 @@ export default function BarChart04({
             type: 'time',
             time: {
               parser: 'MM-DD-YYYY',
-              unit: 'month',
+              unit: 'year', // Change this to 'year'
               displayFormats: {
-                month: 'MMM',
+                year: 'YYYY', // Show full year
               },
             },
             border: {
@@ -160,7 +162,7 @@ export default function BarChart04({
     })
     setChart(newChart)
     return () => newChart.destroy()
-  }, [])
+  }, [selected])
 
   useEffect(() => {
     if (!chart) return

@@ -11,7 +11,6 @@ import {
 import type { ChartData } from 'chart.js'
 import 'chartjs-adapter-moment'
 
-// Import utilities
 import { tailwindConfig, formatThousands } from '@/components/utils/utils'
 
 Chart.register(LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip)
@@ -54,7 +53,7 @@ export default function LineChart05({
             },
             ticks: {
               maxTicksLimit: 7,
-              callback: (value) => `${value}%`,
+              callback: (value) => `$${formatThousands(value as number)}`,
               color: darkMode ? textColor.dark : textColor.light,
             },
             grid: {
@@ -90,7 +89,7 @@ export default function LineChart05({
           tooltip: {
             callbacks: {
               title: () => '', // Disable tooltip title
-              label: (context) => `${context.parsed.y}%`,
+              label: (context) => `$${formatThousands(context.parsed.y)}%`,
             },
             bodyColor: darkMode ? tooltipBodyColor.dark : tooltipBodyColor.light,
             backgroundColor: darkMode ? tooltipBgColor.dark : tooltipBgColor.light,
@@ -183,9 +182,7 @@ export default function LineChart05({
       <div className="px-5 py-3">
         <div className="flex flex-wrap justify-between items-end gap-y-2 gap-x-4">
           <div className="flex items-center">
-            <div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">244.7%</div>
             <div className="text-sm text-gray-500 dark:text-gray-400">
-              <span className="font-medium text-gray-800 dark:text-gray-100">17.4%</span> AVG
             </div>
           </div>
           <div className="grow mb-1">
@@ -193,7 +190,6 @@ export default function LineChart05({
           </div>
         </div>
       </div>
-      {/* Chart built with Chart.js 3 */}
       <div className="grow">
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>    
