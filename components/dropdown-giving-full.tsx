@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import { Menu, MenuButton, MenuItems, MenuItem, Transition } from '@headlessui/react'
 
-export default function DropdownFull({ selected, onSelect }) {
+export default function DropdownFull({ selected, onSelect }:any) {
   const options = [
     { id: 0, value: 'International Missions' },
     { id: 1, value: 'InnerCity Mentorship' },
