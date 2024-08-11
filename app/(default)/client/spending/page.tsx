@@ -24,7 +24,6 @@ import Datepicker from "@/components/datepicker";
 import ModalBlank from "@/components/modal-blank";
 import data from "./data";
 
-
 function SpendingContent() {
   const { data: session, status } = useSession();
   const axiosAuth = useAxiosAuth();
@@ -43,40 +42,45 @@ function SpendingContent() {
   const [selectedItems, setSelectedItems] = useState<number[]>([]); // Add this line
 
   const filteredAndSortedRecords = useMemo(() => {
-    // If searchTerm is empty, return all records (except the header row)
     if (searchTerm.trim() === "") {
       return records;
     }
-  
-    // Split search terms by commas
-    const searchTerms = searchTerm.split(",").filter(term=> term !== " ").map(term => term.trim().toLowerCase());
-  
-    // Filter records based on search terms
+
+    const searchTerms = searchTerm
+      .split(",")
+      .map((term) => term.trim().toLowerCase());
+
     let filteredRecords = records.slice(1).filter((record) => {
-      return Object.values(record).some((value) => 
-        typeof value === 'string' && searchTerms.some((term) => value.toLowerCase().includes(term))
+      return Object.values(record).some(
+        (value) =>
+          typeof value === "string" &&
+          searchTerms.some((term) => value.toLowerCase().includes(term))
       );
     });
-  
-    // Sort the filtered records
+
     if (sortConfig.key) {
-      filteredRecords.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
+      filteredRecords = filteredRecords.sort((a, b) => {
+        const valueA =
+          sortConfig.key === "amount"
+            ? parseFloat(a[sortConfig.key].replace(/,/g, ""))
+            : a[sortConfig.key];
+        const valueB =
+          sortConfig.key === "amount"
+            ? parseFloat(b[sortConfig.key].replace(/,/g, ""))
+            : b[sortConfig.key];
+
+        if (valueA < valueB) {
           return sortConfig.direction === "asc" ? -1 : 1;
         }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
+        if (valueA > valueB) {
           return sortConfig.direction === "asc" ? 1 : -1;
         }
         return 0;
       });
     }
-  
-    // Add back the header row after filtering and sorting
+
     return [records[0], ...filteredRecords];
   }, [records, searchTerm, sortConfig]);
-  
-  
-
 
   const fetchData = async () => {
     try {
@@ -121,9 +125,7 @@ function SpendingContent() {
     setSearchTerm(event.target.value);
   };
 
-  const handleSaveNewRecord = async (
-    record: Record
-  ) => {
+  const handleSaveNewRecord = async (record: Record) => {
     try {
       setToastMessage("Saving new record...");
       setToastInfoOpen(true);
@@ -151,33 +153,40 @@ function SpendingContent() {
       setToastWarningOpen(true);
       return;
     }
-  
-    const newRecords = selectedItems.filter(index => records[index].crmStatus === "new");
-  
+
+    const newRecords = selectedItems.filter(
+      (index) => records[index].crmStatus === "new"
+    );
+
     if (newRecords.length !== selectedItems.length) {
       setToastMessage("Please select only new records to upload.");
       setToastWarningOpen(true);
       return;
     }
-  
+
     try {
       setToastMessage("Uploading records...");
       setToastInfoOpen(true);
-  
-      const updatePromises = newRecords.map(index => {
+
+      const updatePromises = newRecords.map((index) => {
         const updatedRecord = { ...records[index], crmStatus: "pending" };
-        return updateRecord(axiosAuth, index + 1, updatedRecord, `/client/church/spending`);
+        return updateRecord(
+          axiosAuth,
+          index + 1,
+          updatedRecord,
+          `/client/church/spending`
+        );
       });
-  
+
       await Promise.all(updatePromises);
-  
+
       // Upload the records after updating the statuses
       await uploadRecord(axiosAuth, "/client/church/upload");
-  
+
       setToastInfoOpen(false);
       setToastMessage("Records uploaded successfully.");
       setToastSuccessOpen(true);
-  
+
       // Optionally, refetch the records to update the state
       await fetchData();
     } catch (error) {
@@ -187,9 +196,6 @@ function SpendingContent() {
       setToastErrorOpen(true);
     }
   };
-  
-  
-  
 
   const handleUpdateRecord = async (index: number, updatedRecord: any) => {
     index = index + 1;
@@ -215,38 +221,41 @@ function SpendingContent() {
   };
 
   const handleDeleteMultipleRecords = async () => {
-  if (selectedItems.length === 0) {
-    setToastMessage("Please select records to delete.");
-    setToastWarningOpen(true);
-    return;
-  }
+    if (selectedItems.length === 0) {
+      setToastMessage("Please select records to delete.");
+      setToastWarningOpen(true);
+      return;
+    }
 
-  try {
-    setToastMessage("Deleting selected records...");
-    setToastInfoOpen(true);
+    try {
+      setToastMessage("Deleting selected records...");
+      setToastInfoOpen(true);
 
-    const deletePromises = selectedItems.map(async (index) => {
-      const recordId = index + 1; // Adjust for 1-based index in the Google Sheets API
-      return await deleteRecord(axiosAuth, sheetId, recordId, `/client/church/spending`);
-    });
+      const deletePromises = selectedItems.map(async (index) => {
+        const recordId = index + 1; // Adjust for 1-based index in the Google Sheets API
+        return await deleteRecord(
+          axiosAuth,
+          sheetId,
+          recordId,
+          `/client/church/spending`
+        );
+      });
 
-    await Promise.all(deletePromises);
+      await Promise.all(deletePromises);
 
-    await fetchData();
-    setSelectedItems([]); // Clear selected items
-    setToastInfoOpen(false);
-    setToastMessage("Selected records deleted successfully.");
-    setToastSuccessOpen(true);
-  } catch (error) {
-    console.error("Error deleting records:", error);
-    setToastMessage("Error deleting selected records.");
-    setToastInfoOpen(false);
-    setToastErrorOpen(true);
-  }
-};
+      await fetchData();
+      setSelectedItems([]); // Clear selected items
+      setToastInfoOpen(false);
+      setToastMessage("Selected records deleted successfully.");
+      setToastSuccessOpen(true);
+    } catch (error) {
+      console.error("Error deleting records:", error);
+      setToastMessage("Error deleting selected records.");
+      setToastInfoOpen(false);
+      setToastErrorOpen(true);
+    }
+  };
 
-
-  
   const handleDeleteRecord = (index: number) => {
     index = index + 1;
     setSelectedRecordId(index); // Store the ID of the member to delete
@@ -258,7 +267,12 @@ function SpendingContent() {
       try {
         setToastMessage("Deleting record...");
         setToastInfoOpen(true);
-        await deleteRecord(axiosAuth,sheetId, selectedRecordId, `/client/church/spending`);  // Pass sheetId and rowIndex
+        await deleteRecord(
+          axiosAuth,
+          sheetId,
+          selectedRecordId,
+          `/client/church/spending`
+        ); // Pass sheetId and rowIndex
         await fetchData();
         setToastInfoOpen(false);
         setToastMessage("Record deleted successfully.");
@@ -273,8 +287,6 @@ function SpendingContent() {
       }
     }
   };
-  
-  
 
   const handleDateChange = (dates: [any, any]) => {
     const [startDate, endDate] = dates;
@@ -302,7 +314,30 @@ function SpendingContent() {
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
     }
+
+    // Sort records
+    // Sort records
+    const sortedRecords = [...records].sort((a, b) => {
+      const valueA =
+        key === "amount"
+          ? parseFloat(String(a[key]).replace(/,/g, ""))
+          : a[key];
+      const valueB =
+        key === "amount"
+          ? parseFloat(String(b[key]).replace(/,/g, ""))
+          : b[key];
+
+      if (valueA < valueB) {
+        return sortConfig.direction === "asc" ? -1 : 1;
+      }
+      if (valueA > valueB) {
+        return sortConfig.direction === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+
     setSortConfig({ key, direction });
+    setRecords(sortedRecords);
   };
 
   if (status === "loading") return <p>Loading...</p>;
@@ -398,22 +433,24 @@ function SpendingContent() {
         <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
           {/* Search form */}
           {/* Create invoice button */}
-          {session?.user.churchInfo?.church.hasCrm &&<button
-            className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white"
-            onClick={handleUploadRecord}
-          >
-            <svg
-              className="fill-current shrink-0 xs:hidden"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
+          {session?.user.churchInfo?.church.hasCrm && (
+            <button
+              className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white"
+              onClick={handleUploadRecord}
             >
-              <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-            </svg>
-            <span className="max-xs:sr-only">
-              Upload to {session?.user.churchInfo?.church.name}
-            </span>
-          </button>}
+              <svg
+                className="fill-current shrink-0 xs:hidden"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+              >
+                <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
+              </svg>
+              <span className="max-xs:sr-only">
+                Upload to {session?.user.churchInfo?.church.name}
+              </span>
+            </button>
+          )}
           <button
             className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white"
             onClick={handleAddRecord}
@@ -440,10 +477,10 @@ function SpendingContent() {
         {/* Right side */}
         <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
           {/* Delete button */}
-          <DeleteButton 
-        handleDeleteMultipleRecords={handleDeleteMultipleRecords} 
-        selectedItems={selectedItems} 
-      />
+          <DeleteButton
+            handleDeleteMultipleRecords={handleDeleteMultipleRecords}
+            selectedItems={selectedItems}
+          />
           {/* Dropdown */}
           <SearchForm placeholder="Search…" onChange={handleSearch} />
 

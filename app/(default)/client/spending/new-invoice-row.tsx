@@ -41,23 +41,49 @@ export default function NewInvoiceRow({
         />
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <input
-          type="text"
-          name="budget"
-          value={newRecord.budget}
-          onChange={handleChange}
-          className="form-input"
-        />
-      </td>
+            <select
+              name="budget"
+              value={newRecord.budget}
+              onChange={handleChange}
+              className="form-select"
+            >
+              <option value=""></option>
+              <option value="Payroll">Payroll</option>
+              <option value="Facilities">Facilities</option>
+              <option value="Operations">Operations</option>
+              <option value="Fundraising">Fundraising</option>
+              <option value="Software">Software</option>
+              <option value="Insurance">Insurance</option>
+            </select>
+          </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <input
-          type="text"
-          name="expense"
-          value={newRecord.expense}
-          onChange={handleChange}
-          className="form-input"
-        />
-      </td>
+            <select
+              name="expense"
+              value={newRecord.expense}
+              onChange={handleChange}
+              className="form-select"
+            >
+              <option value=""></option>
+              <option value="Salary">Salary</option>
+              <option value="Benefits">Benefits</option>
+              <option value="Overtime">Overtime</option>
+              <option value="Rent">Rent</option>
+              <option value="Utility">Utility</option>
+              <option value="Property Maintenance">Property Maintenance</option>
+              <option value="Property Supplies">Property Supplies</option>
+              <option value="Program Development">Program Development</option>
+              <option value="Direct ProgramServices">Direct ProgramServices</option>
+              <option value="Materials">Materials</option>
+              <option value="Contracted Services">Contracted Services</option>
+              <option value="Travel">Travel</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Legal Fees">Legal Fees</option>
+              <option value="CRM Tool">CRM Tool</option>
+              <option value="Financial Management Software">Financial Management Software</option>
+              <option value="General Liability">General Liability</option>
+              <option value="Property Insurance">Property Insurance</option>
+            </select>
+          </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <input
           type="text"

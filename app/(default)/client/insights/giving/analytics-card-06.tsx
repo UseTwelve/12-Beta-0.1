@@ -21,7 +21,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '82%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>International Missions</div>
-                  <div className="font-medium">28K</div>
+                  <div className="font-medium">$281K</div>
                 </div>
               </li>
               {/* Item */}
@@ -29,7 +29,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '70%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>InnerCity Mentorship</div>
-                  <div className="font-medium">12K</div>
+                  <div className="font-medium">$121K</div>
                 </div>
               </li>
               {/* Item */}
@@ -37,7 +37,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '60%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Bible Distribution</div>
-                  <div className="font-medium">9.7K</div>
+                  <div className="font-medium">$91.7K</div>
                 </div>
               </li>
               {/* Item */}
@@ -45,7 +45,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '44%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Family Support</div>
-                  <div className="font-medium">9.2K</div>
+                  <div className="font-medium">$90.2K</div>
                 </div>
               </li>
               {/* Item */}
@@ -53,7 +53,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '40%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Adoption Initative</div>
-                  <div className="font-medium">7K</div>
+                  <div className="font-medium">$71K</div>
                 </div>
               </li>
               {/* Item */}
@@ -61,7 +61,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '30%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Food Program</div>
-                  <div className="font-medium">6.4K</div>
+                  <div className="font-medium">$67.4K</div>
                 </div>
               </li>
               {/* Item */}
@@ -69,7 +69,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '22%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Housing Assistance</div>
-                  <div className="font-medium">5.4K</div>
+                  <div className="font-medium">$51.4K</div>
                 </div>
               </li>
               

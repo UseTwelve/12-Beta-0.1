@@ -18,13 +18,15 @@ Chart.register(LineController, LineElement, Filler, PointElement, LinearScale, T
 interface LineChart05Props {
   data: ChartData
   width: number
-  height: number
+  height: number,
+  selectedCategories: string[]
 }
 
 export default function LineChart05({
   data,
   width,
-  height
+  height,
+  selectedCategories
 }: LineChart05Props) {
 
   const [chart, setChart] = useState<Chart | null>(null)
@@ -154,7 +156,7 @@ export default function LineChart05({
     })
     setChart(newChart)
     return () => newChart.destroy()
-  }, [])
+  }, [selectedCategories])
 
   useEffect(() => {
     if (!chart) return

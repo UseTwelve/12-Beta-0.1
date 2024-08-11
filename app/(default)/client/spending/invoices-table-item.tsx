@@ -100,7 +100,7 @@ export default function InvoicesTableItem({
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
-              {invoice.amount}
+              ${invoice.amount}
             </div>
           </td>
 

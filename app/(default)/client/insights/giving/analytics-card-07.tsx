@@ -21,7 +21,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r" aria-hidden="true" style={{ width: '82%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Carol Harris</div>
-                  <div className="font-medium">4.2K</div>
+                  <div className="font-medium">$403.2K</div>
                 </div>
               </li>
               {/* Item */}
@@ -29,7 +29,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r" aria-hidden="true" style={{ width: '70%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>David Johnson</div>
-                  <div className="font-medium">3.4K</div>
+                  <div className="font-medium">$303.4K</div>
                 </div>
               </li>
               {/* Item */}
@@ -37,7 +37,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r" aria-hidden="true" style={{ width: '60%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Donald Williams</div>
-                  <div className="font-medium">1.6k</div>
+                  <div className="font-medium">$103.6k</div>
                 </div>
               </li>
               {/* Item */}
@@ -45,7 +45,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r" aria-hidden="true" style={{ width: '44%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Jennifer Bark</div>
-                  <div className="font-medium">1.2k</div>
+                  <div className="font-medium">$103.2k</div>
                 </div>
               </li>
               {/* Item */}
@@ -53,7 +53,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r" aria-hidden="true" style={{ width: '40%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Jennifer Lewis</div>
-                  <div className="font-medium">912</div>
+                  <div className="font-medium">$912</div>
                 </div>
               </li>
               {/* Item */}
@@ -61,7 +61,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r" aria-hidden="true" style={{ width: '30%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Jessica Moore</div>
-                  <div className="font-medium">677</div>
+                  <div className="font-medium">$677</div>
                 </div>
               </li>
               {/* Item */}
@@ -69,7 +69,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r" aria-hidden="true" style={{ width: '22%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Brian Lee</div>
-                  <div className="font-medium">449</div>
+                  <div className="font-medium">$449</div>
                 </div>
               </li>
               {/* Item */}
@@ -77,7 +77,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r" aria-hidden="true" style={{ width: '12%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Amanda Thomas</div>
-                  <div className="font-medium">269</div>
+                  <div className="font-medium">$269</div>
                 </div>
               </li>
             </ul>
