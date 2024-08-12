@@ -1,5 +1,10 @@
 import Link from 'next/link'
 
+// Helper function to format numbers with "K"
+const formatWithK = (num: number) => {
+  return `${(num / 1000).toFixed(0)}K`; // Divide by 1000 and append "K"
+};
+
 export default function AnalyticsCard06() {
   // List of vendors
   const vendors = [
@@ -39,7 +44,7 @@ export default function AnalyticsCard06() {
                   <div className={`absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r`} aria-hidden="true" style={{ width: `${Math.floor((vendor.amount / vendorData[0].amount) * 100)}%` }}></div>
                   <div className="relative flex justify-between space-x-2">
                     <div>{vendor.vendor}</div>
-                    <div className="font-medium">${vendor.amount.toLocaleString()}</div>
+                    <div className="font-medium">{formatWithK(vendor.amount)}</div>
                   </div>
                 </li>
               ))}
