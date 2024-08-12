@@ -21,7 +21,7 @@ export default function AnalyticsCard05() {
                 <div className="absolute inset-0 bg-violet-100 dark:bg-violet-500/20 rounded-r" aria-hidden="true" style={{ width: '82%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Stock</div>
-                  <div className="font-medium">$400.7K</div>
+                  <div className="font-medium">$400K</div>
                 </div>
               </li>
               {/* Item */}
@@ -29,7 +29,7 @@ export default function AnalyticsCard05() {
                 <div className="absolute inset-0 bg-violet-100 dark:bg-violet-500/20 rounded-r" aria-hidden="true" style={{ width: '70%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Zelle</div>
-                  <div className="font-medium">$371.2K</div>
+                  <div className="font-medium">$371K</div>
                 </div>
               </li>
               {/* Item */}
@@ -37,7 +37,7 @@ export default function AnalyticsCard05() {
                 <div className="absolute inset-0 bg-violet-100 dark:bg-violet-500/20 rounded-r" aria-hidden="true" style={{ width: '60%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Apple Pay</div>
-                  <div className="font-medium">$350.4K</div>
+                  <div className="font-medium">$350K</div>
                 </div>
               </li>
               {/* Item */}
@@ -45,7 +45,7 @@ export default function AnalyticsCard05() {
                 <div className="absolute inset-0 bg-violet-100 dark:bg-violet-500/20 rounded-r" aria-hidden="true" style={{ width: '44%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>DonorPerfect</div>
-                  <div className="font-medium">$301.1K</div>
+                  <div className="font-medium">$304K</div>
                 </div>
               </li>
               {/* Item */}
@@ -53,7 +53,7 @@ export default function AnalyticsCard05() {
                 <div className="absolute inset-0 bg-violet-100 dark:bg-violet-500/20 rounded-r" aria-hidden="true" style={{ width: '40%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Cash App</div>
-                  <div className="font-medium">$201.2K</div>
+                  <div className="font-medium">$201K</div>
                 </div>
               </li>
               {/* Item */}
@@ -61,7 +61,7 @@ export default function AnalyticsCard05() {
                 <div className="absolute inset-0 bg-violet-100 dark:bg-violet-500/20 rounded-r" aria-hidden="true" style={{ width: '30%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>PayPal</div>
-                  <div className="font-medium">$111.7K</div>
+                  <div className="font-medium">$113K</div>
                 </div>
               </li>
             </ul>

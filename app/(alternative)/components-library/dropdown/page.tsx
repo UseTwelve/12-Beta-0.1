@@ -45,7 +45,7 @@ export default function DropdownLibrary() {
             {/* Filter */}
             <div>
               <h2 className="text-2xl text-gray-800 dark:text-gray-100 font-bold mb-6">Filter</h2>
-              <DropdownFilter />
+              {/* <DropdownFilter /> */}
             </div>
 
             {/* Profile */}

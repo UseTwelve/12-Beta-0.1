@@ -67,7 +67,7 @@ export default function FintechCard01({ selectedCategories }: { selectedCategori
     <div className="flex flex-col col-span-full bg-white dark:bg-gray-800 shadow-sm rounded-xl">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex justify-between">
         <h2 className="font-semibold text-gray-800 dark:text-gray-100">
-          Giving{" "}
+          Spending{" "}
           <span className="text-gray-400 dark:text-gray-500 font-medium">
             ${totalSum.toLocaleString()}
           </span>

@@ -37,7 +37,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '60%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Bible Distribution</div>
-                  <div className="font-medium">$91.7K</div>
+                  <div className="font-medium">$91K</div>
                 </div>
               </li>
               {/* Item */}
@@ -45,7 +45,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '44%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Family Support</div>
-                  <div className="font-medium">$90.2K</div>
+                  <div className="font-medium">$90K</div>
                 </div>
               </li>
               {/* Item */}
@@ -61,7 +61,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '30%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Food Program</div>
-                  <div className="font-medium">$67.4K</div>
+                  <div className="font-medium">$67K</div>
                 </div>
               </li>
               {/* Item */}
@@ -69,7 +69,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '22%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Housing Assistance</div>
-                  <div className="font-medium">$51.4K</div>
+                  <div className="font-medium">$51K</div>
                 </div>
               </li>
               

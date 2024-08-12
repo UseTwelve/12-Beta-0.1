@@ -20,7 +20,7 @@ interface BarChart04Props {
   data: ChartData
   width: number
   height: number,
-  selected: string,
+  selected: string[],
 }
 
 export default function BarChart04({

@@ -1,0 +1,96 @@
+const data = [
+
+  { date: "07-01-2023", amount: 15439, category: "Payroll" },
+  { date: "07-01-2023", amount: 1544, category: "Facilities" },
+  { date: "07-01-2023", amount: 5558, category: "Operations" },
+  { date: "07-01-2023", amount: 772, category: "Fundraising" },
+  { date: "07-01-2023", amount: 154, category: "Software" },
+  { date: "07-01-2023", amount: 463, category: "Insurance" },
+
+  { date: "08-01-2023", amount: 20580, category: "Payroll" },
+  { date: "08-01-2023", amount: 2058, category: "Facilities" },
+  { date: "08-01-2023", amount: 7409, category: "Operations" },
+  { date: "08-01-2023", amount: 1029, category: "Fundraising" },
+  { date: "08-01-2023", amount: 206, category: "Software" },
+  { date: "08-01-2023", amount: 617, category: "Insurance" },
+
+  { date: "09-01-2023", amount: 29241, category: "Payroll" },
+  { date: "09-01-2023", amount: 2924, category: "Facilities" },
+  { date: "09-01-2023", amount: 10527, category: "Operations" },
+  { date: "09-01-2023", amount: 1462, category: "Fundraising" },
+  { date: "09-01-2023", amount: 292, category: "Software" },
+  { date: "09-01-2023", amount: 877, category: "Insurance" },
+
+  { date: "10-01-2023", amount: 25902, category: "Payroll" },
+  { date: "10-01-2023", amount: 2590, category: "Facilities" },
+  { date: "10-01-2023", amount: 9325, category: "Operations" },
+  { date: "10-01-2023", amount: 1295, category: "Fundraising" },
+  { date: "10-01-2023", amount: 259, category: "Software" },
+  { date: "10-01-2023", amount: 777, category: "Insurance" },
+
+  { date: "11-01-2023", amount: 31763, category: "Payroll" },
+  { date: "11-01-2023", amount: 3176, category: "Facilities" },
+  { date: "11-01-2023", amount: 11435, category: "Operations" },
+  { date: "11-01-2023", amount: 1588, category: "Fundraising" },
+  { date: "11-01-2023", amount: 318, category: "Software" },
+  { date: "11-01-2023", amount: 953, category: "Insurance" },
+
+  { date: "12-01-2023", amount: 18324, category: "Payroll" },
+  { date: "12-01-2023", amount: 1832, category: "Facilities" },
+  { date: "12-01-2023", amount: 6597, category: "Operations" },
+  { date: "12-01-2023", amount: 916, category: "Fundraising" },
+  { date: "12-01-2023", amount: 183, category: "Software" },
+  { date: "12-01-2023", amount: 550, category: "Insurance" },
+
+  { date: "01-01-2024", amount: 24575, category: "Payroll" },
+  { date: "01-01-2024", amount: 2458, category: "Facilities" },
+  { date: "01-01-2024", amount: 8847, category: "Operations" },
+  { date: "01-01-2024", amount: 1229, category: "Fundraising" },
+  { date: "01-01-2024", amount: 246, category: "Software" },
+  { date: "01-01-2024", amount: 737, category: "Insurance" },
+
+  { date: "02-01-2024", amount: 38275, category: "Payroll" },
+  { date: "02-01-2024", amount: 3828, category: "Facilities" },
+  { date: "02-01-2024", amount: 13779, category: "Operations" },
+  { date: "02-01-2024", amount: 1914, category: "Fundraising" },
+  { date: "02-01-2024", amount: 383, category: "Software" },
+  { date: "02-01-2024", amount: 1148, category: "Insurance" },
+
+  { date: "03-01-2024", amount: 41532, category: "Payroll" },
+  { date: "03-01-2024", amount: 4153, category: "Facilities" },
+  { date: "03-01-2024", amount: 14952, category: "Operations" },
+  { date: "03-01-2024", amount: 2077, category: "Fundraising" },
+  { date: "03-01-2024", amount: 415, category: "Software" },
+  { date: "03-01-2024", amount: 1246, category: "Insurance" },
+  
+  { date: "04-01-2024", amount: 36908, category: "Payroll" },
+  { date: "04-01-2024", amount: 3691, category: "Facilities" },
+  { date: "04-01-2024", amount: 13287, category: "Operations" },
+  { date: "04-01-2024", amount: 1845, category: "Fundraising" },
+  { date: "04-01-2024", amount: 369, category: "Software" },
+  { date: "04-01-2024", amount: 1107, category: "Insurance" },
+
+  { date: "05-01-2024", amount: 39417, category: "Payroll" },
+  { date: "05-01-2024", amount: 3942, category: "Facilities" },
+  { date: "05-01-2024", amount: 14190, category: "Operations" },
+  { date: "05-01-2024", amount: 1971, category: "Fundraising" },
+  { date: "05-01-2024", amount: 394, category: "Software" },
+  { date: "05-01-2024", amount: 1183, category: "Insurance" },
+
+  { date: "06-01-2024", amount: 37654, category: "Payroll" },
+  { date: "06-01-2024", amount: 3765, category: "Facilities" },
+  { date: "06-01-2024", amount: 13555, category: "Operations" },
+  { date: "06-01-2024", amount: 1883, category: "Fundraising" },
+  { date: "06-01-2024", amount: 377, category: "Software" },
+  { date: "06-01-2024", amount: 1130, category: "Insurance" },
+
+  { date: "07-01-2024", amount: 40291, category: "Payroll" },
+  { date: "07-01-2024", amount: 4029, category: "Facilities" },
+  { date: "07-01-2024", amount: 14505, category: "Operations" },
+  { date: "07-01-2024", amount: 2015, category: "Fundraising" },
+  { date: "07-01-2024", amount: 403, category: "Software" },
+  { date: "07-01-2024", amount: 1209, category: "Insurance" },
+
+];
+
+export default data;

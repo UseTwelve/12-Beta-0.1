@@ -1,59 +1,84 @@
 'use client'
 
-import { Menu, MenuButton, MenuItems, MenuItem, Transition } from '@headlessui/react'
+import { useState } from 'react';
+import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
 
-export default function DropdownFull({ selected, onSelect }:any) {
-  const options = [
-    { id: 0, value: 'International Missions' },
-    { id: 1, value: 'InnerCity Mentorship' },
-    { id: 2, value: 'Bible Distribution' },
-    { id: 3, value: 'Family Support' },
-    { id: 4, value: 'Adoption Initative' },
-    { id: 5, value: 'Food Program' },
-    { id: 6, value: 'Housing Assistance' }
-  ]
+export default function DropdownProfile({ onChange }: { onChange: (selected: string[]) => void }) {
+  const categories = [
+    'International Missions',
+    'InnerCity Mentorship',
+    'Bible Distribution',
+    'Family Support',
+    'Adoption Initative',
+    'Food Program',
+    'Housing Assistance',
+  ];
+
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(categories);
+
+  const handleCheckboxChange = (category: string) => {
+    setSelectedCategories(prev => {
+      const newSelection = prev.includes(category)
+        ? prev.filter(item => item !== category)
+        : [...prev, category];
+      onChange(newSelection);
+      return newSelection;
+    });
+  };
+
   return (
-    <Menu as="div" className="relative inline-flex w-full">
-      {({ open }) => (
-        <>
-          <MenuButton className="btn w-full justify-between min-w-[11rem] bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100" aria-label="Select option">
-            <span className="flex items-center">
-              <span>{selected}</span>
-            </span>
-            <svg className="shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500" width="11" height="7" viewBox="0 0 11 7">
-              <path d="M5.4 6.8L0 1.4 1.4 0l4 4 4-4 1.4 1.4z" />
-            </svg>
-          </MenuButton>
-          <Transition
-            as="div"
-            className="z-10 absolute top-full left-0 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 py-1.5 rounded-lg shadow-lg overflow-hidden mt-1"
-            enter="transition ease-out duration-100 transform"
-            enterFrom="opacity-0 -translate-y-2"
-            enterTo="opacity-100 translate-y-0"
-            leave="transition ease-out duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <MenuItems className="font-medium text-sm text-gray-600 dark:text-gray-300 divide-y divide-gray-200 dark:divide-gray-700/60 focus:outline-none">
-              {options.map((option) => (
-                <MenuItem key={option.id}>
-                  {({ active }) => (
+    <Popover className="relative inline-flex">
+      <PopoverButton className="btn px-2.5 bg-white dark:bg-gray-800 border-gray-200 hover:border-gray-300 dark:border-gray-700/60 dark:hover:border-gray-600 text-gray-400 dark:text-gray-500">
+      <svg className="fill-current mr-3" width="16" height="16" viewBox="0 0 16 16" >
+          <path d="M0 3a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1ZM3 8a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1ZM7 12a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H7Z" />
+        </svg>
+        Select Goal
+      </PopoverButton>
+      <Transition
+        as="div"
+        className="origin-top-left z-10 absolute top-full right-0 left-auto min-w-[14rem] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 pt-1.5 rounded-lg shadow-lg overflow-hidden mt-1"
+        enter="transition ease-out duration-200 transform"
+        enterFrom="opacity-0 -translate-y-2"
+        enterTo="opacity-100 translate-y-0"
+        leave="transition ease-out duration-200"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        <PopoverPanel>
+          {({ close }) => (
+            <>
+              <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase pt-1.5 pb-2 px-3">Filters</div>
+              <ul className="mb-4">
+                {categories.map(category => (
+                  <li key={category} className="py-1 px-3">
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        className="form-checkbox"
+                        checked={selectedCategories.includes(category)}
+                        onChange={() => handleCheckboxChange(category)}
+                      />
+                      <span className="text-sm font-medium ml-2">{category}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+              <div className="py-2 px-3 border-t border-gray-200 dark:border-gray-700/60 bg-gray-50 dark:bg-gray-700/20">
+                <ul className="flex items-center justify-between">
+                  <li>
                     <button
-                      className={`flex items-center justify-between w-full py-2 px-3 cursor-pointer ${active ? 'bg-gray-50 dark:bg-gray-700/20' : ''} ${option.value === selected && 'text-violet-500'}`}
-                      onClick={() => onSelect(option.value)}
+                      className="btn-xs bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-red-500"
+                      onClick={() => setSelectedCategories([])}
                     >
-                      <span>{option.value}</span>
-                      <svg className={`shrink-0 mr-2 fill-current text-violet-500 ${option.value !== selected && 'invisible'}`} width="12" height="9" viewBox="0 0 12 9">
-                        <path d="M10.28.28L3.989 6.575 1.695 4.28A1 1 0 00.28 5.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28.28z" />
-                      </svg>
+                      Clear
                     </button>
-                  )}
-                </MenuItem>
-              ))}
-            </MenuItems>
-          </Transition>
-        </>
-      )}
-    </Menu>
-  )
+                  </li>
+                </ul>
+              </div>
+            </>
+          )}
+        </PopoverPanel>
+      </Transition>
+    </Popover>
+  );
 }

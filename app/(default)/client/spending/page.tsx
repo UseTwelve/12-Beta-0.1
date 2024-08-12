@@ -318,15 +318,22 @@ function SpendingContent() {
     // Sort records
     // Sort records
     const sortedRecords = [...records].sort((a, b) => {
-      const valueA =
-        key === "amount"
-          ? parseFloat(String(a[key]).replace(/,/g, ""))
-          : a[key];
-      const valueB =
-        key === "amount"
-          ? parseFloat(String(b[key]).replace(/,/g, ""))
-          : b[key];
-
+      let valueA, valueB;
+    
+      if (key === "amount") {
+        // Handle the sorting for the "amount" field
+        valueA = parseFloat(String(a[key]).replace(/,/g, ""));
+        valueB = parseFloat(String(b[key]).replace(/,/g, ""));
+      } else if (key === "date") {
+        // Handle the sorting for the "date" field
+        valueA = new Date(a[key]).getTime();
+        valueB = new Date(b[key]).getTime();
+      } else {
+        // Default sorting for other fields
+        valueA = a[key];
+        valueB = b[key];
+      }
+    
       if (valueA < valueB) {
         return sortConfig.direction === "asc" ? -1 : 1;
       }
@@ -335,6 +342,7 @@ function SpendingContent() {
       }
       return 0;
     });
+    
 
     setSortConfig({ key, direction });
     setRecords(sortedRecords);
@@ -484,7 +492,7 @@ function SpendingContent() {
           {/* Dropdown */}
           <SearchForm placeholder="Search…" onChange={handleSearch} />
 
-          {/* <Datepicker onDateChange={handleDateChange} /> */}
+          <Datepicker />
           {/* <FilterButton align="right" /> */}
           <button
             className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white"

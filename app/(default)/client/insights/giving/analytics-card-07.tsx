@@ -21,7 +21,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r" aria-hidden="true" style={{ width: '82%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Carol Harris</div>
-                  <div className="font-medium">$403.2K</div>
+                  <div className="font-medium">$403K</div>
                 </div>
               </li>
               {/* Item */}
@@ -29,7 +29,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r" aria-hidden="true" style={{ width: '70%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>David Johnson</div>
-                  <div className="font-medium">$303.4K</div>
+                  <div className="font-medium">$303K</div>
                 </div>
               </li>
               {/* Item */}
@@ -37,7 +37,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r" aria-hidden="true" style={{ width: '60%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Donald Williams</div>
-                  <div className="font-medium">$103.6k</div>
+                  <div className="font-medium">$103k</div>
                 </div>
               </li>
               {/* Item */}
@@ -45,7 +45,7 @@ export default function AnalyticsCard06() {
                 <div className="absolute inset-0 bg-sky-100 dark:bg-sky-500/20 rounded-r" aria-hidden="true" style={{ width: '44%' }}></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>Jennifer Bark</div>
-                  <div className="font-medium">$103.2k</div>
+                  <div className="font-medium">$103k</div>
                 </div>
               </li>
               {/* Item */}
