@@ -19,7 +19,7 @@ interface LineChart05Props {
   data: ChartData
   width: number
   height: number,
-  selectedCategories: string[]
+  selectedCategories?: string[]
 }
 
 export default function LineChart05({

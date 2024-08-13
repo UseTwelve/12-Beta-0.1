@@ -20,12 +20,14 @@ interface LineChart03Props {
   data: ChartData
   width: number
   height: number
+  selectedCategory: string
 }
 
 export default function LineChart03({
   data,
   width,
-  height
+  height,
+  selectedCategory,
 }: LineChart03Props) {
 
   const [chart, setChart] = useState<Chart | null>(null)
@@ -65,7 +67,7 @@ export default function LineChart03({
               parser: 'MM-DD-YYYY',
               unit: 'month',
               displayFormats: {
-                month: 'MMM YY',
+                month: 'MMM YYYY',
               },
             },
             border: {
@@ -105,7 +107,7 @@ export default function LineChart03({
     })
     setChart(newChart)
     return () => newChart.destroy()
-  }, [])
+  }, [selectedCategory])
 
   useEffect(() => {
     if (!chart) return

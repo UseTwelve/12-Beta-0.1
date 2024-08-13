@@ -292,16 +292,25 @@ function GivingContent() {
   };
 
   const handleDownload = () => {
-    const ws = XLSX.utils.json_to_sheet(filteredAndSortedRecords.slice(1));
+    if (selectedItems.length === 0) {
+      setToastMessage("Please select records to download.");
+      setToastWarningOpen(true);
+      return;
+    }
+  
+    const selectedRecords = selectedItems.map(index => filteredAndSortedRecords[index]);
+  
+    const ws = XLSX.utils.json_to_sheet(selectedRecords);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "transactions");
-
+  
     // Generate Excel file and trigger download
     XLSX.writeFile(
       wb,
       `${session?.user.churchInfo?.church.name} - ${Date.now()}.xlsx`
     );
   };
+  
 
   const handleSort = (key: string) => {
     let direction = "asc";
