@@ -13,19 +13,6 @@ export default function AnalyticsCard06() {
     "Overtime",
     "Rent",
     "Utility",
-    "Property Maintenance",
-    "Property Supplies",
-    "Program Development",
-    "Direct ProgramServices",
-    "Materials",
-    "Contracted Services",
-    "Travel",
-    "Marketing",
-    "Legal Fees",
-    "CRM Tool",
-    "Financial Management Software",
-    "General Liability",
-    "Property Insurance",
   ];
 
   // Generate random values and percentage widths for each expense
@@ -64,10 +51,7 @@ export default function AnalyticsCard06() {
               ))}
             </ul>
           </div>
-          {/* Card footer */}
-          <div className="text-center pt-4 pb-1 border-t border-gray-100 dark:border-gray-700/60">
-            <Link className="text-sm font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">Categories Report -&gt;</Link>
-          </div>
+          
         </div>
       </div>
     </div>

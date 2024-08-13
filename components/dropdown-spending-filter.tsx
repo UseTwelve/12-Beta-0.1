@@ -1,24 +1,35 @@
-'use client'
+"use client";
 
-import { useState } from 'react';
-import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
+import { useState } from "react";
+import {
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+  Transition,
+} from "@headlessui/react";
 
-export default function DropdownProfile({ onChange }: { onChange: (selected: string[]) => void }) {
+export default function DropdownProfile({
+  onChange,
+}: {
+  onChange: (selected: string[]) => void;
+}) {
   const categories = [
+    "Facilities",
+    "Fundraising",
+    "Insurance",
+    "Operations",
     "Payroll",
-  "Facilities",
-  "Operations",
-  "Fundraising",
-  "Software",
-  "Insurance"
+    "Software",
   ];
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(categories);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    categories
+  );
 
   const handleCheckboxChange = (category: string) => {
-    setSelectedCategories(prev => {
+    setSelectedCategories((prev) => {
       const newSelection = prev.includes(category)
-        ? prev.filter(item => item !== category)
+        ? prev.filter((item) => item !== category)
         : [...prev, category];
       onChange(newSelection);
       return newSelection;
@@ -28,10 +39,15 @@ export default function DropdownProfile({ onChange }: { onChange: (selected: str
   return (
     <Popover className="relative inline-flex">
       <PopoverButton className="btn px-2.5 bg-white dark:bg-gray-800 border-gray-200 hover:border-gray-300 dark:border-gray-700/60 dark:hover:border-gray-600 text-gray-400 dark:text-gray-500">
-      <svg className="fill-current mr-3" width="16" height="16" viewBox="0 0 16 16" >
+        <svg
+          className="fill-current mr-3"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+        >
           <path d="M0 3a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1ZM3 8a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1ZM7 12a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H7Z" />
         </svg>
-       <span className='text-black dark:text-gray-200'>Select Goal</span> 
+        <span className="text-black dark:text-gray-200">Select Budget</span>
       </PopoverButton>
       <Transition
         as="div"
@@ -46,9 +62,11 @@ export default function DropdownProfile({ onChange }: { onChange: (selected: str
         <PopoverPanel>
           {({ close }) => (
             <>
-              <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase pt-1.5 pb-2 px-3">Filters</div>
+              <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase pt-1.5 pb-2 px-3">
+                Filters
+              </div>
               <ul className="mb-4">
-                {categories.map(category => (
+                {categories.map((category) => (
                   <li key={category} className="py-1 px-3">
                     <label className="flex items-center">
                       <input
@@ -57,7 +75,9 @@ export default function DropdownProfile({ onChange }: { onChange: (selected: str
                         checked={selectedCategories.includes(category)}
                         onChange={() => handleCheckboxChange(category)}
                       />
-                      <span className="text-sm font-medium ml-2">{category}</span>
+                      <span className="text-sm font-medium ml-2">
+                        {category}
+                      </span>
                     </label>
                   </li>
                 ))}

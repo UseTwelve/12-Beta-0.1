@@ -56,20 +56,9 @@ export default function AnalyticsCard05() {
                   <div className="font-medium">$211K</div>
                 </div>
               </li>
-              {/* Item */}
-              <li className="relative px-2 py-1">
-                <div className="absolute inset-0 bg-violet-100 dark:bg-violet-500/20 rounded-r" aria-hidden="true" style={{ width: '30%' }}></div>
-                <div className="relative flex justify-between space-x-2">
-                  <div>Insurance</div>
-                  <div className="font-medium">$123K</div>
-                </div>
-              </li>
             </ul>
           </div>
-          {/* Card footer */}
-          <div className="text-center pt-4 pb-1 border-t border-gray-100 dark:border-gray-700/60">
-            <Link className="text-sm font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">Wallet Report -&gt;</Link>
-          </div>
+          
         </div>
       </div>
     </div>

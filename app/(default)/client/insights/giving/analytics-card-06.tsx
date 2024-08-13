@@ -44,7 +44,7 @@ export default function AnalyticsCard06() {
               <li className="relative px-2 py-1">
                 <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '44%' }}></div>
                 <div className="relative flex justify-between space-x-2">
-                  <div>Family Support</div>
+                  <div>Tithes</div>
                   <div className="font-medium">$90K</div>
                 </div>
               </li>
@@ -56,29 +56,10 @@ export default function AnalyticsCard06() {
                   <div className="font-medium">$71K</div>
                 </div>
               </li>
-              {/* Item */}
-              <li className="relative px-2 py-1">
-                <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '30%' }}></div>
-                <div className="relative flex justify-between space-x-2">
-                  <div>Food Program</div>
-                  <div className="font-medium">$67K</div>
-                </div>
-              </li>
-              {/* Item */}
-              <li className="relative px-2 py-1">
-                <div className="absolute inset-0 bg-green-50 dark:bg-green-400/20 rounded-r" aria-hidden="true" style={{ width: '22%' }}></div>
-                <div className="relative flex justify-between space-x-2">
-                  <div>Housing Assistance</div>
-                  <div className="font-medium">$51K</div>
-                </div>
-              </li>
               
             </ul>
           </div>
-          {/* Card footer */}
-          <div className="text-center pt-4 pb-1 border-t border-gray-100 dark:border-gray-700/60">
-            <Link className="text-sm font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">Categories Report -&gt;</Link>
-          </div>
+          
         </div>
       </div>
     </div>

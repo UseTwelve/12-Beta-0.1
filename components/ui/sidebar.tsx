@@ -25,6 +25,7 @@ export default function Sidebar({
   );
   const expandOnly =
     !sidebarExpanded && (breakpoint === "lg" || breakpoint === "xl");
+  
 
   // close on click outside
   useEffect(() => {
@@ -58,6 +59,8 @@ export default function Sidebar({
     };
   }, [breakpoint]);
 
+
+
   if (session && session.user && session.user.userType.name === "client") {
     return (
       <div className={`min-w-fit ${sidebarExpanded ? "sidebar-expanded" : ""}`}>
@@ -74,7 +77,7 @@ export default function Sidebar({
           leaveTo="opacity-0"
           aria-hidden="true"
         />
-
+  
         {/* Sidebar */}
         <Transition
           show={sidebarOpen}
@@ -113,96 +116,74 @@ export default function Sidebar({
             {/* Logo */}
             <Logo />
           </div>
-
+  
           {/* Links */}
           <div className="space-y-8">
             {/* Pages group */}
             <div>
+              
               <ul className="mt-3">
                 {/* Inbox */}
-                <SidebarLinkGroup
-                  open={(segments && segments.includes("dashboard")) || false}
+                <li
+                  className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
+                    segments && segments.includes("giving") &&
+                    "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+                  }`}
                 >
-                  {(handleClick, open) => {
-                    return (
-                      <>
-                        <a
-                          href="#0"
-                          className={`block text-gray-800 dark:text-gray-100 truncate transition ${
-                            segments && segments.includes("dashboard")
-                              ? ""
-                              : "hover:text-gray-900 dark:hover:text-white"
-                          }`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            expandOnly
-                              ? setSidebarExpanded(true)
-                              : handleClick();
-                          }}
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                              <svg
-                                className={`shrink-0 fill-current ${
-                                  segments && segments.includes("dashboard")
-                                    ? "text-violet-500"
-                                    : "text-gray-400 dark:text-gray-500"
-                                }`}
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 16 16"
-                              >
-                                <path d="M6 0a6 6 0 0 0-6 6c0 1.077.304 2.062.78 2.912a1 1 0 1 0 1.745-.976A3.945 3.945 0 0 1 2 6a4 4 0 0 1 4-4c.693 0 1.344.194 1.936.525A1 1 0 1 0 8.912.779 5.944 5.944 0 0 0 6 0Z" />
-                                <path d="M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" />
-                              </svg>
-                              <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Dashboard
-                              </span>
-                            </div>
-                            {/* Icon */}
-                            <div className="flex shrink-0 ml-2">
-                              <svg
-                                className={`w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500 ${
-                                  open && "rotate-180"
-                                }`}
-                                viewBox="0 0 12 12"
-                              >
-                                <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
-                              </svg>
-                            </div>
-                          </div>
-                        </a>
-                        <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                          <ul className={`pl-8 mt-1 ${!open && "hidden"}`}>
-                            <li className="mb-1 last:mb-0">
-                              <SidebarLink href="/client/dashboard/giving">
-                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                  Giving
-                                </span>
-                              </SidebarLink>
-                            </li>
-                          </ul>
-                        </div>
-                        {!session.user.churchInfo?.church.hasCrm &&<div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                          <ul className={`pl-8 mt-1 ${!open && "hidden"}`}>
-                            <li className="mb-1 last:mb-0">
-                              <SidebarLink href="/client/dashboard/givers">
-                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                  Givers
-                                </span>
-                              </SidebarLink>
-                            </li>
-                          </ul>
-                        </div>}
-                      </>
-                    );
-                  }}
-                </SidebarLinkGroup>
-
+                  <SidebarLink href="/client/giving">
+                    <div className="flex items-center">
+                      <svg
+                        className={`shrink-0 fill-current ${
+                          segments && segments.includes("giving")
+                            ? "text-violet-500"
+                            : "text-gray-400 dark:text-gray-500"
+                        }`}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M6 0a6 6 0 0 0-6 6c0 1.077.304 2.062.78 2.912a1 1 0 1 0 1.745-.976A3.945 3.945 0 0 1 2 6a4 4 0 0 1 4-4c.693 0 1.344.194 1.936.525A1 1 0 1 0 8.912.779 5.944 5.944 0 0 0 6 0Z" />
+                        <path d="M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" />
+                      </svg>
+                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Giving
+                      </span>
+                    </div>
+                  </SidebarLink>
+                </li>
                 {/* Inbox */}
-                
-                  <li
+                { !session.user.churchInfo?.church.hasCrm && <li
+                  className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
+                    segments && segments.includes("givers") &&
+                    "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+                  }`}
+                >
+                  <SidebarLink href="/client/givers">
+                    <div className="flex items-center">
+                      <svg
+                        className={`shrink-0 fill-current ${
+                          segments && segments.includes("givers")
+                            ? "text-violet-500"
+                            : "text-gray-400 dark:text-gray-500"
+                        }`}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                        <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                      </svg>
+  
+                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Givers
+                      </span>
+                    </div>
+                  </SidebarLink>
+                </li>}
+  
+                <li
                     className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
                       segments &&
                       segments.includes("spending") &&
@@ -320,7 +301,7 @@ export default function Sidebar({
               </ul>
             </div>
           </div>
-
+  
           {/* Expand / collapse button */}
           <div className="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-auto">
             <div className="w-12 pl-4 pr-3 py-2">
@@ -345,11 +326,7 @@ export default function Sidebar({
       </div>
     );
     // TODO: Add admin sidebar
-  } else if (
-    session &&
-    session.user &&
-    session.user.userType.name === "admin"
-  ) {
+  } else if (session && session.user && session.user.userType.name === "admin") {
     return (
       <div className={`min-w-fit ${sidebarExpanded ? "sidebar-expanded" : ""}`}>
         {/* Sidebar backdrop (mobile only) */}
@@ -365,7 +342,7 @@ export default function Sidebar({
           leaveTo="opacity-0"
           aria-hidden="true"
         />
-
+  
         {/* Sidebar */}
         <Transition
           show={sidebarOpen}
@@ -404,17 +381,17 @@ export default function Sidebar({
             {/* Logo */}
             <Logo />
           </div>
-
+  
           {/* Links */}
           <div className="space-y-8">
             {/* Pages group */}
             <div>
+              
               <ul className="mt-3">
                 {/* Inbox */}
                 <li
                   className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                    segments &&
-                    segments.includes("churches") &&
+                    segments && segments.includes("churches") &&
                     "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
                   }`}
                 >
@@ -443,8 +420,7 @@ export default function Sidebar({
                 {/* Inbox */}
                 <li
                   className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                    segments &&
-                    segments.includes("users") &&
+                    segments && segments.includes("users") &&
                     "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
                   }`}
                 >
@@ -464,126 +440,120 @@ export default function Sidebar({
                         <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
                         <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                       </svg>
-
+  
                       <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                         Members
                       </span>
                     </div>
                   </SidebarLink>
                 </li>
-
+  
                 {/* Settings */}
-                {1 > 2 && (
-                  <SidebarLinkGroup
-                    open={(segments && segments.includes("settings")) || false}
-                  >
-                    {(handleClick, open) => {
-                      return (
-                        <>
-                          <a
-                            href="#0"
-                            className={`block text-gray-800 dark:text-gray-100 truncate transition ${
-                              segments && segments.includes("giving")
-                                ? ""
-                                : "hover:text-gray-900 dark:hover:text-white"
-                            }`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              expandOnly
-                                ? setSidebarExpanded(true)
-                                : handleClick();
-                            }}
-                          >
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center">
-                                <svg
-                                  className={`shrink-0 fill-current ${
-                                    segments && segments.includes("giving")
-                                      ? "text-violet-500"
-                                      : "text-gray-400 dark:text-gray-500"
-                                  }`}
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    d="M10.5 1a3.502 3.502 0 0 1 3.355 2.5H15a1 1 0 1 1 0 2h-1.145a3.502 3.502 0 0 1-6.71 0H1a1 1 0 0 1 0-2h6.145A3.502 3.502 0 0 1 10.5 1ZM9 4.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM5.5 9a3.502 3.502 0 0 1 3.355 2.5H15a1 1 0 1 1 0 2H8.855a3.502 3.502 0 0 1-6.71 0H1a1 1 0 1 1 0-2h1.145A3.502 3.502 0 0 1 5.5 9ZM4 12.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0Z"
-                                    fillRule="evenodd"
-                                  />
-                                </svg>
-                                <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                  Settings
-                                </span>
-                              </div>
-                              {/* Icon */}
-                              <div className="flex shrink-0 ml-2">
-                                <svg
-                                  className={`w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500 ${
-                                    open && "rotate-180"
-                                  }`}
-                                  viewBox="0 0 12 12"
-                                >
-                                  <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
-                                </svg>
-                              </div>
+                { 1 > 2 && <SidebarLinkGroup open={segments && segments.includes("settings") || false}>
+                  {(handleClick, open) => {
+                    return (
+                      <>
+                        <a
+                          href="#0"
+                          className={`block text-gray-800 dark:text-gray-100 truncate transition ${
+                            segments && segments.includes("giving")
+                              ? ""
+                              : "hover:text-gray-900 dark:hover:text-white"
+                          }`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            expandOnly ? setSidebarExpanded(true) : handleClick();
+                          }}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                              <svg
+                                className={`shrink-0 fill-current ${
+                                  segments && segments.includes("giving")
+                                    ? "text-violet-500"
+                                    : "text-gray-400 dark:text-gray-500"
+                                }`}
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                              >
+                                <path
+                                  d="M10.5 1a3.502 3.502 0 0 1 3.355 2.5H15a1 1 0 1 1 0 2h-1.145a3.502 3.502 0 0 1-6.71 0H1a1 1 0 0 1 0-2h6.145A3.502 3.502 0 0 1 10.5 1ZM9 4.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM5.5 9a3.502 3.502 0 0 1 3.355 2.5H15a1 1 0 1 1 0 2H8.855a3.502 3.502 0 0 1-6.71 0H1a1 1 0 1 1 0-2h1.145A3.502 3.502 0 0 1 5.5 9ZM4 12.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0Z"
+                                  fillRule="evenodd"
+                                />
+                              </svg>
+                              <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                Settings
+                              </span>
                             </div>
-                          </a>
-                          <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                            <ul className={`pl-8 mt-1 ${!open && "hidden"}`}>
-                              <li className="mb-1 last:mb-0">
-                                <SidebarLink href="/settings/account">
-                                  <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                    My Account
-                                  </span>
-                                </SidebarLink>
-                              </li>
-                              <li className="mb-1 last:mb-0">
-                                <SidebarLink href="/settings/notifications">
-                                  <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                    My Notifications
-                                  </span>
-                                </SidebarLink>
-                              </li>
-                              <li className="mb-1 last:mb-0">
-                                <SidebarLink href="/settings/apps">
-                                  <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                    Connected Apps
-                                  </span>
-                                </SidebarLink>
-                              </li>
-                              <li className="mb-1 last:mb-0">
-                                <SidebarLink href="/settings/plans">
-                                  <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                    Plans
-                                  </span>
-                                </SidebarLink>
-                              </li>
-                              <li className="mb-1 last:mb-0">
-                                <SidebarLink href="/settings/billing">
-                                  <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                    Billing & Invoices
-                                  </span>
-                                </SidebarLink>
-                              </li>
-                              <li className="mb-1 last:mb-0">
-                                <SidebarLink href="/settings/feedback">
-                                  <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                    Give Feedback
-                                  </span>
-                                </SidebarLink>
-                              </li>
-                            </ul>
+                            {/* Icon */}
+                            <div className="flex shrink-0 ml-2">
+                              <svg
+                                className={`w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500 ${
+                                  open && "rotate-180"
+                                }`}
+                                viewBox="0 0 12 12"
+                              >
+                                <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+                              </svg>
+                            </div>
                           </div>
-                        </>
-                      );
-                    }}
-                  </SidebarLinkGroup>
-                )}
+                        </a>
+                        <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                          <ul className={`pl-8 mt-1 ${!open && "hidden"}`}>
+                            <li className="mb-1 last:mb-0">
+                              <SidebarLink href="/settings/account">
+                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                  My Account
+                                </span>
+                              </SidebarLink>
+                            </li>
+                            <li className="mb-1 last:mb-0">
+                              <SidebarLink href="/settings/notifications">
+                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                  My Notifications
+                                </span>
+                              </SidebarLink>
+                            </li>
+                            <li className="mb-1 last:mb-0">
+                              <SidebarLink href="/settings/apps">
+                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                  Connected Apps
+                                </span>
+                              </SidebarLink>
+                            </li>
+                            <li className="mb-1 last:mb-0">
+                              <SidebarLink href="/settings/plans">
+                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                  Plans
+                                </span>
+                              </SidebarLink>
+                            </li>
+                            <li className="mb-1 last:mb-0">
+                              <SidebarLink href="/settings/billing">
+                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                  Billing & Invoices
+                                </span>
+                              </SidebarLink>
+                            </li>
+                            <li className="mb-1 last:mb-0">
+                              <SidebarLink href="/settings/feedback">
+                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                  Give Feedback
+                                </span>
+                              </SidebarLink>
+                            </li>
+                          </ul>
+                        </div>
+                      </>
+                    );
+                  }}
+                </SidebarLinkGroup>}
               </ul>
             </div>
           </div>
-
+  
           {/* Expand / collapse button */}
           <div className="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-auto">
             <div className="w-12 pl-4 pr-3 py-2">

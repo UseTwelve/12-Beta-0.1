@@ -13,10 +13,10 @@ export default function DropdownFull({ selectedCategories, onSelect }: DropdownF
     { id: 0, value: 'International Missions' },
     { id: 1, value: 'InnerCity Mentorship' },
     { id: 2, value: 'Bible Distribution' },
-    { id: 3, value: 'Family Support' },
+    { id: 3, value: 'Tithes' },
     { id: 4, value: 'Adoption Initative' },
     { id: 5, value: 'Food Program' },
-    { id: 6, value: 'Housing Assistance' },
+    { id: 6, value: 'Offering' },
   ];
 
   const handleCategoryToggle = (category: string) => {

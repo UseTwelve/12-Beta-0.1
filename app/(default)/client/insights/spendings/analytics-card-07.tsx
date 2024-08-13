@@ -50,10 +50,7 @@ export default function AnalyticsCard06() {
               ))}
             </ul>
           </div>
-          {/* Card footer */}
-          <div className="text-center pt-4 pb-1 border-t border-gray-100 dark:border-gray-700/60">
-            <Link className="text-sm font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">Vendors Report -&gt;</Link>
-          </div>
+          
         </div>
       </div>
     </div>

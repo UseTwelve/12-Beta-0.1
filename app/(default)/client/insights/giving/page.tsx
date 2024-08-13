@@ -15,13 +15,13 @@ import { useState } from 'react'
 
 export default function Analytics() {
   const [selectedCategories, setSelectedCategories] = useState([
-    "International Missions",
-    "InnerCity Mentorship",
-    "Bible Distribution",
-    "Family Support",
     "Adoption Initiative",
+    "Bible Distribution",
     "Food Program",
-    "Housing Assistance",
+    "InnerCity Mentorship",
+    "International Missions",
+    "Offering",
+    "Tithes",
   ]);
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-[96rem] mx-auto">

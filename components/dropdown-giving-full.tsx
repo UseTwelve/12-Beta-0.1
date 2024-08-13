@@ -5,13 +5,13 @@ import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/re
 
 export default function DropdownProfile({ onChange }: { onChange: (selected: string[]) => void }) {
   const categories = [
+    'Adoption Initative',
+    'Bible Distribution',
+    'Food Program',
     'International Missions',
     'InnerCity Mentorship',
-    'Bible Distribution',
-    'Family Support',
-    'Adoption Initative',
-    'Food Program',
-    'Housing Assistance',
+    'Offering',
+    'Tithes',
   ];
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>(categories);

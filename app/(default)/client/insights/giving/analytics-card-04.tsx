@@ -22,7 +22,7 @@ export default function AnalyticsCard04({ selectedCategories }: { selectedCatego
       goals: [50000, 70000, 70000],
       actuals: [45801, 60456, 48456],
     },
-    "Family Support": {
+    "Tithes": {
       goals: [60000, 50000, 50000],
       actuals: [58888, 33456, 86426],
     },
@@ -34,7 +34,7 @@ export default function AnalyticsCard04({ selectedCategories }: { selectedCatego
       goals: [30000, 70000, 80000],
       actuals: [23901, 64468, 41234],
     },
-    "Housing Assistance": {
+    "Offering": {
       goals: [35000, 50000, 50000],
       actuals: [28456, 74679, 49012],
     },
