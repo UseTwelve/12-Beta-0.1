@@ -183,62 +183,28 @@ export default function Sidebar({
                   </SidebarLink>
                 </li>}
   
-                <li
-                    className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                      segments &&
-                      segments.includes("spending") &&
-                      "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                    }`}
-                  >
-                    <SidebarLink href="/client/spending">
-                      <div className="flex items-center">
-                        <svg
-                          className={`shrink-0 fill-current ${
-                            segments && segments.includes("spending")
-                              ? "text-violet-500"
-                              : "text-gray-400 dark:text-gray-500"
-                          }`}
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                          <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                        </svg>
-
-                        <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                          Spending
-                        </span>
-                      </div>
-                    </SidebarLink>
-                  </li>
                 {/* Settings */}
-                <SidebarLinkGroup
-                  open={(segments && segments.includes("insights")) || false}
-                >
+                {1 > 2 && <SidebarLinkGroup open={segments && segments.includes("settings") || false}>
                   {(handleClick, open) => {
                     return (
                       <>
                         <a
                           href="#0"
                           className={`block text-gray-800 dark:text-gray-100 truncate transition ${
-                            segments && segments.includes("insights")
+                            segments && segments.includes("giving")
                               ? ""
                               : "hover:text-gray-900 dark:hover:text-white"
                           }`}
                           onClick={(e) => {
                             e.preventDefault();
-                            expandOnly
-                              ? setSidebarExpanded(true)
-                              : handleClick();
+                            expandOnly ? setSidebarExpanded(true) : handleClick();
                           }}
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center">
                               <svg
                                 className={`shrink-0 fill-current ${
-                                  segments && segments.includes("insights")
+                                  segments && segments.includes("giving")
                                     ? "text-violet-500"
                                     : "text-gray-400 dark:text-gray-500"
                                 }`}
@@ -253,7 +219,7 @@ export default function Sidebar({
                                 />
                               </svg>
                               <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Insights
+                                Settings
                               </span>
                             </div>
                             {/* Icon */}
@@ -272,23 +238,44 @@ export default function Sidebar({
                         <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                           <ul className={`pl-8 mt-1 ${!open && "hidden"}`}>
                             <li className="mb-1 last:mb-0">
-                              <SidebarLink href="/client/insights/giving">
+                              <SidebarLink href="/settings/account">
                                 <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                  Giving
+                                  My Account
                                 </span>
                               </SidebarLink>
                             </li>
                             <li className="mb-1 last:mb-0">
-                              <SidebarLink href="/client/insights/spendings">
+                              <SidebarLink href="/settings/notifications">
                                 <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                  Spending
+                                  My Notifications
                                 </span>
                               </SidebarLink>
                             </li>
                             <li className="mb-1 last:mb-0">
-                              <SidebarLink href="/client/insights/forecast">
+                              <SidebarLink href="/settings/apps">
                                 <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                  Financial forecast
+                                  Connected Apps
+                                </span>
+                              </SidebarLink>
+                            </li>
+                            <li className="mb-1 last:mb-0">
+                              <SidebarLink href="/settings/plans">
+                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                  Plans
+                                </span>
+                              </SidebarLink>
+                            </li>
+                            <li className="mb-1 last:mb-0">
+                              <SidebarLink href="/settings/billing">
+                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                  Billing & Invoices
+                                </span>
+                              </SidebarLink>
+                            </li>
+                            <li className="mb-1 last:mb-0">
+                              <SidebarLink href="/settings/feedback">
+                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                  Give Feedback
                                 </span>
                               </SidebarLink>
                             </li>
@@ -297,7 +284,7 @@ export default function Sidebar({
                       </>
                     );
                   }}
-                </SidebarLinkGroup>
+                </SidebarLinkGroup>}
               </ul>
             </div>
           </div>
