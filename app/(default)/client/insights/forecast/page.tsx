@@ -10,6 +10,7 @@ import AnalyticsCard05 from "./analytics-card-05";
 import AnalyticsCard06 from "./analytics-card-06";
 import AnalyticsCard07 from "./analytics-card-07";
 import DropdownFilter from "@/components/dropdown-filter";
+import DropdownFilterBudget from "@/components/dropdown-filter-budget";
 import FintechCard01 from "./analytics-card-01";
 import FintechCard02 from "./analytics-card-02";
 import { useState } from "react";
@@ -200,6 +201,7 @@ export default function Analytics() {
           <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
             <Datepicker align="right" />
             <DropdownFilter onChange={setSelectedCategories} />
+            <DropdownFilterBudget onChange={setSelectedCategories} />
           </div>
         </div>
 
