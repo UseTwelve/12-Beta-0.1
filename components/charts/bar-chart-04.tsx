@@ -104,7 +104,7 @@ export default function BarChart04({
           },
         },
         interaction: {
-          intersect: false,
+          intersect: true,
           mode: 'nearest',
         },
         animation: {
