@@ -13,7 +13,7 @@ export default function Home() {
       return location.href = "/admin/churches";
     }
     if (session.user.userType.name === "client") {
-      return location.href = "/client/giving";
+      return location.href = "/client/insights/giving";
     }
   }
 

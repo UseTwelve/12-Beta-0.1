@@ -215,7 +215,7 @@ export default function InvoicesTable({
             >
               {newRecord && (
                 <NewInvoiceRow
-                  key="new"
+                  key="New"
                   record={newRecord}
                   onSave={onSaveNewRecord}
                   onCancel={() => setNewRecordToNull()}

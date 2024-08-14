@@ -60,7 +60,6 @@ export default function Sidebar({
   }, [breakpoint]);
 
 
-
   if (session && session.user && session.user.userType.name === "client") {
     return (
       <div className={`min-w-fit ${sidebarExpanded ? "sidebar-expanded" : ""}`}>
@@ -123,98 +122,7 @@ export default function Sidebar({
             <div>
               
               <ul className="mt-3">
-                {/* Inbox */}
-                <li
-                  className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                    segments && segments.includes("giving") &&
-                    "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                  }`}
-                >
-                  <SidebarLink href="/client/giving">
-                    <div className="flex items-center">
-                      <svg
-                        className={`shrink-0 fill-current ${
-                          segments && segments.includes("giving")
-                            ? "text-violet-500"
-                            : "text-gray-400 dark:text-gray-500"
-                        }`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M6 0a6 6 0 0 0-6 6c0 1.077.304 2.062.78 2.912a1 1 0 1 0 1.745-.976A3.945 3.945 0 0 1 2 6a4 4 0 0 1 4-4c.693 0 1.344.194 1.936.525A1 1 0 1 0 8.912.779 5.944 5.944 0 0 0 6 0Z" />
-                        <path d="M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" />
-                      </svg>
-                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        Giving
-                      </span>
-                    </div>
-                  </SidebarLink>
-                </li>
-                {/* Inbox */}
-                { !session.user.churchInfo?.church.hasCrm && <li
-                  className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                    segments && segments.includes("givers") &&
-                    "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                  }`}
-                >
-                  <SidebarLink href="/client/givers">
-                    <div className="flex items-center">
-                      <svg
-                        className={`shrink-0 fill-current ${
-                          segments && segments.includes("givers")
-                            ? "text-violet-500"
-                            : "text-gray-400 dark:text-gray-500"
-                        }`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                        <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                      </svg>
-  
-                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        Givers
-                      </span>
-                    </div>
-                  </SidebarLink>
-                </li>}
-  
-                <li
-                    className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                      segments &&
-                      segments.includes("spending") &&
-                      "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                    }`}
-                  >
-                    <SidebarLink href="/client/spending">
-                      <div className="flex items-center">
-                        <svg
-                          className={`shrink-0 fill-current ${
-                            segments && segments.includes("spending")
-                              ? "text-violet-500"
-                              : "text-gray-400 dark:text-gray-500"
-                          }`}
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                          <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                        </svg>
-
-                        <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                          Spending
-                        </span>
-                      </div>
-                    </SidebarLink>
-                  </li>
-                {/* Settings */}
-                <SidebarLinkGroup
+              <SidebarLinkGroup
                   open={(segments && segments.includes("insights")) || false}
                 >
                   {(handleClick, open) => {
@@ -279,7 +187,7 @@ export default function Sidebar({
                               </SidebarLink>
                             </li>
                             <li className="mb-1 last:mb-0">
-                              <SidebarLink href="/client/insights/spendings">
+                              <SidebarLink href="/client/insights/spending">
                                 <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                   Spending
                                 </span>
@@ -298,6 +206,97 @@ export default function Sidebar({
                     );
                   }}
                 </SidebarLinkGroup>
+                {/* Inbox */}
+                <li
+                  className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
+                    segments && segments.includes("giving") && !segments.includes("insights") &&
+                    "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+                  }`}
+                >
+                  <SidebarLink href="/client/giving">
+                    <div className="flex items-center">
+                      <svg
+                        className={`shrink-0 fill-current ${
+                          segments && segments.includes("giving") && !segments.includes("insights")
+                            ? "text-violet-500"
+                            : "text-gray-400 dark:text-gray-500"
+                        }`}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M6 0a6 6 0 0 0-6 6c0 1.077.304 2.062.78 2.912a1 1 0 1 0 1.745-.976A3.945 3.945 0 0 1 2 6a4 4 0 0 1 4-4c.693 0 1.344.194 1.936.525A1 1 0 1 0 8.912.779 5.944 5.944 0 0 0 6 0Z" />
+                        <path d="M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" />
+                      </svg>
+                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Giving
+                      </span>
+                    </div>
+                  </SidebarLink>
+                </li>
+                {/* Inbox */}
+                { !session.user.churchInfo?.church.hasCrm && <li
+                  className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
+                    segments && segments.includes("givers") &&
+                    "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+                  }`}
+                >
+                  <SidebarLink href="/client/givers">
+                    <div className="flex items-center">
+                      <svg
+                        className={`shrink-0 fill-current ${
+                          segments && segments.includes("givers")
+                            ? "text-violet-500"
+                            : "text-gray-400 dark:text-gray-500"
+                        }`}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                        <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                      </svg>
+  
+                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Givers
+                      </span>
+                    </div>
+                  </SidebarLink>
+                </li>}
+  
+                <li
+                    className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
+                      segments &&
+                      segments.includes("spending") && !segments.includes("insights") &&
+                      "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+                    }`}
+                  >
+                    <SidebarLink href="/client/spending">
+                      <div className="flex items-center">
+                        <svg
+                          className={`shrink-0 fill-current ${
+                            segments && segments.includes("spending") && !segments.includes("insights")
+                              ? "text-violet-500"
+                              : "text-gray-400 dark:text-gray-500"
+                          }`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                          <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                        </svg>
+
+                        <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                          Spending
+                        </span>
+                      </div>
+                    </SidebarLink>
+                  </li>
+                
               </ul>
             </div>
           </div>

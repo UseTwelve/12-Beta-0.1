@@ -79,7 +79,7 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
             <tbody className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60" key="heghiwudhfuhdis">
               {newRecord && (
                 <NewInvoiceRow
-                  key="new"
+                  key="New"
                   record={newRecord}
                   onSave={onSaveNewRecord}
                   onCancel={() => setNewRecordToNull()}

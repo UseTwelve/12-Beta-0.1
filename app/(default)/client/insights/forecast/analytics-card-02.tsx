@@ -47,7 +47,7 @@ export default function FintechCard01() {
       },
       {
         label: 'Giving Forecast',
-        data: [
+       data: [
           null, null, null, null, null,
           null, null, null, null, null,
           null, 48456, 49237, 51872, 46015,
@@ -102,9 +102,9 @@ export default function FintechCard01() {
         data: [
           null, null, null, null, null,
           null, null, null, null, null,
-          null, 40291, 42375, 51872, 46015,
-          49398, 47562, 52741, 44903, 50124,
-          45679, 53456, 46820, 51936
+          null, 40291, 42375, 48902, 46578,
+          44321, 49876, 42649, 47110, 43456,
+          45932, 40789, 46357, 44123
         ],
         borderColor: tailwindConfig.theme.colors.green[300], // Lighter green for forecast
         borderDash: [4, 4],
