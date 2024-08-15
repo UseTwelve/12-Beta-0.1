@@ -155,7 +155,7 @@ function SpendingContent() {
     }
 
     const newRecords = selectedItems.filter(
-      (index) => records[index].crmStatus === "new"
+      (index) => records[index].crmStatus === "New"
     );
 
     if (newRecords.length !== selectedItems.length) {
@@ -169,7 +169,7 @@ function SpendingContent() {
       setToastInfoOpen(true);
 
       const updatePromises = newRecords.map((index) => {
-        const updatedRecord = { ...records[index], crmStatus: "pending" };
+        const updatedRecord = { ...records[index], crmStatus: "Pending" };
         return updateRecord(
           axiosAuth,
           index + 1,

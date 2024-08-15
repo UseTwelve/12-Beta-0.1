@@ -112,7 +112,7 @@ function GivingContent() {
 
   const handleAddRecord = () => {
     setNewRecord({
-      crmStatus: "new",
+      crmStatus: "New",
       amount: "",
       wallet: "",
       fullName: "",
@@ -158,7 +158,7 @@ function GivingContent() {
       return;
     }
   
-    const newRecords = selectedItems.filter(index => records[index].crmStatus === "new");
+    const newRecords = selectedItems.filter(index => records[index].crmStatus === "New");
   
     if (newRecords.length !== selectedItems.length) {
       setToastMessage("Please select only new records to upload.");
@@ -171,7 +171,7 @@ function GivingContent() {
       setToastInfoOpen(true);
   
       const updatePromises = newRecords.map(index => {
-        const updatedRecord = { ...records[index], crmStatus: "pending" };
+        const updatedRecord = { ...records[index], crmStatus: "Pending" };
         return updateRecord(axiosAuth, index + 1, updatedRecord, `/client/church/record`);
       });
   

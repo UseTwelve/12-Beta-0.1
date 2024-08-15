@@ -115,9 +115,9 @@ export default function InvoicesTableItem({
               onChange={handleChange}
               className="form-input"
               disabled={
-                editValues.crmStatus === "successful" ||
-                editValues.crmStatus === "failed"
-              } // Set disabled to true if status is not 'pending' or 'new'
+                editValues.crmStatus === "Successful" || editValues.crmStatus === "Upload" ||
+                editValues.crmStatus === "Failed"
+              } // Set disabled to true if status is not 'Pending' or 'new'
             />
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
