@@ -4,6 +4,7 @@ import { useItemSelection } from '@/components/utils/use-item-selection'
 import InvoicesTableItem from './invoices-table-item'
 import NewInvoiceRow from './new-invoice-row'
 import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
 export interface Giver {
   id?: number;
@@ -23,9 +24,10 @@ interface InvoicesTableProps {
   onUpdateRecord: (index: number, updatedRecord: Giver) => void;
   onDeleteRecord: (index: number) => void;
   setNewRecordToNull: () => void;
+  setSelectedItems: (items: number[]) => void; // Add this line
 }
 
-export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, onUpdateRecord, onDeleteRecord, setNewRecordToNull }: InvoicesTableProps) {
+export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, onUpdateRecord, onDeleteRecord, setNewRecordToNull,setSelectedItems }: InvoicesTableProps) {
   const {
     selectedItems,
     isAllSelected,
@@ -33,6 +35,10 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
     handleSelectAllChange,
   } = useItemSelection(invoices);
   const { data: session, status } = useSession();
+
+  useEffect(() => {
+    setSelectedItems(selectedItems);
+  }, [selectedItems, setSelectedItems]);
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl relative">
@@ -87,7 +93,7 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
               )}
               {invoices.slice(1).map((invoice, index) => (
                 <InvoicesTableItem
-                  key={index + 1}
+                  key={invoice.id}
                   index={index + 1}
                   invoice={invoice}
                   onCheckboxChange={handleCheckboxChange}

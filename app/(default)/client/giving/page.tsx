@@ -82,10 +82,11 @@ function GivingContent() {
       setToastMessage("Fetching records...");
       setToastInfoOpen(true);
       const data = await fetchRecords(axiosAuth, "/client/church/records");
+      
       const formattedRecords = data.values.map((record: any[], index: any) => ({
         id: index,
         crmStatus: record[0],
-        amount: record[1],
+        amount: record[1].trim().replace(/[$ ]+/g, ""),
         wallet: record[2],
         fullName: record[3],
         date: record[4],
@@ -292,16 +293,25 @@ function GivingContent() {
   };
 
   const handleDownload = () => {
-    const ws = XLSX.utils.json_to_sheet(filteredAndSortedRecords.slice(1));
+    if (selectedItems.length === 0) {
+      setToastMessage("Please select records to download.");
+      setToastWarningOpen(true);
+      return;
+    }
+  
+    const selectedRecords = selectedItems.map(index => filteredAndSortedRecords[index]);
+  
+    const ws = XLSX.utils.json_to_sheet(selectedRecords);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "transactions");
-
+  
     // Generate Excel file and trigger download
     XLSX.writeFile(
       wb,
       `${session?.user.churchInfo?.church.name} - ${Date.now()}.xlsx`
     );
   };
+  
 
   const handleSort = (key: string) => {
     let direction = "asc";

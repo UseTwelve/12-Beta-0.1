@@ -77,7 +77,7 @@ export default function InvoicesTable({
             {/* Table header */}
             <thead className="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/20 border-t border-b border-gray-100 dark:border-gray-700/60">
               <tr>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                   <div className="flex items-center">
                     <label className="inline-flex">
                       <span className="sr-only">Select all</span>
@@ -90,7 +90,7 @@ export default function InvoicesTable({
                     </label>
                   </div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
+                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
                     className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("crmStatus")}
@@ -112,7 +112,7 @@ export default function InvoicesTable({
                     </svg>
                   </div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
+                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
                     className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("amount")}
@@ -134,7 +134,7 @@ export default function InvoicesTable({
                     </svg>
                   </div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
+                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
                     className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("wallet")}
@@ -156,7 +156,7 @@ export default function InvoicesTable({
                     </svg>
                   </div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
+                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
                     className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("fullName")}
@@ -178,7 +178,7 @@ export default function InvoicesTable({
                     </svg>
                   </div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
+                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
                     className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("date")}
@@ -200,7 +200,7 @@ export default function InvoicesTable({
                     </svg>
                   </div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
+                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
                     className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("category")}
@@ -222,7 +222,7 @@ export default function InvoicesTable({
                     </svg>
                   </div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
+                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
                     className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("memo")}
@@ -244,7 +244,7 @@ export default function InvoicesTable({
                     </svg>
                   </div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
+                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
                     className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("nameInWallet")}
@@ -266,7 +266,7 @@ export default function InvoicesTable({
                     </svg>
                   </div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Actions</div>
                 </th>
               </tr>
@@ -278,7 +278,7 @@ export default function InvoicesTable({
             >
               {newRecord && (
                 <NewInvoiceRow
-                  key="New"
+                  key="new"
                   record={newRecord}
                   onSave={onSaveNewRecord}
                   onCancel={() => setNewRecordToNull()}

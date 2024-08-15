@@ -38,25 +38,25 @@ function GivingContent() {
   const [sheetId, setSheetId] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
   const apiUrl = "/client/givers";
+  const [selectedItems, setSelectedItems] = useState<number[]>([]); 
 
   const filteredAndSortedRecords = useMemo(() => {
     // If searchTerm is empty, return all records (except the header row)
     if (searchTerm.trim() === "") {
       return records;
     }
-
-    // Otherwise, filter the records based on the searchTerm
+  
+    // Split search terms by commas
+    const searchTerms = searchTerm.split(",").filter(term=> term !== " ").map(term => term.trim().toLowerCase());
+  
+    // Filter records based on search terms
     let filteredRecords = records.slice(1).filter((record) => {
-      return Object.values(record).some(
-        (value) =>
-          typeof value === "string" &&
-          searchTerm
-            .split(" ")
-            .some((term) => value.toLowerCase().includes(term.toLowerCase()))
+      return Object.values(record).some((value) => 
+        typeof value === 'string' && searchTerms.some((term) => value.toLowerCase().includes(term))
       );
     });
-
-    // Step 2: Sort the filtered records
+  
+    // Sort the filtered records
     if (sortConfig.key) {
       filteredRecords.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -68,7 +68,7 @@ function GivingContent() {
         return 0;
       });
     }
-
+  
     // Add back the header row after filtering and sorting
     return [records[0], ...filteredRecords];
   }, [records, searchTerm, sortConfig]);
@@ -78,7 +78,8 @@ function GivingContent() {
       setToastMessage("Fetching records...");
       setToastInfoOpen(true);
       const data = await fetchRecords(axiosAuth, apiUrl);
-      const formattedRecords = data.values.map((record: any) => ({
+      const formattedRecords = data.values.map((record: any, index:any) => ({
+        id:index,
         nameInWallet: record[0],
         crmName: record[1],
         group: record[2],
@@ -165,6 +166,37 @@ function GivingContent() {
       setToastErrorOpen(true);
     }
   };
+
+  const handleDeleteMultipleRecords = async () => {
+    if (selectedItems.length === 0) {
+      setToastMessage("Please select records to delete.");
+      setToastWarningOpen(true);
+      return;
+    }
+  
+    try {
+      setToastMessage("Deleting selected records...");
+      setToastInfoOpen(true);
+  
+      const deletePromises = selectedItems.map(async (index) => {
+        const recordId = index + 1; // Adjust for 1-based index in the Google Sheets API
+        return await deleteRecord(axiosAuth, sheetId, recordId, `/client/church/record`);
+      });
+  
+      await Promise.all(deletePromises);
+  
+      setSelectedItems([]); // Clear selected items
+      await fetchData();
+      setToastInfoOpen(false);
+      setToastMessage("Selected records deleted successfully.");
+      setToastSuccessOpen(true);
+    } catch (error) {
+      console.error("Error deleting records:", error);
+      setToastMessage("Error deleting selected records.");
+      setToastInfoOpen(false);
+      setToastErrorOpen(true);
+    }
+  }
 
   const handleDeleteRecord = (index: number) => {
     index = index + 1;
@@ -313,7 +345,10 @@ function GivingContent() {
         {/* Right side */}
         <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
           {/* Delete button */}
-          {/* <DeleteButton /> */}
+          <DeleteButton 
+        handleDeleteMultipleRecords={handleDeleteMultipleRecords} 
+        selectedItems={selectedItems} 
+      />
           {/* Dropdown */}
           <SearchForm placeholder="Search…" onChange={handleSearch} />
           {/* <DateSelect /> */}
@@ -343,6 +378,7 @@ function GivingContent() {
         onUpdateRecord={handleUpdateRecord}
         onDeleteRecord={handleDeleteRecord}
         setNewRecordToNull={() => setNewRecord(null)}
+        setSelectedItems={setSelectedItems}
       />
 
       {/* Pagination */}
