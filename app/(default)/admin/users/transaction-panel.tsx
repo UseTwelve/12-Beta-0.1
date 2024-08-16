@@ -8,7 +8,6 @@ import { TransactionsProperties } from "./transactions-properties";
 import Image from "next/image";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import Toast from "@/components/toast";
-import DropdownFull from "@/components/dropdown-full";
 import { fetchRecords } from "@/lib/hooks/useRequests";
 
 export default function MemberPanel({ onReload }: { onReload: () => void }) {
@@ -22,15 +21,15 @@ export default function MemberPanel({ onReload }: { onReload: () => void }) {
   const [email, setEmail] = useState("");
   const [userType, setUserType] = useState(9997);
   const [role, setRole] = useState(9999);
-  const [church, setChurch] = useState<number|null>(null);
+  const [church, setChurch] = useState<number | null>(null);
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
   const axiosAuth = useAxiosAuth();
-  
+
   const [loading, setLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>("");
   const [toastType, setToastType] = useState<"success" | "error" | "info">("info");
   const [toastOpen, setToastOpen] = useState<boolean>(false);
-  const [churches, setChurches] = useState<{ id: number, name: string }[]>([]);
+  const [churches, setChurches] = useState<{ id: number; name: string }[]>([]);
 
   const clearForm = () => {
     setFullName("");
@@ -64,10 +63,10 @@ export default function MemberPanel({ onReload }: { onReload: () => void }) {
     } catch (error) {
       console.error("Error fetching records:", error);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchChurches(); 
+    fetchChurches();
   }, []);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,13 +113,12 @@ export default function MemberPanel({ onReload }: { onReload: () => void }) {
       setToastMessage("Member was added successfully!");
       setToastType("success");
       setToastOpen(true);
-    } catch (error:any) {
+    } catch (error: any) {
       console.error("Error uploading member data:", error);
       if (error.response.data.message) {
         setToastMessage(error.response.data.message);
       } else {
         setToastMessage("Failed to save the member. Please try again.");
-        
       }
 
       setToastType("error");
@@ -146,14 +144,14 @@ export default function MemberPanel({ onReload }: { onReload: () => void }) {
       leaveTo="translate-x-full"
     >
       <div className="space-y-3">
-      <Toast
-        type={toastType}
-        open={toastOpen}
-        setOpen={setToastOpen}
-        duration={5000}
-      >
-        {toastMessage}
-      </Toast>
+        <Toast
+          type={toastType}
+          open={toastOpen}
+          setOpen={setToastOpen}
+          duration={5000}
+        >
+          {toastMessage}
+        </Toast>
       </div>
 
       <div className="sticky top-16 bg-gradient-to-b from-gray-100 to-white dark:from-[#151D2C] dark:to-gray-900 overflow-x-hidden overflow-y-auto no-scrollbar shrink-0 border-l border-gray-200 dark:border-gray-700/60 w-full sm:w-[390px] h-[calc(100dvh-64px)]">
@@ -262,7 +260,7 @@ export default function MemberPanel({ onReload }: { onReload: () => void }) {
                   type="number"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  placeholder=" enter phone number"
+                  placeholder="Enter phone number"
                 />
               </div>
             </div>
@@ -270,7 +268,7 @@ export default function MemberPanel({ onReload }: { onReload: () => void }) {
               <div>
                 <label
                   className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2"
-                  htmlFor="phoneNumber"
+                  htmlFor="email"
                 >
                   Email
                 </label>
@@ -280,7 +278,7 @@ export default function MemberPanel({ onReload }: { onReload: () => void }) {
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="enter email"
+                  placeholder="Enter email"
                 />
               </div>
             </div>
@@ -288,12 +286,19 @@ export default function MemberPanel({ onReload }: { onReload: () => void }) {
               <h2 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2">
                 Assign church
               </h2>
-              <DropdownFull
-                items={churches}
-                value={church}
-                setValue={setChurch}
-                placeholder="Select a church"
-              />
+              <select
+                id="church"
+                className="form-select w-full"
+                value={church ?? ""}
+                onChange={(e) => setChurch(parseInt(e.target.value) || null)}
+              >
+                <option value="" disabled>Select a church</option>
+                {churches.map((church) => (
+                  <option key={church.id} value={church.id}>
+                    {church.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="flex items-center space-x-3 mt-6">
               <div className="w-full">
