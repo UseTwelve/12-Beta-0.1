@@ -1,3 +1,5 @@
+import CategoryDropdown from "@/components/dropdown-category-full";
+import FellowshipDropdown from "@/components/dropdown-fellowship";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
@@ -52,49 +54,60 @@ export default function NewInvoiceRow({
         <>
           {" "}
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <select
-                  name="group"
-                  value={newRecord.group}
-                  onChange={handleChange}
-                  className="form-select"
-                >
-                  <option value=""></option>
-                  <option value="Group 1">Group 1</option>
-                  <option value="Group 2">Group 2</option>
-                </select>
-              </td>
-              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <select
-                  name="subGroup"
-                  value={newRecord.subGroup}
-                  onChange={handleChange}
-                  className="form-select"
-                >
-                  <option value=""></option>
-                  <option value="SubGroup A">SubGroup A</option>
-                  <option value="SubGroup B">SubGroup B</option>
-                  <option value="SubGroup C">SubGroup C</option>
-                  <option value="SubGroup D">SubGroup D</option>
-                  <option value="SubGroup E">SubGroup E</option>
-                </select>
-              </td>
-              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <select
-                  name="wallet"
-                  value={newRecord.wallet}
-                  onChange={handleChange}
-                  className="form-select"
-                >
-                  <option value=""></option>
-                  <option value="Cash App">Cash App</option>
-                  <option value="PayPal">PayPal</option>
-                  <option value="Apple Pay">Apple Pay</option>
-                  <option value="KingPay">KingPay</option>
-                  <option value="Zelle">Zelle</option>
-                  <option value="Stock">Stock</option>
-                  <option value="DonorPerfect">DonorPerfect</option>
-                </select>
-              </td>{" "}
+            <select
+              name="group"
+              value={newRecord.group}
+              onChange={handleChange}
+              className="form-select"
+            >
+              <option value=""></option>
+              <option value="Group 1">Group 1</option>
+              <option value="Group 2">Group 2</option>
+            </select>
+          </td>
+          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+            <select
+              name="subGroup"
+              value={newRecord.subGroup}
+              onChange={handleChange}
+              className="form-select"
+            >
+              <option value=""></option>
+              <option value="SubGroup A">SubGroup A</option>
+              <option value="SubGroup B">SubGroup B</option>
+              <option value="SubGroup C">SubGroup C</option>
+              <option value="SubGroup D">SubGroup D</option>
+              <option value="SubGroup E">SubGroup E</option>
+            </select>
+          </td>
+          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+            <select
+              name="wallet"
+              value={newRecord.wallet}
+              onChange={handleChange}
+              className="form-select"
+            >
+              <option value=""></option>
+              <option value="Cash App">Cash App</option>
+              <option value="PayPal">PayPal</option>
+              <option value="Apple Pay">Apple Pay</option>
+              <option value="KingPay">KingPay</option>
+              <option value="Zelle">Zelle</option>
+              <option value="Stock">Stock</option>
+              <option value="DonorPerfect">DonorPerfect</option>
+            </select>
+          </td>
+          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+            <FellowshipDropdown
+              value={newRecord.fellowship}
+              onChange={(selectedOption) => {
+                setNewRecord({
+                  ...newRecord,
+                  fellowship: selectedOption,
+                });
+              }}
+            />
+          </td>{" "}
         </>
       )}
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">

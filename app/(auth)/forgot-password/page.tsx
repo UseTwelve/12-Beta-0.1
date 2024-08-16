@@ -6,19 +6,14 @@ import AuthImage from "../auth-image";
 import { useState } from "react";
 import Toast02 from "@/components/toast-02";
 import axiosAuth from "@/lib/axios";
-import { useRouter } from "next/navigation";
 
 export default function ResetPassword() {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [toastErrorOpen, setToastErrorOpen] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [toastSuccessOpen, setToastSuccessOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const router = useRouter();
-  let params = new URLSearchParams(window.location.search);
-  let token = params.get("token");
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -26,27 +21,14 @@ export default function ResetPassword() {
     setSuccess(null);
     setIsLoading(true);
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      setToastErrorOpen(true);
-      setTimeout(() => {
-        setToastErrorOpen(false);
-      }, 5000);
-      setIsLoading(false);
-      return;
-    }
-
     try {
-      const response = await axiosAuth.post(`/auth/reset-password/${token}`, {
-        password,
+      const response = await axiosAuth.post("/auth/forgot-password", {
+        email,
       });
 
       if (response.status === 200) {
-        setSuccess("Your password has been reset successfully.");
+        setSuccess("A reset link has been sent to your email address.");
         setToastSuccessOpen(true);
-        setTimeout(() => {
-          router.push("/signin"); // Redirect to sign in page after success
-        }, 3000);
       } else {
         setError("Something went wrong. Please try again.");
         setToastErrorOpen(true);
@@ -71,7 +53,7 @@ export default function ResetPassword() {
 
             <div className="max-w-sm mx-auto w-full px-4 py-8">
               <h1 className="text-3xl text-gray-800 dark:text-gray-100 font-bold mb-6">
-                Reset your Password
+                Forgot your Password
               </h1>
               <Toast02
                 type="error"
@@ -93,33 +75,16 @@ export default function ResetPassword() {
                   <div>
                     <label
                       className="block text-sm font-medium mb-1"
-                      htmlFor="password"
+                      htmlFor="email"
                     >
-                      New Password <span className="text-red-500">*</span>
+                      Email Address <span className="text-red-500">*</span>
                     </label>
                     <input
-                      id="password"
+                      id="email"
                       className="form-input w-full"
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      autoComplete="on"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className="block text-sm font-medium mb-1"
-                      htmlFor="confirmPassword"
-                    >
-                      Confirm New Password <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      id="confirmPassword"
-                      className="form-input w-full"
-                      type="password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       autoComplete="on"
                       required
                     />
@@ -130,7 +95,8 @@ export default function ResetPassword() {
                     className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white whitespace-nowrap"
                     disabled={isLoading} // Disable the button while loading
                   >
-                    {isLoading ? "Resetting..." : "Reset Password"} {/* Show loading text */}
+                    {isLoading ? "Sending..." : "Send Reset Link"}{" "}
+                    {/* Show loading text */}
                   </button>
                 </div>
               </form>

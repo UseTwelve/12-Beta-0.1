@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Giver } from "./invoices-table";
 import { InvoicesProperties } from "./invoices-properties";
 import { useSession } from "next-auth/react";
+import FellowshipDropdown from "@/components/dropdown-fellowship";
 
 interface InvoicesTableItemProps {
   invoice: Giver;
@@ -118,20 +119,15 @@ export default function InvoicesTableItem({
                 </select>
               </td>
               <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <select
-                  name="wallet"
-                  value={editValues.wallet}
-                  onChange={handleChange}
-                  className="form-select"
-                >
-                  <option value="Cash App">Cash App</option>
-                  <option value="PayPal">PayPal</option>
-                  <option value="Apple Pay">Apple Pay</option>
-                  <option value="KingPay">KingPay</option>
-                  <option value="Zelle">Zelle</option>
-                  <option value="Stock">Stock</option>
-                  <option value="DonorPerfect">DonorPerfect</option>
-                </select>
+              <FellowshipDropdown
+              value={editValues.fellowship}
+              onChange={(selectedOption) => {
+                setEditValues({
+                  ...editValues,
+                  fellowship: selectedOption,
+                });
+              }}
+            />
               </td>
             </>
           )}
@@ -186,6 +182,11 @@ export default function InvoicesTableItem({
               <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                 <div className={`font-medium ${totalColor(invoice.wallet)}`}>
                   {invoice.wallet}
+                </div>
+              </td>
+              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <div className="font-medium text-gray-800 dark:text-gray-100">
+                  {invoice.fellowship}
                 </div>
               </td>
             </>

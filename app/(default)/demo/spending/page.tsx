@@ -404,12 +404,12 @@ function SpendingContent() {
           <div>
             <div className="mb-2">
               <div className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                Delete user?
+                Delete spending?
               </div>
             </div>
             <div className="text-sm mb-10">
               <div className="space-y-2">
-                <p>Are you sure you want to delete this member?</p>
+                <p>Are you sure you want to delete this transaction?</p>
               </div>
             </div>
             <div className="flex flex-wrap justify-end space-x-2">

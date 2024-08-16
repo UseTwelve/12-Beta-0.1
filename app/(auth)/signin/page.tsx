@@ -12,6 +12,7 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [toastErrorOpen, setToastErrorOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false); // New state for loading indicator
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -35,11 +36,16 @@ export default function SignIn() {
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
+    setIsLoading(true); // Show loading indicator
+    setError(null); // Clear previous errors
+
     const result = await signIn("credentials", {
       email,
       password,
       redirect: false, // Prevent automatic redirection
     });
+
+    setIsLoading(false); // Hide loading indicator
 
     if (result?.error) {
       setError(result.error); // Handle error by setting state
@@ -108,7 +114,7 @@ export default function SignIn() {
                 <div className="flex items-center justify-between mt-6">
                   <div className="mr-1">
                     <Link
-                      href="/reset-password"
+                      href="/forgot-password"
                       className="text-sm underline hover:no-underline"
                     >
                       Forgot Password?
@@ -117,8 +123,9 @@ export default function SignIn() {
                   <button
                     type="submit"
                     className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white ml-3"
+                    disabled={isLoading} // Disable button while loading
                   >
-                    Sign In
+                    {isLoading ? "Signing In..." : "Sign In"} {/* Show loading text */}
                   </button>
                 </div>
               </form>

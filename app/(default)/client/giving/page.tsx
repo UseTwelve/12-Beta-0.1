@@ -1,6 +1,6 @@
 "use client";
 
-import { SelectedItemsProvider } from "@/app/selected-items-context";
+import { SelectedItemsProvider, useSelectedItems } from "@/app/selected-items-context";
 import SearchForm from "@/components/search-form";
 import DeleteButton from "@/components/delete-button";
 import DateSelect from "@/components/date-select";
@@ -39,7 +39,7 @@ function GivingContent() {
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null);
   const [dangerModalOpen, setDangerModalOpen] = useState<boolean>(false);
-  const [selectedItems, setSelectedItems] = useState<number[]>([]); // Add this line
+  const { selectedItems, setSelectedItems } = useSelectedItems()// Add this line
 
   const filteredAndSortedRecords = useMemo(() => {
     // If searchTerm is empty, return all records (except the header row)
@@ -186,6 +186,7 @@ function GivingContent() {
       setToastSuccessOpen(true);
   
       // Optionally, refetch the records to update the state
+      setSelectedItems([]);
       await fetchData();
     } catch (error) {
       console.error("Error uploading record:", error);
@@ -377,12 +378,12 @@ function GivingContent() {
           <div>
             <div className="mb-2">
               <div className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                Delete user?
+                Delete transaction?
               </div>
             </div>
             <div className="text-sm mb-10">
               <div className="space-y-2">
-                <p>Are you sure you want to delete this member?</p>
+                <p>Are you sure you want to delete this transaction?</p>
               </div>
             </div>
             <div className="flex flex-wrap justify-end space-x-2">

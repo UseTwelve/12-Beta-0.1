@@ -1,6 +1,6 @@
 "use client";
 
-import { SelectedItemsProvider } from "@/app/selected-items-context";
+import { SelectedItemsProvider, useSelectedItems } from "@/app/selected-items-context";
 import SearchForm from "@/components/search-form";
 import DeleteButton from "@/components/delete-button";
 import DateSelect from "@/components/date-select";
@@ -38,7 +38,7 @@ function GivingContent() {
   const [sheetId, setSheetId] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
   const apiUrl = "/client/givers";
-  const [selectedItems, setSelectedItems] = useState<number[]>([]); 
+  const { selectedItems, setSelectedItems } = useSelectedItems()
 
   const filteredAndSortedRecords = useMemo(() => {
     // If searchTerm is empty, return all records (except the header row)
@@ -85,6 +85,7 @@ function GivingContent() {
         group: record[2],
         subGroup: record[3],
         wallet: record[4],
+        fellowship: record[5],
       }));
       setRecords(formattedRecords);
       setSheetId(data.sheetId);
@@ -282,12 +283,12 @@ function GivingContent() {
           <div>
             <div className="mb-2">
               <div className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                Delete user?
+                Delete giver?
               </div>
             </div>
             <div className="text-sm mb-10">
               <div className="space-y-2">
-                <p>Are you sure you want to delete this member?</p>
+                <p>Are you sure you want to delete this giver?</p>
               </div>
             </div>
             <div className="flex flex-wrap justify-end space-x-2">
@@ -353,7 +354,7 @@ function GivingContent() {
           <SearchForm placeholder="Search…" onChange={handleSearch} />
           {/* <DateSelect /> */}
           {/* <FilterButton align="right" /> */}
-          <button
+          {/* <button
             className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white"
             onClick={handleDownload}
           >
@@ -366,7 +367,7 @@ function GivingContent() {
               <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
             </svg>
             <span className="max-xs:sr-only">Download</span>
-          </button>
+          </button> */}
         </div>
       </div>
 

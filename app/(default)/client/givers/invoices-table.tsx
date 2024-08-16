@@ -74,7 +74,11 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Wallet</div>
-                </th></>}
+                  </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                  <div className="font-semibold text-left">Fellowship</div>
+                  </th>
+                </>}
    
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Actions</div>
