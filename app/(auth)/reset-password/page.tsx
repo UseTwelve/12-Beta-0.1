@@ -3,7 +3,7 @@
 import Link from "next/link";
 import AuthHeader from "../auth-header";
 import AuthImage from "../auth-image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Toast02 from "@/components/toast-02";
 import axiosAuth from "@/lib/axios";
 import { useRouter } from "next/navigation";
@@ -16,9 +16,16 @@ export default function ResetPassword() {
   const [success, setSuccess] = useState<string | null>(null);
   const [toastSuccessOpen, setToastSuccessOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
-  let params = new URLSearchParams(window.location.search);
-  let token = params.get("token");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      let params = new URLSearchParams(window.location.search);
+  const token = params.get("token");
+      setToken(token)
+    }
+  }, []);
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
