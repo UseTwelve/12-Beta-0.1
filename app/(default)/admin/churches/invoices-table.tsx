@@ -12,6 +12,7 @@ export interface Record {
   googleSheetLink: string;
   spreadsheetId: string;
   hasCrm: boolean;
+  chmsName: string;
   active: string;
   createdAt: string;
   updatedAt: string;
@@ -76,6 +77,28 @@ export default function ChurchesTable({
                     <svg
                       className={`sort-icon ${
                         sortConfig?.key === "name"
+                          ? sortConfig.direction === "asc"
+                            ? "asc"
+                            : "desc"
+                          : ""
+                      }`}
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M3.204 5h9.592L8 10.204 3.204 5z" />
+                    </svg>
+                  </div>
+                </th>
+                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
+                  <div
+                    className="font-semibold text-left inline-flex items-start" 
+                    onClick={() => onHandleSort("chmsName")}
+                  >
+                    ChMs Name
+                    <svg
+                      className={`sort-icon ${
+                        sortConfig?.key === "chmsName"
                           ? sortConfig.direction === "asc"
                             ? "asc"
                             : "desc"

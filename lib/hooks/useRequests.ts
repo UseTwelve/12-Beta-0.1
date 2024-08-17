@@ -2,7 +2,7 @@ import { AxiosInstance } from "axios";
 
 export const fetchRecords = async (axiosAuth: AxiosInstance, url:string) => {
   try {
-    const response = await axiosAuth.get(url);
+    const response = await axiosAuth.get(`${url}?sort=-id`);
     const data = response.data.data;
     return data.results;
   } catch (error) {

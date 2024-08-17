@@ -16,6 +16,7 @@ export default function ChurchPanel({ onReload }: { onReload: () => void }) {
   const panelContent = useRef<HTMLDivElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
   const [name, setName] = useState("");
+  const [chmsName, setChmsName] = useState("");
   const [physicalAddress, setPhysicalAddress] = useState("");
   const [hasCrm, setHasCrm] = useState(false);
   const [logoFile, setLogoFile] = useState<File | null>(null);
@@ -29,6 +30,7 @@ export default function ChurchPanel({ onReload }: { onReload: () => void }) {
 
   const clearForm = () => {
     setName("");
+    setChmsName("");
     setPhysicalAddress("");
     setHasCrm(false);
     setLogoFile(null);
@@ -44,6 +46,7 @@ export default function ChurchPanel({ onReload }: { onReload: () => void }) {
   useEffect(() => {
     if (church) {
       setName(church.name);
+      setChmsName(church.chmsName);
       setPhysicalAddress(church.physicalAddress);
       setHasCrm(church.hasCrm);
     } else {
@@ -61,6 +64,7 @@ export default function ChurchPanel({ onReload }: { onReload: () => void }) {
     setLoading(true);
     const formData = new FormData();
     formData.append("name", name);
+    formData.append("chmsName", chmsName);
     formData.append("physicalAddress", physicalAddress);
     formData.append("hasCrm", hasCrm.toString());
     if (logoFile) {
@@ -216,6 +220,24 @@ export default function ChurchPanel({ onReload }: { onReload: () => void }) {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  placeholder="Name of the church"
+                />
+              </div>
+            </div>
+            <div className="mt-6">
+              <div>
+                <label
+                  className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2"
+                  htmlFor="chmsName"
+                >
+                 ChMs Name
+                </label>
+                <input
+                  id="chmsName"
+                  className="form-input w-full"
+                  type="text"
+                  value={chmsName}
+                  onChange={(e) => setChmsName(e.target.value)}
                   placeholder="Name in the CRM"
                 />
               </div>
