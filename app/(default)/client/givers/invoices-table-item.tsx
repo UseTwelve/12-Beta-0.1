@@ -25,6 +25,45 @@ export default function InvoicesTableItem({
 }: InvoicesTableItemProps) {
   const [isEditingState, setIsEditingState] = useState(isEditing);
   const [editValues, setEditValues] = useState(invoice);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const { data: session, status } = useSession();
+  const { totalColor, statusColor, typeIcon } = InvoicesProperties();
+
+  const validate = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!editValues.nameInWallet) {
+      newErrors.nameInWallet = "Name in wallet is required.";
+    }
+
+    if (!editValues.crmName) {
+      newErrors.crmName = "CRM name is required.";
+    }
+
+    if (session && !session.user.churchInfo?.church.hasCrm) {
+      if (!editValues.group) {
+        newErrors.group = "Group is required.";
+      }
+      if (!editValues.subGroup) {
+        newErrors.subGroup = "Subgroup is required.";
+      }
+      if (!editValues.wallet) {
+        newErrors.wallet = "Wallet is required.";
+      }
+      if (!editValues.fellowship) {
+        newErrors.fellowship = "Fellowship is required.";
+      }
+    }
+
+    setErrors(newErrors);
+
+    // Clear errors after 5 sec
+    setTimeout(() => {
+      setErrors({});
+    }, 5000); // 300000 milliseconds = 5 sec
+
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCheckboxChange(invoice.id ?? index + 1, e.target.checked);
@@ -38,8 +77,10 @@ export default function InvoicesTableItem({
   };
 
   const handleSave = () => {
-    onUpdateRecord(index, editValues);
-    setIsEditingState(false);
+    if (validate()) {
+      onUpdateRecord(index, editValues);
+      setIsEditingState(false);
+    }
   };
 
   const handleCancel = () => {
@@ -50,9 +91,6 @@ export default function InvoicesTableItem({
   const handleEdit = () => {
     setIsEditingState(true);
   };
-
-  const { data: session, status } = useSession();
-  const { totalColor, statusColor, typeIcon } = InvoicesProperties();
 
   return (
     <tr>
@@ -79,6 +117,11 @@ export default function InvoicesTableItem({
               onChange={handleChange}
               className="form-input"
             />
+            {errors.nameInWallet && (
+              <div className="text-red-500 text-xs mt-1">
+                {errors.nameInWallet}
+              </div>
+            )}
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <input
@@ -88,6 +131,9 @@ export default function InvoicesTableItem({
               onChange={handleChange}
               className="form-input"
             />
+            {errors.crmName && (
+              <div className="text-red-500 text-xs mt-1">{errors.crmName}</div>
+            )}
           </td>
           {session && !session.user.churchInfo?.church.hasCrm && (
             <>
@@ -102,6 +148,11 @@ export default function InvoicesTableItem({
                   <option value="Group 1">Group 1</option>
                   <option value="Group 2">Group 2</option>
                 </select>
+                {errors.group && (
+                  <div className="text-red-500 text-xs mt-1">
+                    {errors.group}
+                  </div>
+                )}
               </td>
               <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                 <select
@@ -117,17 +168,49 @@ export default function InvoicesTableItem({
                   <option value="SubGroup D">SubGroup D</option>
                   <option value="SubGroup E">SubGroup E</option>
                 </select>
+                {errors.subGroup && (
+                  <div className="text-red-500 text-xs mt-1">
+                    {errors.subGroup}
+                  </div>
+                )}
               </td>
               <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-              <FellowshipDropdown
-              value={editValues.fellowship}
-              onChange={(selectedOption) => {
-                setEditValues({
-                  ...editValues,
-                  fellowship: selectedOption,
-                });
-              }}
-            />
+                <select
+                  name="wallet"
+                  value={editValues.wallet}
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  <option value=""></option>
+                  <option value="Cash App">Cash App</option>
+                  <option value="PayPal">PayPal</option>
+                  <option value="Apple Pay">Apple Pay</option>
+                  <option value="KingPay">KingPay</option>
+                  <option value="Zelle">Zelle</option>
+                  <option value="Stock">Stock</option>
+                  <option value="DonorPerfect">DonorPerfect</option>
+                </select>
+                {errors.wallet && (
+                  <div className="text-red-500 text-xs mt-1">
+                    {errors.wallet}
+                  </div>
+                )}
+              </td>
+              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <FellowshipDropdown
+                  value={editValues.fellowship}
+                  onChange={(selectedOption) => {
+                    setEditValues({
+                      ...editValues,
+                      fellowship: selectedOption,
+                    });
+                  }}
+                />
+                {errors.fellowship && (
+                  <div className="text-red-500 text-xs mt-1">
+                    {errors.fellowship}
+                  </div>
+                )}
               </td>
             </>
           )}

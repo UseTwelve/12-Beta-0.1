@@ -1,6 +1,6 @@
+import { useState } from "react";
 import CategoryDropdown from "@/components/dropdown-category-full";
 import FullNameDropdown from "@/components/dropdown-giver";
-import { useState } from "react";
 
 interface NewInvoiceRowProps {
   record: any;
@@ -14,6 +14,7 @@ export default function NewInvoiceRow({
   onCancel,
 }: NewInvoiceRowProps) {
   const [newRecord, setNewRecord] = useState(record);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const handleChange = (e: any) => {
     setNewRecord({
@@ -22,8 +23,49 @@ export default function NewInvoiceRow({
     });
   };
 
+  const validate = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!newRecord.amount) {
+      newErrors.amount = "Amount is required.";
+    }
+
+    if (!newRecord.wallet) {
+      newErrors.wallet = "Wallet is required.";
+    }
+
+    if (!newRecord.fullName) {
+      newErrors.fullName = "Full name is required.";
+    }
+
+    if (!newRecord.date) {
+      newErrors.date = "Date is required.";
+    }
+
+    if (!newRecord.category) {
+      newErrors.category = "Category is required.";
+    }
+    if (!newRecord.memo) {
+      newErrors.memo = "Memo is required.";
+    }
+
+    if (!newRecord.nameInWallet) {
+      newErrors.nameInWallet = "Name in wallet is required.";
+    }
+
+    setErrors(newErrors);
+
+    setTimeout(() => {
+      setErrors({});
+    }, 5000); 
+
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSave = () => {
-    onSave(newRecord);
+    if (validate()) {
+      onSave(newRecord);
+    }
   };
 
   return (
@@ -47,6 +89,9 @@ export default function NewInvoiceRow({
           onChange={handleChange}
           className="form-input"
         />
+        {errors.amount && (
+          <div className="text-red-500 text-xs mt-1">{errors.amount}</div>
+        )}
       </td>
       <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <select
@@ -64,6 +109,9 @@ export default function NewInvoiceRow({
           <option value="Stock">Stock</option>
           <option value="DonorPerfect">DonorPerfect</option>
         </select>
+        {errors.wallet && (
+          <div className="text-red-500 text-xs mt-1">{errors.wallet}</div>
+        )}
       </td>
       <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <FullNameDropdown
@@ -75,6 +123,9 @@ export default function NewInvoiceRow({
             });
           }}
         />
+        {errors.fullName && (
+          <div className="text-red-500 text-xs mt-1">{errors.fullName}</div>
+        )}
       </td>
       <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <input
@@ -84,6 +135,9 @@ export default function NewInvoiceRow({
           onChange={handleChange}
           className="form-input"
         />
+        {errors.date && (
+          <div className="text-red-500 text-xs mt-1">{errors.date}</div>
+        )}
       </td>
       <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <CategoryDropdown
@@ -95,6 +149,9 @@ export default function NewInvoiceRow({
             });
           }}
         />
+        {errors.category && (
+          <div className="text-red-500 text-xs mt-1">{errors.category}</div>
+        )}
       </td>
       <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <input
@@ -104,6 +161,9 @@ export default function NewInvoiceRow({
           onChange={handleChange}
           className="form-input"
         />
+        {errors.memo && (
+          <div className="text-red-500 text-xs mt-1">{errors.memo}</div>
+        )}
       </td>
       <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <input
@@ -113,6 +173,9 @@ export default function NewInvoiceRow({
           onChange={handleChange}
           className="form-input"
         />
+        {errors.nameInWallet && (
+          <div className="text-red-500 text-xs mt-1">{errors.nameInWallet}</div>
+        )}
       </td>
       <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
         <div className="space-x-1">

@@ -287,7 +287,7 @@ export default function InvoicesTable({
               {invoices.slice(1).map((invoice, index) => (
                 <InvoicesTableItem
                   key={invoice.id}
-                  index={index + 1}
+                  index={invoice.id ?? index + 1}
                   invoice={invoice}
                   onCheckboxChange={handleCheckboxChange}
                   isSelected={selectedItems.includes(invoice.id ?? index + 1)}

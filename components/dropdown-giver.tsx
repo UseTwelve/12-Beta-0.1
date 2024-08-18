@@ -32,13 +32,23 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) 
         setLoading(true);
         try {
           const response = await fetchRecords(axiosAuth, '/client/givers');
-          const formattedRecords = response.values.slice(1).map((record: any) => ({
-            nameInWallet: record[0],
-            crmName: record[1],
-            group: record[2],
-            subGroup: record[3],
-            wallet: record[4],
-          }));
+          const formattedRecords = response.values.slice(1).reduce((uniqueRecords: any[], record: any) => {
+            const crmName = record[1];
+            
+            // Check if crmName is already in the uniqueRecords
+            if (!uniqueRecords.some((rec) => rec.crmName === crmName)) {
+              uniqueRecords.push({
+                nameInWallet: record[0],
+                crmName: crmName,
+                group: record[2],
+                subGroup: record[3],
+                wallet: record[4],
+              });
+            }
+          
+            return uniqueRecords;
+          }, []);
+          
           setOptions(formattedRecords.map((giver: Giver) => giver.crmName));
         } catch (error) {
           console.error('Error fetching givers:', error);

@@ -15,6 +15,7 @@ export default function NewInvoiceRow({
   onCancel,
 }: NewInvoiceRowProps) {
   const [newRecord, setNewRecord] = useState(record);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const { data: session, status } = useSession();
 
   const handleChange = (e: any) => {
@@ -24,8 +25,46 @@ export default function NewInvoiceRow({
     });
   };
 
+  const validate = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!newRecord.nameInWallet) {
+      newErrors.nameInWallet = "Name in wallet is required.";
+    }
+
+    if (!newRecord.crmName) {
+      newErrors.crmName = "CRM name is required.";
+    }
+
+    if (session && !session.user.churchInfo?.church.hasCrm) {
+      if (!newRecord.group) {
+        newErrors.group = "Group is required.";
+      }
+      if (!newRecord.subGroup) {
+        newErrors.subGroup = "Subgroup is required.";
+      }
+      if (!newRecord.wallet) {
+        newErrors.wallet = "Wallet is required.";
+      }
+      if (!newRecord.fellowship) {
+        newErrors.fellowship = "Fellowship is required.";
+      }
+    }
+
+    setErrors(newErrors);
+
+    // Clear errors after 5 seconds
+    setTimeout(() => {
+      setErrors({});
+    }, 5000); // 300000 milliseconds = 5 seconds
+
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSave = () => {
-    onSave(newRecord);
+    if (validate()) {
+      onSave(newRecord);
+    }
   };
 
   return (
@@ -39,6 +78,11 @@ export default function NewInvoiceRow({
           onChange={handleChange}
           className="form-input"
         />
+        {errors.nameInWallet && (
+          <div className="text-red-500 text-xs mt-1">
+            {errors.nameInWallet}
+          </div>
+        )}
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <input
@@ -48,11 +92,15 @@ export default function NewInvoiceRow({
           onChange={handleChange}
           className="form-input"
         />
+        {errors.crmName && (
+          <div className="text-red-500 text-xs mt-1">
+            {errors.crmName}
+          </div>
+        )}
       </td>
 
       {session && !session.user.churchInfo?.church.hasCrm && (
         <>
-          {" "}
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <select
               name="group"
@@ -64,6 +112,11 @@ export default function NewInvoiceRow({
               <option value="Group 1">Group 1</option>
               <option value="Group 2">Group 2</option>
             </select>
+            {errors.group && (
+              <div className="text-red-500 text-xs mt-1">
+                {errors.group}
+              </div>
+            )}
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <select
@@ -79,6 +132,11 @@ export default function NewInvoiceRow({
               <option value="SubGroup D">SubGroup D</option>
               <option value="SubGroup E">SubGroup E</option>
             </select>
+            {errors.subGroup && (
+              <div className="text-red-500 text-xs mt-1">
+                {errors.subGroup}
+              </div>
+            )}
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <select
@@ -96,6 +154,11 @@ export default function NewInvoiceRow({
               <option value="Stock">Stock</option>
               <option value="DonorPerfect">DonorPerfect</option>
             </select>
+            {errors.wallet && (
+              <div className="text-red-500 text-xs mt-1">
+                {errors.wallet}
+              </div>
+            )}
           </td>
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <FellowshipDropdown
@@ -107,7 +170,12 @@ export default function NewInvoiceRow({
                 });
               }}
             />
-          </td>{" "}
+            {errors.fellowship && (
+              <div className="text-red-500 text-xs mt-1">
+                {errors.fellowship}
+              </div>
+            )}
+          </td>
         </>
       )}
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">

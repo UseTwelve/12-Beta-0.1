@@ -268,6 +268,7 @@ function GivingContent() {
         setToastInfoOpen(true);
         await deleteRecord(axiosAuth,sheetId, selectedRecordId, `/client/church/record`);  // Pass sheetId and rowIndex
         await fetchData();
+        setSelectedItems([]);
         setToastInfoOpen(false);
         setToastMessage("Record deleted successfully.");
         setToastSuccessOpen(true);
