@@ -59,11 +59,20 @@ function GivingContent() {
   
     // Sort the filtered records
     if (sortConfig.key) {
-      filteredRecords.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
+      filteredRecords = filteredRecords.sort((a, b) => {
+        const valueA =
+          sortConfig.key === "amount"
+            ? parseFloat(a[sortConfig.key].replace(/,/g, ""))
+            : a[sortConfig.key];
+        const valueB =
+          sortConfig.key === "amount"
+            ? parseFloat(b[sortConfig.key].replace(/,/g, ""))
+            : b[sortConfig.key];
+
+        if (valueA < valueB) {
           return sortConfig.direction === "asc" ? -1 : 1;
         }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
+        if (valueA > valueB) {
           return sortConfig.direction === "asc" ? 1 : -1;
         }
         return 0;
@@ -343,7 +352,38 @@ function GivingContent() {
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
     }
+
+    // Sort records
+    // Sort records
+    const sortedRecords = [...records.slice(1)].sort((a, b) => {
+      let valueA, valueB;
+    
+      if (key === "amount") {
+        // Handle the sorting for the "amount" field
+        valueA = parseFloat(String(a[key]).replace(/,/g, ""));
+        valueB = parseFloat(String(b[key]).replace(/,/g, ""));
+      } else if (key === "date") {
+        // Handle the sorting for the "date" field
+        valueA = new Date(a[key]).getTime();
+        valueB = new Date(b[key]).getTime();
+      } else {
+        // Default sorting for other fields
+        valueA = a[key];
+        valueB = b[key];
+      }
+    
+      if (valueA < valueB) {
+        return sortConfig.direction === "asc" ? -1 : 1;
+      }
+      if (valueA > valueB) {
+        return sortConfig.direction === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+    
+
     setSortConfig({ key, direction });
+    setRecords( [records[0], ...sortedRecords]);
   };
 
   if (status === "loading") return <p>Loading...</p>;
