@@ -64,8 +64,11 @@ const CategoryDropdown: React.FC<CategoryDropdownProps> = ({ onChange, value }) 
           ) : (
             <>
               {options
-                .filter(option => option.toLowerCase().includes(value.toLowerCase()))
-                .map((option, index) => (
+                .filter(
+                  (option) =>
+                    typeof option === "string" &&
+                    option.toLowerCase().includes(value.toLowerCase())
+                ).map((option, index) => (
                   <div
                     key={index}
                     onMouseDown={() => handleSelect(option)}

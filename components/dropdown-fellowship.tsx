@@ -63,9 +63,12 @@ const FellowshipDropdown: React.FC<FellowshipDropdownProps> = ({ onChange, value
             </div>
           ) : (
             <>
-              {options
-                .filter(option => option.toLowerCase().includes(value.toLowerCase()))
-                .map((option, index) => (
+             {options
+                .filter(
+                  (option) =>
+                    typeof option === "string" &&
+                    option.toLowerCase().includes(value.toLowerCase())
+                ).map((option, index) => (
                   <div
                     key={index}
                     onMouseDown={() => handleSelect(option)}

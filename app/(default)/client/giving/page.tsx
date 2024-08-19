@@ -76,7 +76,6 @@ function GivingContent() {
   
   
 
-
   const fetchData = async () => {
     try {
       setToastMessage("Fetching records...");

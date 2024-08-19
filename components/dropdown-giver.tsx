@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { fetchRecords } from '@/lib/hooks/useGoogleSheet';
-import useAxiosAuth from '@/lib/hooks/useAxiosAuth';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { fetchRecords } from "@/lib/hooks/useGoogleSheet";
+import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 
 interface FullNameDropdownProps {
   onChange: (value: string) => void;
@@ -19,7 +19,10 @@ export interface Giver {
   softrRecordID: string;
 }
 
-const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) => {
+const FullNameDropdown: React.FC<FullNameDropdownProps> = ({
+  onChange,
+  value,
+}) => {
   const [options, setOptions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -31,27 +34,29 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) 
       const fetchGivers = async () => {
         setLoading(true);
         try {
-          const response = await fetchRecords(axiosAuth, '/client/givers');
-          const formattedRecords = response.values.slice(1).reduce((uniqueRecords: any[], record: any) => {
-            const crmName = record[1];
-            
-            // Check if crmName is already in the uniqueRecords
-            if (!uniqueRecords.some((rec) => rec.crmName === crmName)) {
-              uniqueRecords.push({
-                nameInWallet: record[0],
-                crmName: crmName,
-                group: record[2],
-                subGroup: record[3],
-                wallet: record[4],
-              });
-            }
-          
-            return uniqueRecords;
-          }, []);
-          
+          const response = await fetchRecords(axiosAuth, "/client/givers");
+          const formattedRecords = response.values
+            .slice(1)
+            .reduce((uniqueRecords: any[], record: any) => {
+              const crmName = record[1];
+
+              // Check if crmName is already in the uniqueRecords
+              if (!uniqueRecords.some((rec) => rec.crmName === crmName)) {
+                uniqueRecords.push({
+                  nameInWallet: record[0],
+                  crmName: crmName,
+                  group: record[2],
+                  subGroup: record[3],
+                  wallet: record[4],
+                });
+              }
+
+              return uniqueRecords;
+            }, []);
+
           setOptions(formattedRecords.map((giver: Giver) => giver.crmName));
         } catch (error) {
-          console.error('Error fetching givers:', error);
+          console.error("Error fetching givers:", error);
         } finally {
           setLoading(false);
         }
@@ -60,22 +65,22 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) 
     }
   }, [focused]);
 
-  
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };
 
   const handleSelect = (option: string) => {
-    if (option === 'add_name') {
-      router.push('/client/givers');
+    if (option === "add_name") {
+      router.push("/client/givers");
     } else {
       onChange(option);
     }
   };
 
   return (
-    <div className="relative w-full"> {/* Make the container relative */}
+    <div className="relative w-full">
+      {" "}
+      {/* Make the container relative */}
       <input
         type="text"
         value={value}
@@ -94,7 +99,11 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) 
           ) : (
             <>
               {options
-                .filter(option => option.toLowerCase().includes(value.toLowerCase()))
+                .filter(
+                  (option) =>
+                    typeof option === "string" &&
+                    option.toLowerCase().includes(value.toLowerCase())
+                )
                 .map((option, index) => (
                   <div
                     key={index}
@@ -105,7 +114,7 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({ onChange, value }) 
                   </div>
                 ))}
               <div
-                onMouseDown={() => handleSelect('add_name')}
+                onMouseDown={() => handleSelect("add_name")}
                 className="cursor-pointer px-4 py-2 hover:bg-indigo-100 text-indigo-600 font-semibold transition duration-150 ease-in-out"
               >
                 Add New Name
