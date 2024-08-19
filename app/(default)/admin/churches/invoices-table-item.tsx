@@ -56,7 +56,7 @@ export default function InvoicesTableItem({
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap md:w-1/2">
         <div className="flex items-center">
           <div className="w-9 h-9 shrink-0 mr-2 sm:mr-3">
-            <button tabIndex={-1}>
+            <span tabIndex={-1}>
               {church.logo && <Image
                 className="rounded-full"
                 src={church.logo}
@@ -64,10 +64,10 @@ export default function InvoicesTableItem({
                 height={36}
                 alt={church.name}
               />}
-            </button>
+            </span>
           </div>
           <div className="font-medium text-gray-800 dark:text-gray-100">
-            <button>{church.name}</button>
+            <span>{church.name}</span>
           </div>
         </div>
       </td>
