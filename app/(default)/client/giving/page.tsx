@@ -43,12 +43,12 @@ function GivingContent() {
 
   const filteredAndSortedRecords = useMemo(() => {
     // If searchTerm is empty, return all records (except the header row)
-    if (searchTerm.trim() === "") {
+    if (typeof searchTerm !== "string" || searchTerm.trim() === "") {
       return records;
     }
   
     // Split search terms by commas
-    const searchTerms = searchTerm.split(",").filter(term=> term !== " ").map(term => term.trim().toLowerCase());
+    const searchTerms = searchTerm.split(",").filter(term => term.trim() !== "").map(term => term.trim().toLowerCase());
   
     // Filter records based on search terms
     let filteredRecords = records.slice(1).filter((record) => {
@@ -72,7 +72,7 @@ function GivingContent() {
   
     // Add back the header row after filtering and sorting
     return [records[0], ...filteredRecords];
-  }, [records, searchTerm, sortConfig]);
+  }, [records, searchTerm, sortConfig]);  
   
   
 
