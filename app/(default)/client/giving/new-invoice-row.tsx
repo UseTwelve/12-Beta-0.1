@@ -23,6 +23,7 @@ export default function NewInvoiceRow({
     });
   };
 
+
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
 
@@ -127,11 +128,11 @@ export default function NewInvoiceRow({
           <div className="text-red-500 text-xs mt-1">{errors.fullName}</div>
         )}
       </td>
-      <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+       <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <input
           type="date"
           name="date"
-          value={newRecord.date}
+          value={newRecord.date}  
           onChange={handleChange}
           className="form-input"
         />

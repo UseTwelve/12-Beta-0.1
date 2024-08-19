@@ -74,7 +74,12 @@ function GivingContent() {
     return [records[0], ...filteredRecords];
   }, [records, searchTerm, sortConfig]);  
   
-  
+
+
+  function convertToMDY(dateString: string) {
+    const [year, month, day] = dateString.split('-');
+    return `${parseInt(month)}/${parseInt(day)}/${year}`;
+  }
 
   const fetchData = async () => {
     try {
@@ -130,6 +135,7 @@ function GivingContent() {
   const handleSaveNewRecord = async (
     record: Record
   ) => {
+    record.date = convertToMDY(record.date);
     try {
       setToastMessage("Saving new record...");
       setToastInfoOpen(true);
@@ -300,8 +306,24 @@ function GivingContent() {
       return;
     }
   
-    const selectedRecords = selectedItems.map(index => filteredAndSortedRecords[index]);
+    let selectedRecords = selectedItems.map(selectedId => {
+      // Find the record in filteredAndSortedRecords that matches the selectedId
+      const record = filteredAndSortedRecords.find(rec => rec.id === selectedId);
   
+      if (record) {
+        // Create a shallow copy of the record and remove the id property
+        const { id, ...recordWithoutId } = record;
+        return recordWithoutId;
+      }
+  
+      return null;
+    }).filter(record => record !== null); // Filter out any null values
+    if (selectedRecords.length === 0) {
+      setToastMessage("No valid records found to download.");
+      setToastWarningOpen(true);
+      return;
+    }
+    selectedRecords = selectedRecords.length === filteredAndSortedRecords.length ? selectedRecords.slice(1) : selectedRecords;
     const ws = XLSX.utils.json_to_sheet(selectedRecords);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "transactions");
@@ -312,6 +334,8 @@ function GivingContent() {
       `${session?.user.churchInfo?.church.name} - ${Date.now()}.xlsx`
     );
   };
+  
+  
   
 
   const handleSort = (key: string) => {

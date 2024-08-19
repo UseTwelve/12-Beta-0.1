@@ -54,6 +54,15 @@ export default function InvoicesTableItem({
     },
   ];
 
+
+  function convertToYMD(dateString: string) {
+    const [month, day, year] = dateString.split('/');
+    const paddedMonth = month.padStart(2, '0');
+    const paddedDay = day.padStart(2, '0');
+    console.log(`${year}-${paddedMonth}-${paddedDay}`);
+    return `${year}-${paddedMonth}-${paddedDay}`;
+  }
+
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCheckboxChange(invoice.id ?? index, e.target.checked);
   };
@@ -222,7 +231,7 @@ export default function InvoicesTableItem({
             <input
               type="date"
               name="date"
-              value={editValues.date}
+              value={convertToYMD(editValues.date)}
               className="form-input"
               disabled
             />
