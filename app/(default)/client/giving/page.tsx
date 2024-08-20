@@ -40,6 +40,8 @@ function GivingContent() {
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null);
   const [dangerModalOpen, setDangerModalOpen] = useState<boolean>(false);
   const { selectedItems, setSelectedItems } = useSelectedItems()// Add this line
+  const [multiDeleteModalOpen, setMultiDeleteModalOpen] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   const filteredAndSortedRecords = useMemo(() => {
     // If searchTerm is empty, return all records (except the header row)
@@ -92,8 +94,8 @@ function GivingContent() {
 
   const fetchData = async () => {
     try {
-      setToastMessage("Fetching records...");
-      setToastInfoOpen(true);
+      // setToastMessage("Fetching records...");
+      // setToastInfoOpen(true);
       const data = await fetchRecords(axiosAuth, "/client/church/records");
       
       const formattedRecords = data.values.map((record: any[], index: any) => ({
@@ -168,7 +170,7 @@ function GivingContent() {
 
   const handleUploadRecord = async () => {
     if (selectedItems.length === 0) {
-      setToastMessage("Please select records to upload.");
+      setToastMessage(`Select transactions to upload.`);
       setToastWarningOpen(true);
       return;
     }
@@ -176,7 +178,7 @@ function GivingContent() {
     const newRecords = selectedItems.filter(index => records[index].crmStatus === "New");
   
     if (newRecords.length !== selectedItems.length) {
-      setToastMessage("Please select only new records to upload.");
+      setToastMessage(`Select only "New" transactions to upload.`);
       setToastWarningOpen(true);
       return;
     }
@@ -236,36 +238,46 @@ function GivingContent() {
     }
   };
 
+  
   const handleDeleteMultipleRecords = async () => {
-  if (selectedItems.length === 0) {
-    setToastMessage("Please select records to delete.");
-    setToastWarningOpen(true);
-    return;
-  }
+    if (selectedItems.length === 0) {
+      setToastMessage("Please select records to delete.");
+      setToastWarningOpen(true);
+      return;
+    }
 
-  try {
-    setToastMessage("Deleting selected records...");
-    setToastInfoOpen(true);
+    setMultiDeleteModalOpen(true); // Open the danger modal for multiple deletion
+  };
 
-    const deletePromises = selectedItems.map(async (index) => {
-      const recordId = index + 1; // Adjust for 1-based index in the Google Sheets API
-      return await deleteRecord(axiosAuth, sheetId, recordId, `/client/church/record`);
-    });
+  const confirmMultipleDelete = async () => {
+    setIsDeleting(true);
+    const selectedItemsLength = selectedItems.length;
+    try {
+      // setToastMessage("Deleting selected records...");
+      // setToastInfoOpen(true);
 
-    await Promise.all(deletePromises);
+      const deletePromises = selectedItems.map(async (index) => {
+        const recordId = index + 1; // Adjust for 1-based index in the Google Sheets API
+        return await deleteRecord(axiosAuth, sheetId, recordId, `/client/church/record`);
+      });
 
-    await fetchData();
-    setSelectedItems([]); // Clear selected items
-    setToastInfoOpen(false);
-    setToastMessage("Selected records deleted successfully.");
-    setToastSuccessOpen(true);
-  } catch (error) {
-    console.error("Error deleting records:", error);
-    setToastMessage("Error deleting selected records.");
-    setToastInfoOpen(false);
-    setToastErrorOpen(true);
-  }
-};
+      await Promise.all(deletePromises);
+
+      await fetchData();
+      setSelectedItems([]); // Clear selected items
+      setToastInfoOpen(false);
+      setToastMessage(`You have successfully deleted ${selectedItemsLength} Transaction(s).`);
+      setToastSuccessOpen(true);
+    } catch (error) {
+      console.error("Error deleting transaction:", error);
+      setToastMessage("Error deleting selected transaction.");
+      setToastInfoOpen(false);
+      setToastErrorOpen(true);
+    } finally {
+      setIsDeleting(false); 
+      setMultiDeleteModalOpen(false); // Close the modal after the operation
+    }
+  };
 
 
   
@@ -276,22 +288,24 @@ function GivingContent() {
   };
 
   const confirmDelete = async () => {
+    setIsDeleting(true); 
     if (selectedRecordId !== null) {
       try {
-        setToastMessage("Deleting record...");
-        setToastInfoOpen(true);
+        // setToastMessage("Deleting transaction...");
+        // setToastInfoOpen(true);
         await deleteRecord(axiosAuth,sheetId, selectedRecordId, `/client/church/record`);  // Pass sheetId and rowIndex
         await fetchData();
         setSelectedItems([]);
         setToastInfoOpen(false);
-        setToastMessage("Record deleted successfully.");
+        setToastMessage("Transaction deleted successfully.");
         setToastSuccessOpen(true);
       } catch (error) {
-        console.error("Error deleting record:", error);
-        setToastMessage("Error deleting record.");
+        console.error("Error deleting transaction:", error);
+        setToastMessage("Error deleting transaction.");
         setToastInfoOpen(false);
         setToastErrorOpen(true);
       } finally {
+        setIsDeleting(false); 
         setDangerModalOpen(false); // Close the modal after the operation
       }
     }
@@ -310,7 +324,7 @@ function GivingContent() {
 
   const handleDownload = () => {
     if (selectedItems.length === 0) {
-      setToastMessage("Please select records to download.");
+      setToastMessage("Please select transactions to download.");
       setToastWarningOpen(true);
       return;
     }
@@ -342,6 +356,10 @@ function GivingContent() {
       wb,
       `${session?.user.churchInfo?.church.name} - ${Date.now()}.xlsx`
     );
+
+    setToastMessage("Download successful.");
+    setToastSuccessOpen(true);
+
   };
   
   
@@ -461,7 +479,48 @@ function GivingContent() {
                 className="btn-sm bg-red-500 hover:bg-red-600 text-white"
                 onClick={confirmDelete} // Call confirmDelete on confirmation
               >
-                Yes, Delete it
+                {!isDeleting ? "Yes, Delete it": "Deleting..."}
+              </button>
+            </div>
+          </div>
+        </div>
+      </ModalBlank>
+      {/* Modal for multiple deletions */}
+      <ModalBlank isOpen={multiDeleteModalOpen} setIsOpen={setMultiDeleteModalOpen}>
+        <div className="p-5 flex space-x-4">
+          <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-gray-100 dark:bg-gray-700">
+            <svg
+              className="shrink-0 fill-current text-red-500"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+            >
+              <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
+            </svg>
+          </div>
+          <div>
+            <div className="mb-2">
+              <div className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                Delete selected transaction?
+              </div>
+            </div>
+            <div className="text-sm mb-10">
+              <div className="space-y-2">
+                <p>You are about to delete {selectedItems.length } transaction(s), Are you sure?</p>
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-end space-x-2">
+              <button
+                className="btn-sm border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-gray-800 dark:text-gray-300"
+                onClick={() => setMultiDeleteModalOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn-sm bg-red-500 hover:bg-red-600 text-white"
+                onClick={confirmMultipleDelete} // Confirm multiple deletions
+              >
+                {!isDeleting ? "Yes, Delete": "Deleting..."}
               </button>
             </div>
           </div>

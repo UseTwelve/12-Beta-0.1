@@ -109,6 +109,8 @@ export default function NewInvoiceRow({
           <option value="Zelle">Zelle</option>
           <option value="Stock">Stock</option>
           <option value="DonorPerfect">DonorPerfect</option>
+          <option value="Cash">Cash</option>
+          <option value="Check">Check</option>
         </select>
         {errors.wallet && (
           <div className="text-red-500 text-xs mt-1">{errors.wallet}</div>
