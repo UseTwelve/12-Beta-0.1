@@ -74,8 +74,8 @@ export default function InvoicesTable({
       </header>
       <div>
         {/* Table */}
-        <div className="table-container">
-        {/* <div className=" overflow-x-auto"> */}
+        {/* <div className="table-container"> */}
+        <div className=" overflow-x-auto">
           <table className="table-auto w-full dark:text-gray-300">
             {/* Table header */}
             <thead className="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/20 border-t border-b border-gray-100 dark:border-gray-700/60">
