@@ -37,18 +37,18 @@ export default function NewInvoiceRow({
     }
 
     if (session && !session.user.churchInfo?.church.hasCrm) {
-      if (!newRecord.group) {
-        newErrors.group = "Group is required.";
-      }
+      // if (!newRecord.group) {
+      //   newErrors.group = "Group is required.";
+      // }
       if (!newRecord.subGroup) {
-        newErrors.subGroup = "Subgroup is required.";
+        newErrors.subGroup = "Group is required.";
       }
-      if (!newRecord.wallet) {
-        newErrors.wallet = "Wallet is required.";
-      }
-      if (!newRecord.fellowship) {
-        newErrors.fellowship = "Fellowship is required.";
-      }
+      // if (!newRecord.wallet) {
+      //   newErrors.wallet = "Wallet is required.";
+      // }
+      // if (!newRecord.fellowship) {
+      //   newErrors.fellowship = "Fellowship is required.";
+      // }
     }
 
     setErrors(newErrors);
@@ -101,7 +101,7 @@ export default function NewInvoiceRow({
 
       {session && !session.user.churchInfo?.church.hasCrm && (
         <>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <select
               name="group"
               value={newRecord.group}
@@ -117,7 +117,7 @@ export default function NewInvoiceRow({
                 {errors.group}
               </div>
             )}
-          </td>
+          </td> */}
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <select
               name="subGroup"

@@ -153,16 +153,16 @@ function GivingContent() {
   const handleUpdateRecord = async (index: number, updatedRecord: Giver) => {
     index = index + 1;
     try {
-      setToastMessage("Updating record...");
+      setToastMessage("Updating giver...");
       setToastInfoOpen(true);
       await updateRecord(axiosAuth, index, updatedRecord, apiUrl);
       await fetchData();
       setToastInfoOpen(false);
-      setToastMessage("Record updated successfully.");
+      setToastMessage("Giver updated successfully.");
       setToastSuccessOpen(true);
     } catch (error) {
-      console.error("Error updating record:", error);
-      setToastMessage("Error updating record.");
+      console.error("Error updating giver:", error);
+      setToastMessage("Error updating giver.");
       setToastInfoOpen(false);
       setToastErrorOpen(true);
     }
@@ -170,13 +170,13 @@ function GivingContent() {
 
   const handleDeleteMultipleRecords = async () => {
     if (selectedItems.length === 0) {
-      setToastMessage("Please select records to delete.");
+      setToastMessage("Please select givers to delete.");
       setToastWarningOpen(true);
       return;
     }
   
     try {
-      setToastMessage("Deleting selected records...");
+      setToastMessage("Deleting selected givers...");
       setToastInfoOpen(true);
   
       const deletePromises = selectedItems.map(async (index) => {
@@ -189,11 +189,11 @@ function GivingContent() {
       setSelectedItems([]); // Clear selected items
       await fetchData();
       setToastInfoOpen(false);
-      setToastMessage("Selected records deleted successfully.");
+      setToastMessage("Selected giver deleted successfully.");
       setToastSuccessOpen(true);
     } catch (error) {
-      console.error("Error deleting records:", error);
-      setToastMessage("Error deleting selected records.");
+      console.error("Error deleting giver:", error);
+      setToastMessage("Error deleting selected givers.");
       setToastInfoOpen(false);
       setToastErrorOpen(true);
     }
@@ -209,16 +209,17 @@ function GivingContent() {
   const confirmDelete = async () => {
     if (selectedRecordId !== null) {
       try {
-        setToastMessage("Deleting record...");
+        setToastMessage("Deleting giver...");
         setToastInfoOpen(true);
         await deleteRecord(axiosAuth,sheetId, selectedRecordId, apiUrl);  // Pass sheetId and rowIndex
+        setSelectedItems([])
         await fetchData();
         setToastInfoOpen(false);
-        setToastMessage("Record deleted successfully.");
+        setToastMessage("Giver deleted successfully.");
         setToastSuccessOpen(true);
       } catch (error) {
-        console.error("Error deleting record:", error);
-        setToastMessage("Error deleting record.");
+        console.error("Error deleting giver:", error);
+        setToastMessage("Error deleting giver.");
         setToastInfoOpen(false);
         setToastErrorOpen(true);
       } finally {

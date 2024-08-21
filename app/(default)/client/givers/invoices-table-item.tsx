@@ -32,26 +32,13 @@ export default function InvoicesTableItem({
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!editValues.nameInWallet) {
-      newErrors.nameInWallet = "Name in wallet is required.";
-    }
-
     if (!editValues.crmName) {
       newErrors.crmName = "CRM name is required.";
     }
 
     if (session && !session.user.churchInfo?.church.hasCrm) {
-      if (!editValues.group) {
-        newErrors.group = "Group is required.";
-      }
       if (!editValues.subGroup) {
         newErrors.subGroup = "Subgroup is required.";
-      }
-      if (!editValues.wallet) {
-        newErrors.wallet = "Wallet is required.";
-      }
-      if (!editValues.fellowship) {
-        newErrors.fellowship = "Fellowship is required.";
       }
     }
 
@@ -137,7 +124,7 @@ export default function InvoicesTableItem({
           </td>
           {session && !session.user.churchInfo?.church.hasCrm && (
             <>
-              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+              {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                 <select
                   name="group"
                   value={editValues.group}
@@ -153,7 +140,7 @@ export default function InvoicesTableItem({
                     {errors.group}
                   </div>
                 )}
-              </td>
+              </td> */}
               <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                 <select
                   name="subGroup"
@@ -252,11 +239,11 @@ export default function InvoicesTableItem({
           </td>
           {session && !session.user.churchInfo?.church.hasCrm && (
             <>
-              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+              {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                 <div className="font-medium text-gray-800 dark:text-gray-100">
                   {invoice.group}
                 </div>
-              </td>
+              </td> */}
               <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                 <div className="font-medium text-gray-800 dark:text-gray-100">
                   {invoice.subGroup}

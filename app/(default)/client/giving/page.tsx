@@ -104,7 +104,7 @@ function GivingContent() {
         amount: record[1].trim().replace(/[$ ]+/g, ""),
         wallet: record[2],
         fullName: record[3],
-        date: record[4],
+        date: record[4].split(" ")[0],
         category: record[5],
         memo: record[6],
         nameInWallet: record[7],

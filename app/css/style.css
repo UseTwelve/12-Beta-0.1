@@ -16,3 +16,8 @@
 .sort-icon.asc {
   transform: rotate(180deg);
 }
+
+.table-container {
+  position: relative;
+  overflow: visible; /* Ensure dropdown is not cut off */
+}

@@ -69,9 +69,9 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
                 { session && !session.user.churchInfo?.church.hasCrm && <><th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Group</div>
                 </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                {/* <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">sub Group</div>
-                </th>
+                </th> */}
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Wallet</div>
                   </th>
