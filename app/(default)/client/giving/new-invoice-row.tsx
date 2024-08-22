@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CategoryDropdown from "@/components/dropdown-category-full";
 import FullNameDropdown from "@/components/dropdown-giver";
+import { useSession } from "next-auth/react";
 
 interface NewInvoiceRowProps {
   record: any;
@@ -22,6 +23,8 @@ export default function NewInvoiceRow({
       [e.target.name]: e.target.value,
     });
   };
+
+  const { data: session, status } = useSession();
 
 
   const validate = () => {
@@ -50,10 +53,6 @@ export default function NewInvoiceRow({
       newErrors.memo = "Memo is required.";
     }
 
-    if (!newRecord.nameInWallet) {
-      newErrors.nameInWallet = "Name in wallet is required.";
-    }
-
     setErrors(newErrors);
 
     setTimeout(() => {
@@ -72,16 +71,18 @@ export default function NewInvoiceRow({
   return (
     <tr>
       <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px"></td>
-      <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <input
-          type="text"
-          name="crmStatus"
-          value={newRecord.crmStatus}
-          onChange={handleChange}
-          className="form-input"
-          disabled
-        />
-      </td>
+      {session && session.user.churchInfo?.church.hasCrm && (
+        <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <input
+            type="text"
+            name="crmStatus"
+            value={newRecord.crmStatus}
+            onChange={handleChange}
+            className="form-input"
+            disabled
+          />
+        </td>
+      )}
       <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <input
           type="text"
@@ -168,7 +169,7 @@ export default function NewInvoiceRow({
           <div className="text-red-500 text-xs mt-1">{errors.memo}</div>
         )}
       </td>
-      <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+      {/* <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <input
           type="text"
           name="nameInWallet"
@@ -179,7 +180,7 @@ export default function NewInvoiceRow({
         {errors.nameInWallet && (
           <div className="text-red-500 text-xs mt-1">{errors.nameInWallet}</div>
         )}
-      </td>
+      </td> */}
       <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
         <div className="space-x-1">
           <button

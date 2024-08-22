@@ -4,6 +4,7 @@ import { useItemSelection } from "@/components/utils/use-item-selection";
 import InvoicesTableItem from "./invoices-table-item";
 import NewInvoiceRow from "./new-invoice-row";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export interface Record {
   id?: number;
@@ -46,6 +47,7 @@ export default function InvoicesTable({
     handleCheckboxChange,
     handleSelectAllChange,
   } = useItemSelection(invoices);
+  const { data: session, status } = useSession();
 
   const totalAmount = invoices
     .filter((record:Record, index) => selectedItems.includes(record.id?? index))
@@ -93,28 +95,28 @@ export default function InvoicesTable({
                     </label>
                   </div>
                 </th>
-                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
-                  <div
-                    className="font-semibold text-left inline-flex items-start"
-                    onClick={() => onHandleSort("crmStatus")}
-                  >
-                    CRM Status
-                    <svg
-                      className={`sort-icon ${
-                        sortConfig?.key === "crmStatus"
-                          ? sortConfig.direction === "asc"
-                            ? "asc"
-                            : "desc"
-                          : ""
-                      }`}
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
+                {session && session.user.churchInfo?.church.hasCrm && (
+                  <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
+                    <div
+                      className="font-semibold text-left inline-flex items-start"
+                      onClick={() => onHandleSort("crmStatus")}
                     >
-                      <path d="M3.204 5h9.592L8 10.204 3.204 5z" />
-                    </svg>
-                  </div>
-                </th>
+                      CRM Status
+                      <svg
+                        className={`sort-icon ${sortConfig?.key === "crmStatus"
+                            ? sortConfig.direction === "asc"
+                              ? "asc"
+                              : "desc"
+                            : ""
+                          }`}
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M3.204 5h9.592L8 10.204 3.204 5z" />
+                      </svg>
+                    </div>
+                  </th>)}
                 <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
                     className="font-semibold text-left inline-flex items-start"
@@ -247,7 +249,7 @@ export default function InvoicesTable({
                     </svg>
                   </div>
                 </th>
-                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
+                {/* <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
                     className="font-semibold text-left inline-flex items-start"
                     onClick={() => onHandleSort("nameInWallet")}
@@ -268,7 +270,7 @@ export default function InvoicesTable({
                       <path d="M3.204 5h9.592L8 10.204 3.204 5z" />
                     </svg>
                   </div>
-                </th>
+                </th> */}
                 <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Actions</div>
                 </th>

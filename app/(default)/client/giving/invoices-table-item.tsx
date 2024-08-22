@@ -4,6 +4,7 @@ import { InvoicesProperties } from "./invoices-properties";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import FullNameDropdown from "@/components/dropdown-giver";
 import CategoryDropdown from "@/components/dropdown-category-full";
+import { useSession } from "next-auth/react";
 
 interface InvoicesTableItemProps {
   invoice: Record;
@@ -39,6 +40,7 @@ export default function InvoicesTableItem({
   const [editValues, setEditValues] = useState(invoice);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const axiosAuth = useAxiosAuth();
+  const { data: session, status } = useSession();
   const categories = [
     {
       id: 1,
@@ -101,10 +103,6 @@ export default function InvoicesTableItem({
       newErrors.memo = "Memo is required.";
     }
 
-    if (!editValues.nameInWallet) {
-      newErrors.nameInWallet = "Name in wallet is required.";
-    }
-
     setErrors(newErrors);
 
     setTimeout(() => {
@@ -160,30 +158,31 @@ export default function InvoicesTableItem({
       </td>
       {isEditingState ? (
         <>
-           <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            {editValues.crmStatus === "Successful" ||
-            editValues.crmStatus === "Uploaded" ||
-            editValues.crmStatus === "Failed" ? (
-              <input
-                type="text"
-                name="crmStatus"
-                value={editValues.crmStatus}
-                onChange={handleChange}
-                className="form-input"
-                disabled
-              />
-            ) : (
-              <select
-                name="crmStatus"
-                value={editValues.crmStatus}
-                onChange={handleChange}
-                className="form-select"
-              >
-                <option value="New">New</option>
-                <option value="Pending">Pending</option>
-              </select>
-            )}
-          </td>
+          {session && session.user.churchInfo?.church.hasCrm && (
+            <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+              {editValues.crmStatus === "Successful" ||
+                editValues.crmStatus === "Uploaded" ||
+                editValues.crmStatus === "Failed" ? (
+                <input
+                  type="text"
+                  name="crmStatus"
+                  value={editValues.crmStatus}
+                  onChange={handleChange}
+                  className="form-input"
+                  disabled
+                />
+              ) : (
+                <select
+                  name="crmStatus"
+                  value={editValues.crmStatus}
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  <option value="New">New</option>
+                  <option value="Pending">Pending</option>
+                </select>
+              )}
+            </td>)}
           <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <input
               type="text"
@@ -270,7 +269,7 @@ export default function InvoicesTableItem({
               </div>
             )}
           </td>
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          {/* <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <input
               type="text"
               name="nameInWallet"
@@ -283,7 +282,7 @@ export default function InvoicesTableItem({
                 {errors.nameInWallet}
               </div>
             )}
-          </td>
+          </td> */}
           <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
             <div className="space-x-1">
               <button
@@ -308,16 +307,18 @@ export default function InvoicesTableItem({
           </td>
         </>
       ) : (
-        <>
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <div
-              className={`inline-flex font-medium rounded-full text-center px-2.5 py-0.5 ${statusColor(
-                invoice.crmStatus
-              )}`}
-            >
-              {invoice.crmStatus}
-            </div>
-          </td>
+          <>
+            {session && session.user.churchInfo?.church.hasCrm && (
+              <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <div
+                  className={`inline-flex font-medium rounded-full text-center px-2.5 py-0.5 ${statusColor(
+                    invoice.crmStatus
+                  )}`}
+                >
+                  {invoice.crmStatus}
+                </div>
+              </td>
+            )}
           <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
               ${invoice.amount}
@@ -349,11 +350,11 @@ export default function InvoicesTableItem({
               {invoice.memo}
             </div>
           </td>
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          {/* <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
               {invoice.nameInWallet}
             </div>
-          </td>
+          </td> */}
           <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
             <div className="space-x-1">
               <button
