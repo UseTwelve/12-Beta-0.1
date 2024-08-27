@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import ChannelImage03 from "@/public/images/image.png";
 import twelveLogo from "@/public/images/twelve.jpg";
 import Image from "next/image";
-import PlaidLink from "@/components/PlaidLink";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import {
   PlaidLinkOnSuccess,
