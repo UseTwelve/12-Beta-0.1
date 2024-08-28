@@ -98,12 +98,12 @@ export default function InvoicesTable({
                 {session && session.user.churchInfo?.church.hasCrm && (
                   <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                     <div
-                      className="font-semibold text-left inline-flex items-start"
+                      className="font-semibold text-left inline-flex items-start text-sm normal-case"
                       onClick={() => onHandleSort("crmStatus")}
                     >
                       CRM Status
                       <svg
-                        className={`sort-icon ${sortConfig?.key === "crmStatus"
+                        className={`sort-icon mt-1 ${sortConfig?.key === "crmStatus"
                             ? sortConfig.direction === "asc"
                               ? "asc"
                               : "desc"
@@ -119,12 +119,12 @@ export default function InvoicesTable({
                   </th>)}
                 <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start"
+                    className="font-semibold text-left inline-flex items-start text-sm normal-case"
                     onClick={() => onHandleSort("amount")}
                   >
                     Amount
                     <svg
-                      className={`sort-icon ${
+                      className={`sort-icon mt-1 ${
                         sortConfig?.key === "amount"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -141,12 +141,12 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start"
+                    className="font-semibold text-left inline-flex items-start text-sm normal-case"
                     onClick={() => onHandleSort("wallet")}
                   >
                     Wallet
                     <svg
-                      className={`sort-icon ${
+                      className={`sort-icon mt-1 ${
                         sortConfig?.key === "wallet"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -163,12 +163,12 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start"
+                    className="font-semibold text-left inline-flex items-start text-sm normal-case"
                     onClick={() => onHandleSort("fullName")}
                   >
                     Fullname in CRM
                     <svg
-                      className={`sort-icon ${
+                      className={`sort-icon mt-1 ${
                         sortConfig?.key === "fullName"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -185,12 +185,12 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start"
+                    className="font-semibold text-left inline-flex items-start text-sm normal-case"
                     onClick={() => onHandleSort("date")}
                   >
                     Date
                     <svg
-                      className={`sort-icon ${
+                      className={`sort-icon mt-1 ${
                         sortConfig?.key === "date"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -207,12 +207,12 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start"
+                    className="font-semibold text-left inline-flex items-start text-sm normal-case"
                     onClick={() => onHandleSort("category")}
                   >
                     Category
                     <svg
-                      className={`sort-icon ${
+                      className={`sort-icon mt-1 ${
                         sortConfig?.key === "category"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -229,12 +229,12 @@ export default function InvoicesTable({
                 </th>
                 <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start"
+                    className="font-semibold text-left inline-flex items-start text-sm normal-case"
                     onClick={() => onHandleSort("memo")}
                   >
                     Memo
                     <svg
-                      className={`sort-icon ${
+                      className={`sort-icon mt-1 ${
                         sortConfig?.key === "memo"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -251,12 +251,12 @@ export default function InvoicesTable({
                 </th>
                 {/* <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap cursor-pointer  text-left">
                   <div
-                    className="font-semibold text-left inline-flex items-start"
+                    className="font-semibold text-left inline-flex items-start text-sm normal-case"
                     onClick={() => onHandleSort("nameInWallet")}
                   >
                     Name in wallet
                     <svg
-                      className={`sort-icon ${
+                      className={`sort-icon mt-1 ${
                         sortConfig?.key === "nameInWallet"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -272,7 +272,7 @@ export default function InvoicesTable({
                   </div>
                 </th> */}
                 <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Actions</div>
+                  <div className="font-semibold text-left text-sm normal-case">Actions</div>
                 </th>
               </tr>
             </thead>
