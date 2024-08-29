@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { SetStateAction, useEffect, useMemo, useState } from "react";
 import Toast from "@/components/toast";
 import * as XLSX from "xlsx";
+import { format } from 'date-fns';
 
 import {
   fetchRecords,
@@ -22,6 +23,7 @@ import {
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import Datepicker from "@/components/datepicker";
 import ModalBlank from "@/components/modal-blank";
+import { OrbitProgress, ThreeDot } from "react-loading-indicators";
 
 
 function GivingContent() {
@@ -42,6 +44,7 @@ function GivingContent() {
   const { selectedItems, setSelectedItems } = useSelectedItems()// Add this line
   const [multiDeleteModalOpen, setMultiDeleteModalOpen] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const filteredAndSortedRecords = useMemo(() => {
     // If searchTerm is empty, return all records (except the header row)
@@ -86,12 +89,6 @@ function GivingContent() {
   }, [records, searchTerm, sortConfig]);  
   
 
-
-  function convertToMDY(dateString: string) {
-    const [year, month, day] = dateString.split('-');
-    return `${parseInt(month)}/${parseInt(day)}/${year}`;
-  }
-
   const fetchData = async () => {
     try {
       // setToastMessage("Fetching records...");
@@ -122,7 +119,9 @@ function GivingContent() {
 
   useEffect(() => {
     if (status === "authenticated") {
+      setIsLoading(true);
       fetchData();
+      setIsLoading(false);
     }
   }, [status, axiosAuth]);
 
@@ -146,7 +145,7 @@ function GivingContent() {
   const handleSaveNewRecord = async (
     record: Record
   ) => {
-    record.date = convertToMDY(record.date);
+    record.date = format(record.date, 'MM/dd/yyyy');
     try {
       setToastMessage("Saving new record...");
       setToastInfoOpen(true);
@@ -404,7 +403,11 @@ function GivingContent() {
     setRecords( [records[0], ...sortedRecords]);
   };
 
-  if (status === "loading") return <p>Loading...</p>;
+  if (status === "loading" || isLoading) return (
+    <div className="flex items-center justify-center min-h-screen">
+      <OrbitProgress variant="track-disc" color="#000000" size="medium" text="Loading..." textColor="#000000" />
+    </div>
+  );
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-[96rem] mx-auto">
@@ -605,7 +608,6 @@ function GivingContent() {
           </button>
         </div>
       </div>
-
       {/* Table */}
       <InvoicesTable
         invoices={filteredAndSortedRecords}

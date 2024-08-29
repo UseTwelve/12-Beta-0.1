@@ -149,7 +149,7 @@ function SpendingContent() {
 
   const handleUploadRecord = async () => {
     if (selectedItems.length === 0) {
-      setToastMessage("Please select records to upload.");
+      setToastMessage("Select at least one transaction to upload.");
       setToastWarningOpen(true);
       return;
     }

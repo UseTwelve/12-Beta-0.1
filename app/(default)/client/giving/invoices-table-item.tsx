@@ -143,7 +143,7 @@ export default function InvoicesTableItem({
 
   return (
     <tr>
-      <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+      <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap w-px">
         <div className="flex items-center">
           <label className="inline-flex">
             <span className="sr-only">Select</span>
@@ -159,7 +159,7 @@ export default function InvoicesTableItem({
       {isEditingState ? (
         <>
           {session && session.user.churchInfo?.church.hasCrm && (
-            <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+            <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
               {editValues.crmStatus === "Successful" ||
                 editValues.crmStatus === "Uploaded" ||
                 editValues.crmStatus === "Failed" ? (
@@ -183,7 +183,7 @@ export default function InvoicesTableItem({
                 </select>
               )}
             </td>)}
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <input
               type="text"
               name="amount"
@@ -195,7 +195,7 @@ export default function InvoicesTableItem({
               <div className="text-red-500 text-xs mt-1">{errors.amount}</div>
             )}
           </td>
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
           <input
               type="text"
               name="wallet"
@@ -207,7 +207,7 @@ export default function InvoicesTableItem({
               <div className="text-red-500 text-xs mt-1">{errors.wallet}</div>
             )}
           </td>
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap relative">
+          <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap relative">
             <div className="relative">
               <FullNameDropdown
                 value={editValues.fullName}
@@ -226,7 +226,7 @@ export default function InvoicesTableItem({
             </div>
           </td>
 
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <input
               type="date"
               name="date"
@@ -238,7 +238,7 @@ export default function InvoicesTableItem({
               <div className="text-red-500 text-xs mt-1">{errors.date}</div>
             )}
           </td>
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap relative">
+          <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap relative">
             <CategoryDropdown
               value={editValues.category}
               onChange={(selectedOption) => {
@@ -255,7 +255,7 @@ export default function InvoicesTableItem({
             )}
           </td>
 
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-6 first:pl-5 last:pr-5 py-2 pr-32 whitespace-nowrap">
             <input
               type="text"
               name="memo"
@@ -269,7 +269,7 @@ export default function InvoicesTableItem({
               </div>
             )}
           </td>
-          {/* <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          {/* <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <input
               type="text"
               name="nameInWallet"
@@ -283,7 +283,7 @@ export default function InvoicesTableItem({
               </div>
             )}
           </td> */}
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+          <td className="px-6 first:pl-5 last:pr-5 py-3  whitespace-nowrap absolute right-0 bg-white dark:bg-gray-900/20 border-t border-b border-gray-100 dark:border-gray-700/60">
             <div className="space-x-1">
               <button
                 className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full"
@@ -309,7 +309,7 @@ export default function InvoicesTableItem({
       ) : (
           <>
             {session && session.user.churchInfo?.church.hasCrm && (
-              <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+              <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
                 <div
                   className={`inline-flex font-medium rounded-full text-center px-2.5 py-0.5 ${statusColor(
                     invoice.crmStatus
@@ -319,43 +319,43 @@ export default function InvoicesTableItem({
                 </div>
               </td>
             )}
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
               ${invoice.amount}
             </div>
           </td>
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <div className={`font-medium ${totalColor(invoice.wallet)}`}>
               {invoice.wallet}
             </div>
           </td>
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
               {invoice.fullName}
             </div>
           </td>
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
               {invoice.date}
             </div>
           </td>
 
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
               {invoice.category}
             </div>
           </td>
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-6 first:pl-5 last:pr-5 py-2 pr-32 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
               {invoice.memo}
             </div>
           </td>
-          {/* <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          {/* <td className="px-6 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
               {invoice.nameInWallet}
             </div>
           </td> */}
-          <td className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+          <td className="first:pl-3 last:pr-3  mt-[-1px] whitespace-nowrap absolute right-0 bg-white dark:bg-gray-900/20 border-t border-b border-gray-100 dark:border-gray-700/60">
             <div className="space-x-1">
               <button
                 className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full"

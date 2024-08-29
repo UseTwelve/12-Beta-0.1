@@ -14,6 +14,7 @@ import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { FlyoutProvider, useFlyoutContext } from "@/app/flyout-context";
 import { ChurchDetailProvider, useChurchDetail } from "./transaction-context"; // Import the hook
 import ChurchPanel from "./transaction-panel";
+import { OrbitProgress } from "react-loading-indicators";
 
 function ChurchesContent() {
   const { data: session, status } = useSession();
@@ -29,7 +30,8 @@ function ChurchesContent() {
   const apiUrl = "/admin/churches";
 
   const { setChurch } = useChurchDetail();
-  const { setFlyoutOpen } = useFlyoutContext()
+  const { setFlyoutOpen } = useFlyoutContext();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const filteredAndSortedRecords = useMemo(() => {
     // If searchTerm is empty, return all records (except the header row)
@@ -78,7 +80,9 @@ function ChurchesContent() {
 
   useEffect(() => {
     if (status === "authenticated") {
+      setIsLoading(true);
       fetchData();
+      setIsLoading(false);
     }
   }, [status, axiosAuth]);
 
@@ -114,7 +118,11 @@ function ChurchesContent() {
     setSortConfig({ key, direction });
   };
 
-  if (status === "loading") return <p>Loading...</p>;
+  if (status === "loading" || isLoading) return(
+    <div className="flex items-center justify-center min-h-screen">
+      <OrbitProgress variant="track-disc" color="#000000" size="medium" text="Loading..." textColor="#000000" />
+    </div>
+  );
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-[96rem] mx-auto">

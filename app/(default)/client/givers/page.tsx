@@ -21,6 +21,7 @@ import {
 } from "@/lib/hooks/useGoogleSheet";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import ModalBlank from "@/components/modal-blank";
+import { OrbitProgress } from "react-loading-indicators";
 
 function GivingContent() {
   const { data: session, status } = useSession();
@@ -38,7 +39,8 @@ function GivingContent() {
   const [sheetId, setSheetId] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
   const apiUrl = "/client/givers";
-  const { selectedItems, setSelectedItems } = useSelectedItems()
+  const { selectedItems, setSelectedItems } = useSelectedItems();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const filteredAndSortedRecords = useMemo(() => {
     // If searchTerm is empty, return all records (except the header row)
@@ -75,8 +77,6 @@ function GivingContent() {
 
   const fetchData = async () => {
     try {
-      setToastMessage("Fetching records...");
-      setToastInfoOpen(true);
       const data = await fetchRecords(axiosAuth, apiUrl);
       const formattedRecords = data.values.map((record: any, index:any) => ({
         id:index,
@@ -101,7 +101,9 @@ function GivingContent() {
 
   useEffect(() => {
     if (status === "authenticated") {
+      setIsLoading(true);
       fetchData();
+      setIsLoading(false);
     }
   }, [status, axiosAuth]);
 
@@ -228,7 +230,11 @@ function GivingContent() {
     }
   };
 
-  if (status === "loading") return <p>Loading...</p>;
+  if (status === "loading" || isLoading) return (
+    <div className="flex items-center justify-center min-h-screen">
+      <OrbitProgress variant="track-disc" color="#000000" size="medium" text="Loading..." textColor="#000000" />
+    </div>
+  );
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-[96rem] mx-auto">

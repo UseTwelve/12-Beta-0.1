@@ -160,7 +160,7 @@ export default function NewInvoiceRow({
               </div>
             )}
           </td>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-2 first:pl-5 last:pr-5 py-3 pr-32 whitespace-nowrap">
             <FellowshipDropdown
               value={newRecord.fellowship}
               onChange={(selectedOption) => {
@@ -178,7 +178,7 @@ export default function NewInvoiceRow({
           </td>
         </>
       )}
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+      <td className="px-6 first:pl-5 last:pr-5 py-3  whitespace-nowrap absolute right-0 bg-white dark:bg-gray-900/20 border-t border-b border-gray-100 dark:border-gray-700/60">
         <div className="space-x-1">
           <button
             className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full"

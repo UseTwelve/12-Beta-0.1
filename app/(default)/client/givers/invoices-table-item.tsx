@@ -81,7 +81,7 @@ export default function InvoicesTableItem({
 
   return (
     <tr>
-      <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+      <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap w-px">
         <div className="flex items-center">
           <label className="inline-flex">
             <span className="sr-only">Select</span>
@@ -96,7 +96,7 @@ export default function InvoicesTableItem({
       </td>
       {isEditingState ? (
         <>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <input
               type="text"
               name="nameInWallet"
@@ -110,7 +110,7 @@ export default function InvoicesTableItem({
               </div>
             )}
           </td>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <input
               type="text"
               name="crmName"
@@ -124,7 +124,7 @@ export default function InvoicesTableItem({
           </td>
           {session && !session.user.churchInfo?.church.hasCrm && (
             <>
-              {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+              {/* <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
                 <select
                   name="group"
                   value={editValues.group}
@@ -141,7 +141,7 @@ export default function InvoicesTableItem({
                   </div>
                 )}
               </td> */}
-              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+              <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
                 <select
                   name="subGroup"
                   value={editValues.subGroup}
@@ -161,7 +161,7 @@ export default function InvoicesTableItem({
                   </div>
                 )}
               </td>
-              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+              <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
                 <select
                   name="wallet"
                   value={editValues.wallet}
@@ -183,7 +183,7 @@ export default function InvoicesTableItem({
                   </div>
                 )}
               </td>
-              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+              <td className="px-2 first:pl-5 last:pr-5 py-2 pr-32 whitespace-nowrap">
                 <FellowshipDropdown
                   value={editValues.fellowship}
                   onChange={(selectedOption) => {
@@ -201,7 +201,7 @@ export default function InvoicesTableItem({
               </td>
             </>
           )}
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+          <td className="first:pl-5 last:pr-5 py-2  whitespace-nowrap absolute right-0 bg-white dark:bg-gray-900/20 border-t border-b border-gray-100 dark:border-gray-700/60">
             <div className="space-x-1">
               <button
                 className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full"
@@ -226,35 +226,35 @@ export default function InvoicesTableItem({
         </>
       ) : (
         <>
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
               {invoice.nameInWallet}
             </div>
           </td>
 
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+          <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
             <div className="font-medium text-gray-800 dark:text-gray-100">
               {invoice.crmName}
             </div>
           </td>
           {session && !session.user.churchInfo?.church.hasCrm && (
             <>
-              {/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+              {/* <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
                 <div className="font-medium text-gray-800 dark:text-gray-100">
                   {invoice.group}
                 </div>
               </td> */}
-              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+              <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
                 <div className="font-medium text-gray-800 dark:text-gray-100">
                   {invoice.subGroup}
                 </div>
               </td>
-              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+              <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
                 <div className={`font-medium ${totalColor(invoice.wallet)}`}>
                   {invoice.wallet}
                 </div>
               </td>
-              <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+              <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
                 <div className="font-medium text-gray-800 dark:text-gray-100">
                   {invoice.fellowship}
                 </div>
@@ -262,7 +262,7 @@ export default function InvoicesTableItem({
             </>
           )}
 
-          <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+          <td className="first:pl-3 last:pr-3  mt-[-1px] whitespace-nowrap absolute right-0 bg-white dark:bg-gray-900/20 border-t border-b border-gray-100 dark:border-gray-700/60">
             <div className="space-x-1">
               <button
                 className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full"

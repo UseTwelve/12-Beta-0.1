@@ -5,6 +5,7 @@ import InvoicesTableItem from './invoices-table-item'
 import NewInvoiceRow from './new-invoice-row'
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
+import { ThreeDot } from 'react-loading-indicators';
 
 export interface Giver {
   id?: number;
@@ -75,12 +76,12 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Wallet</div>
                   </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <th className="px-2 first:pl-5 last:pr-5 py-3 pr-32 whitespace-nowrap">
                   <div className="font-semibold text-left">Fellowship</div>
                   </th>
                 </>}
    
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap bg-gray-50 dark:bg-gray-900/20 border-t border-b border-gray-100 dark:border-gray-700/60 absolute right-0 mt-[-1px]">
                   <div className="font-semibold text-left">Actions</div>
                 </th>
               </tr>
@@ -107,8 +108,14 @@ export default function InvoicesTable({ invoices, newRecord, onSaveNewRecord, on
                   isEditing={false} // Add the isEditing property with a default value
                 />
               ))}
-            </tbody>
+            </tbody> 
+              
           </table>
+          {invoices.length <= 0 && (
+            <div className="flex items-center justify-center w-full h-40">
+            <ThreeDot color="#000000" size="medium" text="" textColor="" />
+           </div>
+          )}
         </div>
       </div>
     </div>

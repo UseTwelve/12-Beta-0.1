@@ -5,6 +5,7 @@ import InvoicesTableItem from "./invoices-table-item";
 import NewInvoiceRow from "./new-invoice-row";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { ThreeDot } from "react-loading-indicators";
 
 export interface Record {
   id?: number;
@@ -271,7 +272,7 @@ export default function InvoicesTable({
                     </svg>
                   </div>
                 </th> */}
-                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <th className="px-6 first:pl-5 last:pr-5 py-3 whitespace-nowrap bg-gray-50 dark:bg-gray-900/20 border-t border-b border-gray-100 dark:border-gray-700/60 absolute right-0 mt-[-1px]">
                   <div className="font-semibold text-left text-sm normal-case">Actions</div>
                 </th>
               </tr>
@@ -303,6 +304,11 @@ export default function InvoicesTable({
               ))}
             </tbody>
           </table>
+          {invoices.length <= 0 && (
+            <div className="flex items-center justify-center w-full h-40">
+            <ThreeDot color="#000000" size="medium" text="" textColor="" />
+           </div>
+          )}
         </div>
       </div>
     </div>
