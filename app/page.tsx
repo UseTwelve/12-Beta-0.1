@@ -6,17 +6,17 @@ import { useEffect, useState } from 'react';
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const [color, setColor] = useState("#000000"); // Default to black
-  const [textColor, setTextColor] = useState("#000000"); // Default to black
+  const [color, setColor] = useState("#000000"); 
+  const [textColor, setTextColor] = useState("#000000"); 
 
   useEffect(() => {
     const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (isDarkMode) {
-      setColor("#FFFFFF"); // Set to white in dark mode
-      setTextColor("#FFFFFF"); // Set to white in dark mode
+      setColor("#FFFFFF"); 
+      setTextColor("#FFFFFF"); 
     } else {
-      setColor("#000000"); // Set to black in light mode
-      setTextColor("#000000"); // Set to black in light mode
+      setColor("#000000"); 
+      setTextColor("#000000"); 
     }
   }, []);
 
