@@ -10,13 +10,9 @@ export default function NotFound() {
     <div className="flex h-[100dvh] overflow-hidden">
 
       {/* Sidebar */}
-      <Sidebar />
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-
-        {/*  Site header */}
-        <Header />
 
         <main className="grow [&>*:first-child]:scroll-mt-16">
           <div className="relative bg-white dark:bg-gray-900 h-full">
@@ -29,8 +25,8 @@ export default function NotFound() {
                     <Image className="dark:hidden" src={NotFoundImage} width={176} height={176} alt="404 illustration" />
                     <Image className="hidden dark:block" src={NotFoundImageDark} width={176} height={176} alt="404 illustration dark" />                 
                   </div>
-                  <div className="mb-6">Hmm...this page doesn't exist. Try searching for something else!</div>
-                  <Link href="/" className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white">Back To Dashboard</Link>
+                  <div className="mb-6">Hmm...this page doesn't exist.</div>
+                  <Link href="/link-account" className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white">Back To connecting the bank</Link>
                 </div>
 
               </div>
