@@ -55,8 +55,8 @@ export default function LinkAccountPage() {
               Twelve
             </h1>
           </span>
-          <h1 className="text-3xl font-bold mb-1 text-gray-900">Connect your bank account to automatically track Zelle transactions</h1>
-          <p className="text-gray-500 mb-8">Twelve uses Plaid, a specialist provider of secure bank data connections, to offer the ability to automatically import your bank transaction data. Twelve and Plaid cannot make payments or move money in your accounts through this connection. This product is built for accounting purposes only.</p>
+          <h1 className="text-3xl font-bold mb-1 text-gray-900">Connect your bank account with Plaid</h1>
+          <p className="text-gray-500 mb-8">Twelve uses  <a href="https://plaid.com/company/" target="_blank">Plaid</a>, a specialist provider of secure bank data connections, to offer the ability to automatically import your bank transaction data. Twelve and Plaid cannot make payments or move money in your accounts through this connection. This product is built for accounting purposes only.</p>
           <button
             className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-150"
             onClick={() => open()}
