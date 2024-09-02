@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
-import ChannelImage03 from "@/public/images/image.png";
+import ChannelImage03 from "@/public/images/link-bank.png";
 import twelveLogo from "@/public/images/twelve.jpg";
 import Image from "next/image";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
