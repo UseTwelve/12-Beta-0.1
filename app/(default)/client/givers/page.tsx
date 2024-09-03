@@ -42,6 +42,10 @@ function GivingContent() {
   const { selectedItems, setSelectedItems } = useSelectedItems();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const itemsPerPage = 10; // Define the number of items per page
+
   const filteredAndSortedRecords = useMemo(() => {
     // If searchTerm is empty, return all records (except the header row)
     if (searchTerm.trim() === "") {
@@ -74,6 +78,19 @@ function GivingContent() {
     // Add back the header row after filtering and sorting
     return [records[0], ...filteredRecords];
   }, [records, searchTerm, sortConfig]);
+
+
+  const paginatedRecords = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return filteredAndSortedRecords.slice(start, end);
+  }, [filteredAndSortedRecords, currentPage]);
+
+  const totalPages = Math.ceil(filteredAndSortedRecords.length / itemsPerPage);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   const fetchData = async () => {
     try {
@@ -380,7 +397,7 @@ function GivingContent() {
 
       {/* Table */}
       <InvoicesTable
-        invoices={filteredAndSortedRecords}
+         invoices={paginatedRecords}
         newRecord={newRecord}
         onSaveNewRecord={handleSaveNewRecord}
         onUpdateRecord={handleUpdateRecord}
@@ -390,9 +407,15 @@ function GivingContent() {
       />
 
       {/* Pagination */}
-      {/* <div className="mt-8">
-        <PaginationClassic />
-      </div> */}
+      <div className="mt-8">
+      <PaginationClassic
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          itemsPerPage={itemsPerPage} // Pass itemsPerPage to the PaginationClassic component
+          filteredAndSortedRecords={filteredAndSortedRecords} // Pass filteredAndSortedRecords to the PaginationClassic component
+        />
+      </div>
     </div>
   );
 }
