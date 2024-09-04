@@ -22,6 +22,7 @@ import {
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import ModalBlank from "@/components/modal-blank";
 import { OrbitProgress } from "react-loading-indicators";
+import LoadingIndicator from "@/components/loading-indicator";
 
 function GivingContent() {
   const { data: session, status } = useSession();
@@ -248,9 +249,7 @@ function GivingContent() {
   };
 
   if (status === "loading" || isLoading) return (
-    <div className="flex items-center justify-center min-h-screen">
-      <OrbitProgress variant="track-disc" color="#000000" size="medium" text="Loading..." textColor="#000000" />
-    </div>
+    <LoadingIndicator />
   );
 
   return (

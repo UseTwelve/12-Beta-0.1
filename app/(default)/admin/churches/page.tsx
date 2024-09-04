@@ -15,6 +15,7 @@ import { FlyoutProvider, useFlyoutContext } from "@/app/flyout-context";
 import { ChurchDetailProvider, useChurchDetail } from "./transaction-context"; // Import the hook
 import ChurchPanel from "./transaction-panel";
 import { OrbitProgress } from "react-loading-indicators";
+import LoadingIndicator from "@/components/loading-indicator";
 
 function ChurchesContent() {
   const { data: session, status } = useSession();
@@ -119,9 +120,7 @@ function ChurchesContent() {
   };
 
   if (status === "loading" || isLoading) return(
-    <div className="flex items-center justify-center min-h-screen">
-      <OrbitProgress variant="track-disc" color="#000000" size="medium" text="Loading..." textColor="#000000" />
-    </div>
+    <LoadingIndicator />
   );
 
   return (

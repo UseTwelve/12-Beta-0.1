@@ -262,7 +262,7 @@ export default function InvoicesTableItem({
             </>
           )}
 
-          <td className="first:pl-3 last:pr-3  mt-[-1px] whitespace-nowrap absolute right-0 bg-white dark:bg-gray-900/20 border-t border-b border-gray-100 dark:border-gray-700/60">
+          <td className="first:pl-3 last:pr-3  mt-[-1px] whitespace-nowrap absolute right-0 bg-white dark:bg-[#1f2937] border-t border-b border-gray-100 dark:border-gray-700/60">
             <div className="space-x-1">
               <button
                 className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full"

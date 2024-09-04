@@ -104,7 +104,7 @@ export default function InvoicesTable({
                     >
                       CRM Status
                       <svg
-                        className={`sort-icon mt-1 ${sortConfig?.key === "crmStatus"
+                        className={`sort-icon mt-1 fill-gray-500 dark:fill-gray-400 ${sortConfig?.key === "crmStatus"
                             ? sortConfig.direction === "asc"
                               ? "asc"
                               : "desc"
@@ -125,7 +125,7 @@ export default function InvoicesTable({
                   >
                     Amount
                     <svg
-                      className={`sort-icon mt-1 ${
+                      className={`sort-icon mt-1 fill-gray-500 dark:fill-gray-400 ${
                         sortConfig?.key === "amount"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -147,7 +147,7 @@ export default function InvoicesTable({
                   >
                     Wallet
                     <svg
-                      className={`sort-icon mt-1 ${
+                      className={`sort-icon mt-1 fill-gray-500 dark:fill-gray-400 ${
                         sortConfig?.key === "wallet"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -169,7 +169,7 @@ export default function InvoicesTable({
                   >
                     Fullname in CRM
                     <svg
-                      className={`sort-icon mt-1 ${
+                      className={`sort-icon mt-1 fill-gray-500 dark:fill-gray-400 ${
                         sortConfig?.key === "fullName"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -191,7 +191,7 @@ export default function InvoicesTable({
                   >
                     Date
                     <svg
-                      className={`sort-icon mt-1 ${
+                      className={`sort-icon mt-1 fill-gray-500 dark:fill-gray-400 ${
                         sortConfig?.key === "date"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -213,7 +213,7 @@ export default function InvoicesTable({
                   >
                     Category
                     <svg
-                      className={`sort-icon mt-1 ${
+                      className={`sort-icon mt-1 fill-gray-500 dark:fill-gray-400 ${
                         sortConfig?.key === "category"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -235,7 +235,7 @@ export default function InvoicesTable({
                   >
                     Memo
                     <svg
-                      className={`sort-icon mt-1 ${
+                      className={`sort-icon mt-1 fill-gray-500 dark:fill-gray-400 ${
                         sortConfig?.key === "memo"
                           ? sortConfig.direction === "asc"
                             ? "asc"
@@ -257,7 +257,7 @@ export default function InvoicesTable({
                   >
                     Name in wallet
                     <svg
-                      className={`sort-icon mt-1 ${
+                      className={`sort-icon mt-1 fill-gray-500 dark:fill-gray-400 ${
                         sortConfig?.key === "nameInWallet"
                           ? sortConfig.direction === "asc"
                             ? "asc"

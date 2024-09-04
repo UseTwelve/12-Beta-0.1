@@ -26,6 +26,7 @@
     "react-flatpickr": "^3.10.13",
     "react-loading-indicators": "^1.0.0",
     "react-plaid-link": "^3.5.1",
+    "sharp": "^0.33.5",
     "typescript": "^5.3.3",
     "xlsx": "^0.18.5"
   },
