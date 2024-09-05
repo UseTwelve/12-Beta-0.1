@@ -67,7 +67,7 @@ const FellowshipDropdown: React.FC<FellowshipDropdownProps> = ({ onChange, value
                 .filter(
                   (option) =>
                     typeof option === "string" &&
-                    option.toLowerCase().includes(value.toLowerCase())
+                    option.toLowerCase().includes(value?.toLowerCase())
                 ).map((option, index) => (
                   <div
                     key={index}

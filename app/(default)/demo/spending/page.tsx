@@ -54,7 +54,7 @@ function SpendingContent() {
       return Object.values(record).some(
         (value) =>
           typeof value === "string" &&
-          searchTerms.some((term) => value.toLowerCase().includes(term))
+          searchTerms.some((term) => value?.toLowerCase().includes(term))
       );
     });
 

@@ -102,7 +102,7 @@ const FullNameDropdown: React.FC<FullNameDropdownProps> = ({
                 .filter(
                   (option) =>
                     typeof option === "string" &&
-                    option.toLowerCase().includes(value.toLowerCase())
+                    option.toLowerCase().includes(value?.toLowerCase())
                 )
                 .map((option, index) => (
                   <div

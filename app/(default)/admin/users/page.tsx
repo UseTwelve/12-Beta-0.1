@@ -46,7 +46,7 @@ function GivingContent() {
       return Object.values(record).some(
         (value) =>
           typeof value === "string" &&
-          value.toLowerCase().includes(searchTerm.toLowerCase())
+          value?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     });
 

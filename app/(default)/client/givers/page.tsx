@@ -59,7 +59,7 @@ function GivingContent() {
     // Filter records based on search terms
     let filteredRecords = records.slice(1).filter((record) => {
       return Object.values(record).some((value) => 
-        typeof value === 'string' && searchTerms.some((term) => value.toLowerCase().includes(term))
+        typeof value === 'string' && searchTerms.some((term) => value?.toLowerCase().includes(term))
       );
     });
   

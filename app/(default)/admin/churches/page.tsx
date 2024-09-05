@@ -43,7 +43,7 @@ function ChurchesContent() {
     // Otherwise, filter the records based on the searchTerm
     let filteredRecords = records.slice(1).filter((record) => {
       return Object.values(record).some((value) => 
-        typeof value === 'string' && searchTerm.split(" ").some((term) => value.toLowerCase().includes(term.toLowerCase()))
+        typeof value === 'string' && searchTerm.split(" ").some((term) => value?.toLowerCase().includes(term.toLowerCase()))
       );
     });
   
