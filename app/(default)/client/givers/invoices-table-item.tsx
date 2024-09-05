@@ -3,6 +3,7 @@ import { Giver } from "./invoices-table";
 import { InvoicesProperties } from "./invoices-properties";
 import { useSession } from "next-auth/react";
 import FellowshipDropdown from "@/components/dropdown-fellowship";
+import GroupDropdown from "@/components/dropdown-group";
 
 interface InvoicesTableItemProps {
   invoice: Giver;
@@ -142,19 +143,15 @@ export default function InvoicesTableItem({
                 )}
               </td> */}
               <td className="px-2 first:pl-5 last:pr-5 py-2 whitespace-nowrap">
-                <select
-                  name="subGroup"
-                  value={editValues.subGroup}
-                  onChange={handleChange}
-                  className="form-select"
-                >
-                  <option value=""></option>
-                  <option value="SubGroup A">SubGroup A</option>
-                  <option value="SubGroup B">SubGroup B</option>
-                  <option value="SubGroup C">SubGroup C</option>
-                  <option value="SubGroup D">SubGroup D</option>
-                  <option value="SubGroup E">SubGroup E</option>
-                </select>
+                <GroupDropdown
+              value={editValues.subGroup}
+              onChange={(selectedOption) => {
+                setEditValues({
+                  ...editValues,
+                  subGroup: selectedOption,
+                });
+              }}
+            />
                 {errors.subGroup && (
                   <div className="text-red-500 text-xs mt-1">
                     {errors.subGroup}

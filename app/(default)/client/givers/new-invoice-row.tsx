@@ -1,5 +1,6 @@
 import CategoryDropdown from "@/components/dropdown-category-full";
 import FellowshipDropdown from "@/components/dropdown-fellowship";
+import GroupDropdown from "@/components/dropdown-group";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
@@ -119,19 +120,15 @@ export default function NewInvoiceRow({
             )}
           </td> */}
           <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-            <select
-              name="subGroup"
+            <GroupDropdown
               value={newRecord.subGroup}
-              onChange={handleChange}
-              className="form-select"
-            >
-              <option value=""></option>
-              <option value="SubGroup A">SubGroup A</option>
-              <option value="SubGroup B">SubGroup B</option>
-              <option value="SubGroup C">SubGroup C</option>
-              <option value="SubGroup D">SubGroup D</option>
-              <option value="SubGroup E">SubGroup E</option>
-            </select>
+              onChange={(selectedOption) => {
+                setNewRecord({
+                  ...newRecord,
+                  subGroup: selectedOption,
+                });
+              }}
+            />
             {errors.subGroup && (
               <div className="text-red-500 text-xs mt-1">
                 {errors.subGroup}
