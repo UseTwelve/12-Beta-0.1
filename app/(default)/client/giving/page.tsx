@@ -351,6 +351,10 @@ function GivingContent() {
       if (record) {
         // Create a shallow copy of the record and remove the id property
         const { id, ...recordWithoutId } = record;
+        if (session && !session.user.churchInfo?.church.hasCrm) {
+          delete recordWithoutId.crmStatus;
+          delete recordWithoutId.nameInWallet;
+        }
         return recordWithoutId;
       }
   
