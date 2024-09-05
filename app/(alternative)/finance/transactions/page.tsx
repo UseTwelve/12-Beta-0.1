@@ -172,7 +172,7 @@ function Transactions() {
 
         {/* Pagination */}
         <div className="mt-8">
-          <PaginationClassic />
+          {/* <PaginationClassic /> */}
         </div>    
       </div>
 

@@ -34,7 +34,7 @@ export default function PaginationLibrary() {
             <div>
               <h2 className="text-2xl text-gray-800 dark:text-gray-100 font-bold mb-6">Option 2</h2>
               <div className="px-6 py-8 bg-gray-100 dark:bg-gray-800/50 rounded-lg">
-                <PaginationClassic />
+                {/* <PaginationClassic /> */}
               </div>
             </div>
 
