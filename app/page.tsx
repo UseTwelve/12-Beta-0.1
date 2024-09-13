@@ -2,39 +2,33 @@
 import LoadingIndicator from '@/components/loading-indicator';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { OrbitProgress } from 'react-loading-indicators';
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const [color, setColor] = useState("#000000"); 
-  const [textColor, setTextColor] = useState("#000000"); 
-
-  useEffect(() => {
-    const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (isDarkMode) {
-      setColor("#FFFFFF"); 
-      setTextColor("#FFFFFF"); 
-    } else {
-      setColor("#000000"); 
-      setTextColor("#000000"); 
-    }
-  }, []);
   
   if (status === 'loading') {
     return (
       <LoadingIndicator />
     );
   }
-
+  
   if (status === 'authenticated') {
-    if (session.user.userType.name === "admin") {
-      return location.href = "/admin/churches";
+    if (session && session.user && session.user.userType.name === "client" && !session.user.churchInfo) {
+      // Redirect user to sign-in page with error query params
+      return redirect(`/signin?error=you%20have%20not%20been%20assigned%20to%20any%20church%20yet.`);
     }
-    if (session.user.userType.name === "client") {
-      return location.href = "/client/giving";
+    
+    if (session && session.user && session.user.userType.name === "admin") {
+      // Redirect admin user to admin churches page
+      return redirect("/admin/churches");
+    }
+    
+    if (session && session.user && session.user.userType.name === "client") {
+      // Redirect client user to client giving page
+      return redirect("/client/giving");
     }
   }
 
+  // Default redirect to sign-in page if not authenticated
   return redirect('/signin');
 }

@@ -21,15 +21,17 @@ export default function SignIn() {
       setError(searchParams);
 
       if (searchParams) {
-        const url = new URL(window.location.href);
-        url.searchParams.delete("error");
-        window.history.replaceState({}, "", url);
         setToastErrorOpen(true);
 
-        // Automatically close the toast after 5 seconds
+        // Automatically close the toast after 5 seconds and then remove the query parameter
         setTimeout(() => {
           setToastErrorOpen(false);
-        }, 5000);
+          
+          // Remove the error parameter from the URL after the toast disappears
+          const url = new URL(window.location.href);
+          url.searchParams.delete("error");
+          window.history.replaceState({}, "", url);
+        }, 7000);
       }
     }
   }, []);
@@ -57,6 +59,17 @@ export default function SignIn() {
       }, 5000);
     } else {
       window.location.href = "/";
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true); // Show loading indicator
+    setError(null); // Clear previous errors
+
+    try {
+      await signIn('google', { callbackUrl:"/" });
+    } catch (error) {
+      console.error('Error during Google sign-in:', error);
     }
   };
 
@@ -129,6 +142,27 @@ export default function SignIn() {
                   </button>
                 </div>
               </form>
+              {/* OR Divider */}
+              <div className="relative mt-6">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300 dark:border-gray-600" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">
+                    OR
+                  </span>
+                </div>
+              </div>
+              <div className="mt-4">
+                {/* Google Sign-In Button */}
+                <button
+                  onClick={handleGoogleSignIn}
+                  className="btn bg-red-500 hover:bg-red-600 text-white w-full"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Signing In..." : "Sign In with Google"} {/* Show loading text */}
+                </button>
+              </div>
             </div>
           </div>
         </div>

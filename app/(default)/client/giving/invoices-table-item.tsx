@@ -61,7 +61,7 @@ export default function InvoicesTableItem({
     const [month, day, year] = dateString.split('/');
     const paddedMonth = month.padStart(2, '0');
     const paddedDay = day.padStart(2, '0');
-    console.log(`${year}-${paddedMonth}-${paddedDay}`);
+    
     return `${year}-${paddedMonth}-${paddedDay}`;
   }
 
